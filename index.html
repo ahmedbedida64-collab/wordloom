@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wordloom</title>
+  <meta name="theme-color" content="#FFEBCD">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..800;1,8..60,400..800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?version=6">
+</head>
+<body>
+  <script>
+    document.body.classList.remove('theme-royal', 'mood-purple', 'mood-sky', 'mood-starlight', 'theme-dark');
+    document.body.classList.add('theme-antique');
+    window._isRunning = false;
+    window._animId = null;
+    window.startAnimation = function() {
+      if (document.hidden || document.body.classList.contains('reading-mode')) return;
+      if (!window._isRunning && window._internalAnimate) {
+        window._isRunning = true;
+        window._internalClock?.start();
+        window._internalAnimate();
+      }
+    };
+    window.stopAnimation = function() {
+      window._isRunning = false;
+      if (window._animId) {
+        cancelAnimationFrame(window._animId);
+        window._animId = null;
+      }
+      window._internalClock?.stop();
+    };
+  </script>
+  <canvas id="bg"></canvas>
+  <main id="auth-screen" class="auth-screen">
+    <section class="auth-card">
+      <p class="eyebrow">Wordloom</p>
+      <h1>Read more. Understand more.</h1>
+      <p>Build your English through stories made for your level.</p>
+      <form id="auth-form">
+        <label for="auth-name">Your name<input id="auth-name" type="text" autocomplete="name" maxlength="40" required placeholder="What should we call you?"></label>
+        <label for="auth-language">Mother language
+          <select id="auth-language">
+            <option value="ar" selected>العربية</option>
+            <option value="en">English</option>
+            <option value="fr">français</option>
+            <option value="es">español</option>
+            <option value="tr">Türkçe</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+        <p id="auth-error" role="alert"></p>
+        <button type="submit">Start reading →</button>
+      </form>
+      <button id="auth-guest" class="text-button" type="button">Continue as guest</button>
+    </section>
+  </main>
+
+  <div class="app-shell auth-locked">
+    <aside class="sidebar">
+      <a class="brand" href="#">Wordloom</a>
+      <nav aria-label="Main navigation">
+        <button class="nav-item nav-item-library" data-view="library" style="--nav-gradient-from:#a955ff;--nav-gradient-to:#ea51ff;--nav-icon-color:#d49cff" type="button"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H10v20H6.5A2.5 2.5 0 0 1 4 19.5Z"/><path d="M10 2h4v20h-4z"/><path d="M14 2h3.5A2.5 2.5 0 0 1 20 4.5V22h-6"/><path d="M2 22h20"/></svg></span><span class="nav-label">Library</span></button>
+        <button class="nav-item nav-item-review" data-view="vocabulary" style="--nav-gradient-from:#56CCF2;--nav-gradient-to:#2F80ED;--nav-icon-color:#78d8ff" type="button"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m5 7 1.5 1.5L9 6M11 7h8M5 12l1.5 1.5L9 11M11 12h8M5 17l1.5 1.5L9 16M11 17h8"/></svg></span><span class="nav-label">Review</span><span class="nav-count"></span></button>
+        <button class="nav-item nav-item-custom-book" data-action="custom-book" style="--nav-gradient-from:#FF9966;--nav-gradient-to:#FF5E62;--nav-icon-color:#ffad83" type="button"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5.5c2.5-1 5-.5 8 1.5v13c-3-2-5.5-2.5-8-1.5zM20 5.5c-2.5-1-5-.5-8 1.5v13c3-2 5.5-2.5 8-1.5z"/><path d="M16 4v5M13.5 6.5h5"/></svg></span><span class="nav-label">Custom book</span></button>
+        <button class="nav-item nav-item-settings nav-item-profile" data-action="settings" style="--nav-gradient-from:#80FF72;--nav-gradient-to:#7EE8FA;--nav-icon-color:#8effd0" type="button"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="nav-label">Settings</span></button>
+      </nav>
+    </aside>
+    <section class="main-content">
+      <header class="topbar">
+          <button class="mobile-menu icon-button" type="button" aria-label="Open menu">☰</button>
+        <div class="breadcrumb"><strong>Library</strong></div>
+        <div class="top-actions">
+          <button class="icon-button" type="button" aria-label="Open search">⌕</button>
+        </div>
+      </header>
+
+      <section id="library-view" class="view">
+        <div class="library-section">
+          <div class="view-heading"><div><p class="eyebrow">Your shelf</p><h1>Library</h1></div></div>
+          <section class="reading-streak" aria-label="Your reading streak"><span class="streak-fire" role="img" aria-label="Fire">🔥</span><div><strong id="streak-count">Start your streak</strong><span id="streak-message">Read today, then return tomorrow to keep the flame going.</span></div></section>
+          <div class="library-tools"><input id="library-search" type="search" placeholder="Search books"><button id="library-filter-toggle" class="filter-icon icon-button" type="button" aria-expanded="false" aria-controls="library-level-filter">Levels</button><button id="library-topic-toggle" class="filter-icon icon-button" type="button" aria-expanded="false" aria-controls="library-topic-filter">Topics</button></div>
+          <div id="library-level-filter" class="library-level-filter hidden" role="toolbar" aria-label="Filter books by level">
+            <button class="level-button active" data-level="all" type="button" aria-pressed="true">All</button>
+            <button class="level-button" data-level="A1" type="button" aria-pressed="false">A1</button>
+            <button class="level-button" data-level="A2" type="button" aria-pressed="false">A2</button>
+            <button class="level-button" data-level="B1" type="button" aria-pressed="false">B1</button>
+            <button class="level-button" data-level="B2" type="button" aria-pressed="false">B2</button>
+            <button class="level-button" data-level="C1" type="button" aria-pressed="false">C1</button>
+          </div>
+          <div id="library-topic-filter" class="library-level-filter hidden" role="toolbar" aria-label="Filter books by topic">
+            <button class="level-button topic-button active" data-topic="all" type="button" aria-pressed="true">All Topics</button>
+            <button class="level-button topic-button" data-topic="life" type="button" aria-pressed="false">Everyday Life</button>
+            <button class="level-button topic-button" data-topic="travel" type="button" aria-pressed="false">Travel</button>
+            <button class="level-button topic-button" data-topic="science" type="button" aria-pressed="false">Science</button>
+            <button class="level-button topic-button" data-topic="history" type="button" aria-pressed="false">History</button>
+            <button class="level-button topic-button" data-topic="culture" type="button" aria-pressed="false">Culture</button>
+            <button class="level-button topic-button" data-topic="technology" type="button" aria-pressed="false">Technology</button>
+            <button class="level-button topic-button" data-topic="business" type="button" aria-pressed="false">Business</button>
+          </div>
+          <div class="library-tabs" aria-label="Library views">
+            <button class="library-tab active" data-library-tab="all" type="button">All</button>
+            <button class="library-tab" data-library-tab="favorites" type="button">Favorites</button>
+            <button class="library-tab" data-library-tab="history" type="button">Reading history</button>
+          </div>
+          <div id="book-grid" class="book-grid"></div>
+        </div>
+      </section>
+
+      <section id="reading-view" class="view hidden" hidden>
+        <div class="reader-chrome">
+          <button id="back-to-library" class="text-button back-link" type="button">← Library</button>
+          <span id="reader-status" class="reader-status"></span>
+        </div>
+        <div class="reading-paper-wrap">
+          <article class="reading-paper">
+            <div class="antique-ornate-frame" aria-hidden="true">
+              <div class="frame-edge top-edge">
+                <span class="material-symbols-outlined corner-ornament">spa</span>
+                <div class="frame-rule"></div>
+                <span class="material-symbols-outlined corner-ornament">spa</span>
+              </div>
+              <div class="frame-edge bottom-edge">
+                <span class="material-symbols-outlined corner-ornament">spa</span>
+                <div class="frame-rule"></div>
+                <span class="material-symbols-outlined corner-ornament">spa</span>
+              </div>
+            </div>
+            <header class="reader-page-title">
+              <span class="material-symbols-outlined antique-book-symbol" aria-hidden="true">auto_stories</span>
+              <h1 id="reader-heading"></h1>
+              <div class="antique-title-divider" aria-hidden="true"></div>
+              <p class="reading-author"></p>
+            </header>
+            <div id="story-copy" class="story-copy"></div>
+          </article>
+        </div>
+        <div class="reader-controls">
+          <button id="reader-prev-btn" class="reader-control" type="button" aria-label="Previous page">← Previous</button>
+          <button id="reader-next-btn" class="reader-control turn-page-button" type="button" aria-label="Next page">
+            <span class="btn-text">Turn Page</span>
+            <span class="material-symbols-outlined btn-arrow" aria-hidden="true">arrow_forward</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="vocabulary-view" class="view hidden">
+        <div class="review-hub-bar">
+          <div class="review-streak-pill"><span aria-hidden="true">🔥</span><strong>14 Days</strong></div>
+          <div class="review-hub-brand">Study Parlor</div>
+          <button class="review-settings-button" type="button" data-action="settings" aria-label="Open settings">⚙</button>
+        </div>
+
+        <div class="review-hub-heading">
+          <div><span class="review-kicker">Pedagogical Repetition</span><h1>Daily Review</h1></div>
+          <div class="review-ready-pill"><span aria-hidden="true"></span>Session Ready</div>
+        </div>
+
+        <section class="review-status-panel" aria-label="Review status">
+          <div class="review-status-copy">
+            <span class="review-status-tag"><span aria-hidden="true">⏰</span>Scheduled Recall</span>
+            <div><strong>36</strong><span>Words Pending</span></div>
+          </div>
+          <div class="review-progress-ring" aria-label="36 words pending"><span>36</span><small>pending</small></div>
+          <div class="review-status-chips"><span>12 new</span><span>16 learning</span><span>8 due</span></div>
+        </section>
+
+        <div class="vocab-heading review-legacy-heading">
+          <div><p class="eyebrow">Your language bank</p><h2>Choose a review mode</h2><p class="view-intro">Practice and master your words.</p></div>
+          <div class="vocab-stat"><strong id="saved-word-count">0</strong><span>words to review</span></div>
+        </div>
+
+        <div id="review-method-stack" class="review-method-stack" style="display:none;">
+          <button type="button" class="review-method-face" data-reveal="flashcard-stage" aria-label="Open the Flashcards review">
+            <span class="review-face-cover review-cover-flash" aria-hidden="true">
+              <svg class="review-face-art" viewBox="0 0 320 180" focusable="false">
+                <defs>
+                  <linearGradient id="rf-flash-back" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#8f7bff"/><stop offset="1" stop-color="#3e2f7d"/>
+                  </linearGradient>
+                  <filter id="rf-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0b0712" flood-opacity=".35"/>
+                  </filter>
+                </defs>
+                <g filter="url(#rf-shadow)">
+                  <rect x="30" y="22" width="120" height="150" rx="14" fill="rgba(255,255,255,.16)"/>
+                  <rect x="172" y="16" width="118" height="154" rx="14" fill="rgba(255,255,255,.24)"/>
+                  <rect x="88" y="34" width="144" height="128" rx="14" fill="#f7f3ff"/>
+                  <rect x="104" y="56" width="92" height="12" rx="6" fill="url(#rf-flash-back)" opacity=".9"/>
+                  <rect x="104" y="80" width="60" height="12" rx="6" fill="url(#rf-flash-back)" opacity=".45"/>
+                  <rect x="104" y="104" width="74" height="12" rx="6" fill="url(#rf-flash-back)" opacity=".6"/>
+                  <rect x="104" y="128" width="50" height="12" rx="6" fill="url(#rf-flash-back)" opacity=".3"/>
+                </g>
+              </svg>
+            </span>
+            <span class="review-face-copy">
+              <small>Recall mode</small>
+              <strong>Flashcards</strong>
+              <em>Pick the translation for each word to lock it in.</em>
+              <span class="review-face-enter">Enter review →</span>
+            </span>
+          </button>
+
+          <button type="button" class="review-method-face" data-reveal="match-it-app" aria-label="Open the Match It review">
+            <span class="review-face-cover review-cover-match" aria-hidden="true">
+              <svg class="review-face-art" viewBox="0 0 320 180" focusable="false">
+                <defs>
+                  <linearGradient id="rf-match-chip-a" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#4f9db8"/><stop offset="1" stop-color="#2e5d7d"/>
+                  </linearGradient>
+                  <linearGradient id="rf-match-chip-b" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#f2a08b"/><stop offset="1" stop-color="#c4534b"/>
+                  </linearGradient>
+                </defs>
+                <g stroke="#ffe9c9" stroke-width="2" stroke-dasharray="4 5" opacity=".55">
+                  <line x1="116" y1="46" x2="204" y2="46"/>
+                  <line x1="116" y1="92" x2="204" y2="92"/>
+                  <line x1="116" y1="138" x2="204" y2="138"/>
+                </g>
+                <g filter="url(#rf-shadow)">
+                  <rect x="34" y="30" width="82" height="30" rx="15" fill="url(#rf-match-chip-a)"/>
+                  <rect x="34" y="76" width="82" height="30" rx="15" fill="url(#rf-match-chip-a)" opacity=".85"/>
+                  <rect x="34" y="122" width="82" height="30" rx="15" fill="url(#rf-match-chip-a)" opacity=".7"/>
+                  <rect x="204" y="30" width="82" height="30" rx="15" fill="url(#rf-match-chip-b)"/>
+                  <rect x="204" y="76" width="82" height="30" rx="15" fill="url(#rf-match-chip-b)" opacity=".85"/>
+                  <rect x="204" y="122" width="82" height="30" rx="15" fill="url(#rf-match-chip-b)" opacity=".7"/>
+                </g>
+              </svg>
+            </span>
+            <span class="review-face-copy">
+              <small>Speed mode</small>
+              <strong>Match It</strong>
+              <em>Pair each word with its meaning before the clock runs out.</em>
+              <span class="review-face-enter">Enter review →</span>
+            </span>
+          </button>
+        </div>
+
+        <div id="review-inside">
+          <button id="review-back-btn" class="text-button back-link" type="button">← All methods</button>
+        </div>
+
+        <div id="flashcard-stage" style="display:none; width:100%; max-width:440px; margin:0 auto;"></div>
+
+        <div id="match-it-app" class="match-app">
+          <div class="match-statusbar">
+            <div class="match-stat score"><span class="icon">★</span><span id="match-scoreVal">0</span></div>
+            <div class="match-progress-track"><div class="match-progress-fill" id="match-progressFill"></div></div>
+            <div class="match-stat mistakes"><span class="icon">✕</span><span id="match-mistakeVal">0</span></div>
+            <div class="match-timer" id="match-timerVal">0:00</div>
+          </div>
+          
+          <h2 class="match-heading" id="match-roundHeading">Round 1</h2>
+          
+          <div class="match-board">
+            <div class="match-col" id="match-colLeft"></div>
+            <div class="match-col" id="match-colRight"></div>
+          </div>
+        </div>
+
+        <div class="match-toast" id="match-toast">Round complete!</div>
+        
+        <div class="match-overlay" id="match-overlay">
+          <div class="match-complete-card">
+            <div class="match-complete-badge">✓</div>
+            <h2 class="match-complete-title">Nice work!</h2>
+            <p class="match-complete-sub">You matched every pair.</p>
+            <div class="match-complete-stats">
+              <div class="match-complete-stat"><span class="num" id="match-finalScore">0</span><span class="label">score</span></div>
+              <div class="match-complete-stat"><span class="num" id="match-finalTime">0:00</span><span class="label">time</span></div>
+              <div class="match-complete-stat"><span class="num" id="match-finalMistakes">0</span><span class="label">mistakes</span></div>
+            </div>
+            <button class="match-btn-primary" id="match-playAgainBtn" type="button">Play again</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <div id="quick-word-popover" hidden></div>
+  <div id="dictionary-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="dictionary-title" aria-hidden="true" hidden><div class="modal"><button data-close-modal type="button">Close</button><div id="dictionary-content"></div></div></div>
+  <div id="book-preview-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="book-preview-title" aria-hidden="true" hidden><section class="book-preview-modal"></section></div>
+  <div id="preferences-modal" class="modal-backdrop hidden"><div class="modal settings-modal"><button data-close-modal type="button">Close</button><div class="settings-heading"><span class="eyebrow">Your reading room</span><h2>Settings</h2><p>Shape Wordloom around the way you learn.</p></div><label>Mother language<select id="mother-language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">français</option><option value="es">español</option><option value="tr">Türkçe</option><option value="de">Deutsch</option></select></label><label>Line size and shape<select id="line-size-shape"><option value="cozy">Cozy · compact lines</option><option value="standard" selected>Standard · balanced lines</option><option value="roomy">Airy · wide-open lines</option></select></label><label>Learner level<select id="learner-level"><option value="A1">A1 · Beginner</option><option value="A2">A2 · Easy</option><option value="B1">B1 · Intermediate</option><option value="B2">B2 · Upper intermediate</option><option value="C1">C1 · Advanced</option><option value="C2">C2 · Proficient</option></select></label><button id="save-preferences" type="button">Save settings</button></div></div>
+  <div id="source-modal" class="modal-backdrop hidden">
+    <section class="source-modal" role="dialog" aria-modal="true" aria-labelledby="source-title">
+      <div class="source-modal-heading"><div><p class="eyebrow">Build your shelf</p><h2 id="source-title">Where should we look?</h2><p>Choose a source, then add a title to your reading list or import a book from this device.</p></div><button class="modal-close" data-close-modal type="button" aria-label="Close">Close</button></div>
+      <div class="source-grid">
+        <a class="source-card featured" href="https://www.fabulang.com/en/en" target="_blank" rel="noopener" data-source-label="Fabulang"><span class="source-icon">F</span><strong>Fabulang</strong><span>CEFR graded stories across A1–C2 levels.</span><small>Explore stories →</small></a>
+        <a class="source-card" href="https://learnenglish-new.com/" target="_blank" rel="noopener" data-source-label="LearnEnglish-New"><span class="source-icon">L</span><strong>LearnEnglish-New</strong><span>Classic adapted literature and short stories.</span><small>Browse classics →</small></a>
+        <a class="source-card" href="https://readlang.com/en/library" target="_blank" rel="noopener" data-source-label="Readlang"><span class="source-icon">R</span><strong>Readlang Library</strong><span>Extensive reading texts and articles.</span><small>Explore library →</small></a>
+        <a class="source-card" href="https://www.gutenberg.org/ebooks/search/?query=language+learning" target="_blank" rel="noopener" data-source-label="Project Gutenberg"><span class="source-icon">G</span><strong>Project Gutenberg</strong><span>Free public-domain books.</span><small>Browse classics →</small></a>
+        <button class="source-card local" id="import-local-book" type="button"><span class="source-icon">＋</span><strong>From this device</strong><span>Import a PDF or text file privately.</span><small>Choose a file →</small></button>
+      </div>
+      <p class="source-note">External sources open in a new tab. Wordloom only imports files you choose from your own device.</p>
+    </section>
+  </div>
+  <div id="streak-detail" hidden></div><div id="streak-title" hidden></div><div id="toast" role="status"></div>
+  <input id="pdf-input" type="file" accept="application/pdf,.txt" hidden><button id="import-pdf" hidden type="button">Import PDF</button>
+  <script src="library-catalog.js"></script>
+  <script src="app.js?version=20"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Three.js background texture
+    try {
+      if (window.THREE) {
+        const canvas = document.getElementById('bg');
+        if (canvas) {
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+          camera.position.z = 8;
+          let renderer = null;
+
+          try {
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(innerWidth, innerHeight);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+          } catch (webglErr) {
+            console.warn('WebGL context unavailable, falling back to static parchment canvas', webglErr);
+            canvas.style.display = 'none';
+          }
+
+          if (renderer) {
+            function glowTexture() {
+              const textureCanvas = document.createElement('canvas');
+              textureCanvas.width = textureCanvas.height = 256;
+              const context = textureCanvas.getContext('2d');
+              const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128);
+              gradient.addColorStop(0, 'rgba(255,255,255,1)');
+              gradient.addColorStop(1, 'rgba(255,255,255,0)');
+              context.fillStyle = gradient;
+              context.fillRect(0, 0, 256, 256);
+              return new THREE.CanvasTexture(textureCanvas);
+            }
+
+            const glow = glowTexture();
+            const stars = [];
+            const starCount = innerWidth < 700 ? 170 : 340;
+            for (let i = 0; i < starCount; i++) {
+              const material = new THREE.SpriteMaterial({
+                map: glow, color: i % 6 === 0 ? 0xc7b6ff : 0xffffff, transparent: true, opacity: .55,
+                blending: THREE.AdditiveBlending, depthWrite: false
+              });
+              const star = new THREE.Sprite(material);
+              const baseSize = 0.02 + Math.random() * 0.06;
+              star.scale.set(baseSize, baseSize, 1);
+              star.position.set((Math.random() - .5) * 24, (Math.random() - .5) * 14, -2 - Math.random() * 7);
+              star.userData = { baseSize, speed: 0.6 + Math.random() * 1.8, phase: Math.random() * Math.PI * 2 };
+              scene.add(star);
+              stars.push(star);
+            }
+
+            let mouseX = 0;
+            let mouseY = 0;
+            addEventListener('mousemove', event => {
+              mouseX = event.clientX / innerWidth - 0.5;
+              mouseY = event.clientY / innerHeight - 0.5;
+            });
+            addEventListener('resize', () => {
+              camera.aspect = innerWidth / innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(innerWidth, innerHeight);
+            });
+
+            const clock = new THREE.Clock();
+            window._internalClock = clock;
+
+            function animate() {
+              if (!window._isRunning) return;
+              window._animId = requestAnimationFrame(animate);
+              const time = clock.getElapsedTime();
+              stars.forEach(star => {
+                const twinkle = (Math.sin(time * star.userData.speed + star.userData.phase) + 1) / 2;
+                const size = star.userData.baseSize * (.7 + twinkle * .8);
+                star.scale.set(size, size, 1);
+                star.material.opacity = .18 + twinkle * .5;
+              });
+              camera.position.x += (mouseX * 1.2 - camera.position.x) * 0.03;
+              camera.position.y += (-mouseY - camera.position.y) * 0.03;
+              camera.lookAt(0, 0, 0);
+              renderer.render(scene, camera);
+            }
+            window._internalAnimate = animate;
+
+            document.addEventListener('visibilitychange', () => {
+              if (document.hidden) {
+                window.stopAnimation();
+              } else {
+                window.startAnimation();
+              }
+            });
+
+            window.startAnimation();
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Three.js initialization safely bypassed:', e);
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+    }
+  </script>
+</body>
+</html>

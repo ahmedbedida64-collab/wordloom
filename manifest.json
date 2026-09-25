@@ -1,0 +1,18 @@
+{
+  "name": "Wordloom",
+  "short_name": "Wordloom",
+  "description": "Build your English through stories made for your level.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#06030f",
+  "theme_color": "#0c0714",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
