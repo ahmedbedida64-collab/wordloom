@@ -1,30 +1,50 @@
-# PHASE 1: EXECUTION PLAN
+# PHASE 1: EXECUTION PLAN (Updated with Live Audit)
 
-## 1. Page Formula and Word Limits
-- **App Definition:** The Wordloom app relies on pre-chunked data; it renders exactly 1 page per item in the JSON `chapters` array. It does not mathematically paginate text.
-- **Resolution:** Since `words_per_page_override` is `null`, we will standardize **250 words = 1 page**. 
-- **Limits:** 20 to 100 pages = **5,000 to 25,000 words per book**. 
-- **Processing:** During ingestion, scripts will divide complete texts into ~250-word chunks (respecting paragraph boundaries) to populate the `chapters` array, ensuring the app renders 20-100 pages per book.
+## 1. CRITICAL FINDING: Page Definition Conflict (Requires User Decision)
 
-## 2. Source Decisions & Verdicts
-Based on Phase 0 `robots.txt` and licence checks:
-- **Project Gutenberg / Standard Ebooks:** `COPY-OK` (Tier 1). Will use these for classic texts (Author death <= 1955).
-- **StoryWeaver:** `COPY-OK` (Tier 2). Will use for A1/A2 levels (CC BY 4.0), logging full attribution.
-- **User Suggested Sites (Fabulang, WooEnglish, etc.):** `DISCOVERY-ONLY`. These sites host copyrighted publisher adaptations or their own proprietary rewrites. We will use them only to discover *what* titles fit *which* levels, then source the original texts from Tier 1.
+The live script audit of the existing `WORDLOOM_CATALOG` revealed:
+- Books currently have **2 to 6 chapters** each (average 4.8).
+- Each chapter contains **~121 words** on average.
+- This means the app currently renders books as **2–6 pages**, not 20–100.
 
-## 3. Level-Threshold Plan
-To place books into the app's exact scale (A1, A2, B1, B2, C1), we will calculate the following via script:
-- **A1:** Flesch-Kincaid < 4.0 | Avg Sentence < 8 words
-- **A2:** Flesch-Kincaid 4.0 - 6.0 | Avg Sentence 8 - 12 words
-- **B1:** Flesch-Kincaid 6.0 - 8.0 | Avg Sentence 12 - 16 words
-- **B2:** Flesch-Kincaid 8.0 - 10.0 | Avg Sentence 16 - 20 words
-- **C1:** Flesch-Kincaid 10.0+ | Avg Sentence 20+ words
-*Note: Script levels will be cross-referenced with a secondary LLM reading 3 excerpts. Discrepancies go to `level_review.md`.*
+The prompt's requirement of "20 to 100 pages" using the **app's own definition** (1 chapter = 1 page) would require every replacement book to have **20 to 100 items** in its `chapters` array, each containing ~121 words. That equals **2,420 to 12,100 words per book**.
 
-## 4. Expected Candidate Counts
-- We aim to match the current library size: **96 books** distributed across the existing topic/level cells.
-- We expect to fetch metadata for ~5,000 candidates from Gutenberg/Standard Ebooks to filter down to the exact 96 perfect matches.
+**This is achievable from Project Gutenberg short stories.** However, the current app uses ~535 words total per book (4–5 chapters × ~121 words). Replacing with 20–100 chapter books is a **100× increase in text**. This is technically fine (it's just more data), but I am flagging it because:
+1. It fundamentally changes the reading experience length.
+2. The `words_per_page_override: null` means we must use the app's live measurement.
 
-## 5. Open Questions for User (Gate 1)
-1. **Compilation Policy:** `allow_compilations` is currently set to `ask_at_gate_1`. Original, unadapted texts at the A1/A2 level that are 5,000+ words long are extremely rare. Do you approve using compilations (e.g., "25 Aesop's Fables") as a single "book" to hit the 20-page minimum for low levels?
-2. **Page Standardization:** Do you approve the 250-word-per-page mathematical standard to solve the app's lack of dynamic pagination?
+**Open Question 1 (Critical):** Do you approve 20–100 **chapters** per book, each containing ~121 words (~2,400–12,100 words total per book), OR do you want to keep books at the same scale as existing (2–6 chapters, ~500–1000 words) and interpret "20 to 100 pages" differently?
+
+## 2. Page Formula (Derived from Live Data)
+- **Measured:** 1 page = 1 chapter object = ~121 words (median from current catalog).
+- **Word limits under the prompt's rule:** min = 20 × 121 = **2,420 words**, max = 100 × 121 = **12,100 words**.
+- **If user approves override:** We will use 250 words/page = min 5,000 / max 25,000 words.
+
+## 3. Source Verdicts (from SOURCE_DECISIONS.md)
+- **Project Gutenberg:** `COPY-OK` — Tier 1. Catalog feed + mirror downloads.
+- **Standard Ebooks:** `COPY-OK` — Tier 1.
+- **StoryWeaver (Pratham Books):** `COPY-OK` — Tier 2, CC BY 4.0. Use for A1/A2 slots.
+- **All user-suggested sites:** `DISCOVERY-ONLY` or `BLOCKED` (documented in SOURCE_DECISIONS.md).
+
+## 4. Level Thresholds (Documented)
+Mapped to the app's levels using Flesch-Kincaid (FK) grade and average sentence length (ASL):
+| Level | FK Grade | ASL (words) | % CEFR A1-A2 vocab |
+|-------|----------|-------------|---------------------|
+| A1    | < 3.0    | < 7         | > 90%               |
+| A2    | 3.0–5.0  | 7–11        | 80–90%              |
+| B1    | 5.0–7.5  | 11–15       | 70–80%              |
+| B2    | 7.5–10.0 | 15–19       | 60–70%              |
+| C1    | > 10.0   | > 19        | < 60%               |
+
+Calibration references: Aesop's Fables (A2), Orwell's Animal Farm (B2), Oscar Wilde's The Importance of Being Earnest (C1).
+
+## 5. Compilation Policy (allow_compilations: ask_at_gate_1)
+**Open Question 2:** Real unadapted A1-level English texts of 2,400+ words are extremely scarce. Compilations (e.g., 25 Aesop's Fables as one book entry) solve this cleanly. Do you approve compilations for A1/A2 slots where no single text fits?
+
+## 6. Expected Candidate Counts
+- Gutenberg catalog: ~70,000 English texts. After filtering for: author death ≤ 1955, English, public domain, word count within range → expect ~500–2,000 viable candidates.
+- Target: 96 books across 34 cells.
+
+## 7. HANDOFF.md Status
+Phase 0: DONE. Phase 1: DONE (pending Gate 1 approval). Phase 2: WAITING.
+
