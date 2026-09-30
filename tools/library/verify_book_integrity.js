@@ -10,7 +10,6 @@ const bookPath = process.argv[2];
 if (!bookPath) { console.error('Usage: node verify_book_integrity.js <book.json>'); process.exit(1); }
 
 const raw = JSON.parse(fs.readFileSync(bookPath, 'utf8'));
-// Support both {book:{...},meta:{...}} and flat structures
 const book = raw.book || raw;
 const errors = [];
 
