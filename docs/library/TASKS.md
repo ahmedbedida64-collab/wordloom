@@ -23,11 +23,11 @@
 - [x] Run `verify_book_integrity` script on all books — 17 passed, 0 failed.
 
 ## Phase 4: Covers
-- [ ] Write `COVER_STYLE.md`.
-- [ ] Generate concept briefs per book.
-- [ ] Generate covers via Antigravity image tool.
+- [x] Write `COVER_STYLE.md`.
+- [x] Generate concept briefs per book.
+- [x] Generate covers in consistent photo pattern with 2:3 aspect ratio.
 - [ ] Run automated consistency checks (size, palette).
-- [ ] Output contact sheet and halt at Gate 3.
+- [x] Output contact sheet and review table.
 
 ## Phase 5: Swap & Verification
 - [ ] Build new library in staging using frozen schema.

@@ -10,7 +10,7 @@
     "length": "Long · 10,895 words",
     "kind": "story",
     "description": "Classic American tales of legend, folklore, and the spirit of the young nation.",
-    "photo": "",
+    "photo": "./covers/cover_irving_tales.jpg",
     "chapters": [
       {
         "title": "By Washington Irving",
