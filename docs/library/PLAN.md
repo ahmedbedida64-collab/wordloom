@@ -48,3 +48,9 @@ Calibration references: Aesop's Fables (A2), Orwell's Animal Farm (B2), Oscar Wi
 ## 7. HANDOFF.md Status
 Phase 0: DONE. Phase 1: DONE (pending Gate 1 approval). Phase 2: WAITING.
 
+
+## 8. USER DECISIONS (Gate 1 — 2026-09-30)
+- **Page length:** Option A. 20–100 chapters per book, ~121 words per chapter. Min words: 2,420. Max words: 12,100.
+- **Compilations:** YES. Approved for A1/A2 slots where no single text fits.
+- **words_per_page:** 121 (measured from live catalog). Chapters must contain ~100–150 words each.
+- **Gate 1 status: APPROVED. Phase 2 is now unlocked.**

@@ -1,0 +1,17 @@
+{"file":"book3_corrupted.txt","status":"failed","reason":"Validation Failed: Empty text file detected","timestamp":"2026-09-30T18:29:03.088Z"}
+{"type":"page_fetch","url":"https://gutendex.com/books/?languages=en&mime_type=text%2Fplain&page=1","status":200,"ts":"2026-09-30T20:07:21.606Z"}
+{"type":"candidate_skip","id":2641,"reason":"recent_author","death_year":1970,"title":"A Room with a View","ts":"2026-09-30T20:07:21.618Z"}
+{"type":"candidate_skip","id":831,"reason":"unknown_death","title":"Four Arthurian Romances","ts":"2026-09-30T20:07:21.620Z"}
+{"type":"candidate_skip","id":37683,"reason":"unknown_death","title":"Chambers's Twentieth Century Dictionary (part 1 of 4: A-D)","ts":"2026-09-30T20:07:21.620Z"}
+{"type":"candidate_skip","id":75201,"reason":"recent_author","death_year":1961,"title":"A farewell to arms","ts":"2026-09-30T20:07:21.620Z"}
+{"type":"page_fetch","url":"https://gutendex.com/books/?languages=en&mime_type=text%2Fplain&page=2","status":200,"ts":"2026-09-30T20:07:40.106Z"}
+{"type":"candidate_skip","id":863,"reason":"recent_author","death_year":1976,"title":"The Mysterious Affair at Styles","ts":"2026-09-30T20:07:40.108Z"}
+{"type":"candidate_skip","id":72824,"reason":"recent_author","death_year":1976,"title":"The mystery of the Blue Train","ts":"2026-09-30T20:07:40.109Z"}
+{"type":"candidate_skip","id":70114,"reason":"recent_author","death_year":1976,"title":"The Big Four","ts":"2026-09-30T20:07:40.110Z"}
+{"type":"candidate_skip","id":75288,"reason":"recent_author","death_year":1976,"title":"The Seven Dials mystery","ts":"2026-09-30T20:07:40.110Z"}
+{"type":"candidate_skip","id":69608,"reason":"unknown_death","title":"Weird Tales, Volume 1, Number 4, June, 1923: The unique magazine","ts":"2026-09-30T20:07:40.110Z"}
+{"type":"candidate_skip","id":70008,"reason":"recent_author","death_year":1957,"title":"Unnatural death","ts":"2026-09-30T20:07:40.115Z"}
+{"type":"candidate_skip","id":2038,"reason":"unknown_death","title":"The Lock and Key Library: Classic Mystery and Detective Stories: Modern English","ts":"2026-09-30T20:07:40.115Z"}
+{"type":"candidate_skip","id":1155,"reason":"recent_author","death_year":1976,"title":"The Secret Adversary","ts":"2026-09-30T20:07:40.115Z"}
+{"type":"error","url":"https://gutendex.com/books/?topic=autobiography&languages=en&mime_type=text%2Fplain","reason":"JSON: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON","ts":"2026-09-30T20:10:03.648Z"}
+{"type":"fetch","url":"https://gutendex.com/books/?topic=family&languages=en&mime_type=text%2Fplain","status":200,"ts":"2026-09-30T20:12:02.933Z"}

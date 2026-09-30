@@ -1,1 +1,9 @@
-{"discovered": 0, "fetched": 0, "skipped": 0, "processed": 0}
+{
+  "phase": 2,
+  "discovered": 400,
+  "unique_candidates": 56,
+  "spot_checked": 8,
+  "passed_word_range": 1,
+  "excluded_copyright": 1,
+  "updated_at": "2026-09-30T21:16:00+01:00"
+}

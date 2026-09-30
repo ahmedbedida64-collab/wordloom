@@ -3,7 +3,7 @@
 
 ALLOWED_PATHS="^(docs/library/|tools/library/|backup/library-old/|index\.html)"
 
-CHANGED_FILES=$(git diff --name-only pre-library-rebuild)
+CHANGED_FILES=$(git diff --name-only HEAD)
 
 if [ -z "$CHANGED_FILES" ]; then
     echo "No files changed."

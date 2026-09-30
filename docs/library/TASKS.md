@@ -9,12 +9,12 @@
 ## Phase 1: Planning (Pending Gate 1)
 - [x] Write `PLAN.md` with thresholds, formulas, and expected counts.
 - [x] Initialize ledgers (`PROGRESS.json`, `CRAWL_LEDGER.jsonl`).
-- [ ] Receive `APPROVED` from user at Gate 1.
+- [x] Receive `APPROVED` from user at Gate 1.
 
 ## Phase 2: Discovery
-- [ ] Run exhaustive discovery scripts on COPY-OK sources.
-- [ ] Generate `candidates.csv`.
-- [ ] Generate `LICENCE_REVIEW.md` and gap report.
+- [x] Run exhaustive discovery scripts on COPY-OK sources.
+- [x] Generate `candidates.csv`.
+- [x] Generate `LICENCE_REVIEW.md` and gap report.
 - [ ] Output Gate 2 Audit Packet and halt.
 
 ## Phase 3: Ingest & Integrity
