@@ -31,13 +31,12 @@ Upload this folder to any static host. The entry point is `index.html`.
 The app uses Google Fonts and Unsplash cover images, so the deployed site needs normal outbound HTTPS access. User preferences, notes, saved words, and the demo sign-in session are stored in the browser's local storage on each device. The current login is a front-end demo gate; connect it to a real authentication provider before using real user accounts.
 
 ## Project Architecture
-
+ 
 Wordloom is designed to run anywhere with zero build tools or dependencies:
-- **`index.html`**: semantic app shell, views, modals, and navigation.
-- **`app.css`**: unified, clear stylesheet consolidating all styles into one structured file.
-- **`app.js`**: application logic, state persistence, reading flow, vocabulary, and preferences.
-- **`library-catalog.js`**: story library and full reader catalog.
+- **`index.html`**: self-contained standalone application including markup, styles (`<style>`), catalog data, and logic (`<script>`).
 - **`sw.js`**: service worker providing offline capability.
+- **`manifest.json`**: PWA manifest.
+- **`icon.svg`**: app icon.
 
 ## Future product layers
 

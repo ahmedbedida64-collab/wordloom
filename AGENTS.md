@@ -1,6 +1,6 @@
 # Wordloom Agent Guide
 
-This project is a dependency-free browser app. The product interface is defined in [index.html](index.html), state and rendering logic live in [app.js](app.js), the story catalog lives in [library-catalog.js](library-catalog.js), and all styling is unified into [app.css](app.css).
+This project is a dependency-free browser app unified into a single standalone [index.html](index.html) file containing markup, styling (`<style>`), catalog data, and application logic (`<script>`).
 
 See [README.md](README.md) for the user-facing feature summary and hosting guidance.
 
@@ -14,11 +14,11 @@ See [README.md](README.md) for the user-facing feature summary and hosting guida
 
 ## Project shape
 
-- [index.html](index.html): app shell, views, modals, nav, and service worker registration.
-- [app.js](app.js): catalog/data model, dynamic rendering, navigation, localStorage persistence, IndexedDB offline-library download, vocabulary review logic, reader flow, and preferences.
-- [library-catalog.js](library-catalog.js): bundled offline reading library catalog and story data.
-- [app.css](app.css): unified stylesheet consolidating base system, layout overrides, enhanced components, vocabulary parlour, and luxury reader themes in a single structured file.
-- [sw.js](sw.js): caches the app shell and runtime GET requests; bump the cache name when the shell or cache behavior changes.
+- [index.html](index.html): unified standalone app containing app shell, views, modals, full stylesheets in `<style>`, story catalog, and logic in `<script>`.
+- [sw.js](sw.js): caches the standalone app shell (`index.html`, `manifest.json`, `icon.svg`) and runtime GET requests.
+- [manifest.json](manifest.json): web application manifest.
+- [icon.svg](icon.svg): app icon.
+- [archive.tar.gz](archive.tar.gz): compressed archive of historical assets and separate modular source files.
 
 ## Development and validation
 

@@ -1,0 +1,51 @@
+{
+  "storage": {
+    "location": "index.html (inside const WORDLOOM_CATALOG array)",
+    "loading_mechanism": "In-memory JavaScript array embedded in HTML. No separate API call.",
+    "logic_mixed": true
+  },
+  "schema": {
+    "title": "string",
+    "author": "string",
+    "level": "string",
+    "topic": "string",
+    "cover": "string (CSS class)",
+    "progress": "number",
+    "source": "string",
+    "length": "string (e.g. 'Medium · 535 words')",
+    "kind": "string",
+    "description": "string",
+    "photo": "string (URL)",
+    "chapters": [
+      {
+        "title": "string",
+        "subtitle": "string",
+        "paragraphs": ["string"]
+      }
+    ]
+  },
+  "taxonomy": {
+    "topics": ["all", "life", "travel", "science", "history", "culture", "technology", "business"],
+    "levels": ["all", "A1", "A2", "B1", "B2", "C1"]
+  },
+  "current_counts": {
+    "A1-travel": 4, "A2-science": 2, "B1-life": 5, "B2-life": 5, "C1-life": 5,
+    "C2-culture": 1, "A1-culture": 4, "A2-culture": 4, "B1-history": 2,
+    "C2-technology": 5, "A1-life": 6, "A2-history": 3, "B2-culture": 3,
+    "C1-culture": 4, "B1-culture": 5, "A2-life": 7, "B1-travel": 4,
+    "B2-travel": 3, "C2-science": 2, "C1-technology": 1, "C2-life": 1,
+    "C1-history": 3, "A1-history": 3, "B2-history": 2, "C2-history": 1,
+    "C2-travel": 1, "A1-business": 1, "A2-business": 2, "A2-travel": 1,
+    "B1-business": 2, "B1-science": 1, "C1-science": 1, "B2-science": 1,
+    "B2-technology": 1
+  },
+  "page_definition": {
+    "formula": "1 Page = 1 item in the 'chapters' array.",
+    "words_per_page": null
+  },
+  "cover_spec": {
+    "folder": "Currently external URLs (e.g., imgix.net) stored in 'photo' field, fallback CSS 'cover' field.",
+    "aspect_ratio": "Derived from UI grid, approx 2:3",
+    "text_in_image": "UI shows title/author as text overlay on the card. Covers MUST contain no text."
+  }
+}

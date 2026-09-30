@@ -1,16 +1,15 @@
-const CACHE_NAME = 'wordloom-antique-v4';
+const CACHE_NAME = 'wordloom-standalone-v15';
 const APP_SHELL = [
   './',
   './index.html',
-  './app.css?version=6',
-  './library-catalog.js',
-  './app.js?version=20',
   './manifest.json',
   './icon.svg'
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
+  );
   self.skipWaiting();
 });
 
@@ -23,13 +22,18 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+// Network-first strategy: always fetch live updates when online, fallback to cache when offline
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-      return response;
-    }))
+    fetch(event.request)
+      .then(response => {
+        if (response && response.status === 200) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
