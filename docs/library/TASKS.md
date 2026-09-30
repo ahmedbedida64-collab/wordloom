@@ -1,0 +1,37 @@
+# TASK TRACKER
+
+## Phase 0: Recon & Scope (Completed)
+- [x] Check `robots.txt` and terms for suggested sources.
+- [x] Write `RECON.md` and `library_spec.json`.
+- [x] Write `SOURCE_DECISIONS.md`.
+- [x] Establish git branch and `check_scope.sh`.
+
+## Phase 1: Planning (Pending Gate 1)
+- [x] Write `PLAN.md` with thresholds, formulas, and expected counts.
+- [x] Initialize ledgers (`PROGRESS.json`, `CRAWL_LEDGER.jsonl`).
+- [ ] Receive `APPROVED` from user at Gate 1.
+
+## Phase 2: Discovery
+- [ ] Run exhaustive discovery scripts on COPY-OK sources.
+- [ ] Generate `candidates.csv`.
+- [ ] Generate `LICENCE_REVIEW.md` and gap report.
+- [ ] Output Gate 2 Audit Packet and halt.
+
+## Phase 3: Ingest & Integrity
+- [ ] Download, clean, and verify real texts.
+- [ ] Compute levels and topics.
+- [ ] Run `verify_book_integrity` script on all books (0 failures allowed).
+
+## Phase 4: Covers
+- [ ] Write `COVER_STYLE.md`.
+- [ ] Generate concept briefs per book.
+- [ ] Generate covers via Antigravity image tool.
+- [ ] Run automated consistency checks (size, palette).
+- [ ] Output contact sheet and halt at Gate 3.
+
+## Phase 5: Swap & Verification
+- [ ] Build new library in staging using frozen schema.
+- [ ] Conduct browser tests (first page, last page).
+- [ ] Take before/after layout screenshots.
+- [ ] Swap atomically in `index.html`.
+- [ ] Generate final report and rollback commands.
