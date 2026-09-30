@@ -15,3 +15,61 @@
 {"type":"candidate_skip","id":1155,"reason":"recent_author","death_year":1976,"title":"The Secret Adversary","ts":"2026-09-30T20:07:40.115Z"}
 {"type":"error","url":"https://gutendex.com/books/?topic=autobiography&languages=en&mime_type=text%2Fplain","reason":"JSON: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON","ts":"2026-09-30T20:10:03.648Z"}
 {"type":"fetch","url":"https://gutendex.com/books/?topic=family&languages=en&mime_type=text%2Fplain","status":200,"ts":"2026-09-30T20:12:02.933Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/23362/23362-0.txt","cache":"text_23362","ts":"2026-09-30T20:53:53.437Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/11231/11231-0.txt","cache":"text_11231","ts":"2026-09-30T20:53:56.172Z"}
+{"type":"ingest_skip","slug":"bartleby","reason":"too_long","words":14358,"ts":"2026-09-30T20:53:56.178Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/160/160-0.txt","cache":"text_160","ts":"2026-09-30T20:53:59.259Z"}
+{"type":"ingest_skip","slug":"the_awakening","reason":"too_long","words":64028,"ts":"2026-09-30T20:53:59.280Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2060/2060-0.txt","cache":"text_2060","ts":"2026-09-30T20:54:02.342Z"}
+{"type":"ingest_skip","slug":"turn_of_screw","reason":"too_long","words":40047,"ts":"2026-09-30T20:54:02.358Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/4517/4517-0.txt","cache":"text_4517","ts":"2026-09-30T20:54:05.254Z"}
+{"type":"ingest_skip","slug":"ethan_frome","reason":"too_long","words":34717,"ts":"2026-09-30T20:54:05.267Z"}
+{"type":"ingest_fail","slug":"daisy_miller","reason":"HTTP 404","ts":"2026-09-30T20:54:07.651Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/8164/8164-0.txt","cache":"text_8164","ts":"2026-09-30T20:54:10.970Z"}
+{"type":"ingest_skip","slug":"man_would_be_king","reason":"too_long","words":50763,"ts":"2026-09-30T20:54:10.982Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/21/21-0.txt","cache":"text_21","ts":"2026-09-30T20:54:13.983Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2591/2591-0.txt","cache":"text_2591","ts":"2026-09-30T20:54:17.166Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2148/2148-0.txt","cache":"text_2148","ts":"2026-09-30T20:54:20.371Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2776/2776-0.txt","cache":"text_2776","ts":"2026-09-30T20:54:23.407Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/1695/1695-0.txt","cache":"text_1695","ts":"2026-09-30T20:54:26.448Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/3090/3090-0.txt","cache":"text_3090","ts":"2026-09-30T20:54:31.355Z"}
+{"type":"ingest_skip","slug":"maupassant_stories","reason":"too_short","words":754,"ts":"2026-09-30T20:54:31.426Z"}
+{"type":"ingest_fail","slug":"kipling_plain_tales","reason":"HTTP 404","ts":"2026-09-30T20:54:33.801Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/3173/3173-0.txt","cache":"text_3173","ts":"2026-09-30T20:54:36.824Z"}
+{"type":"ingest_skip","slug":"aesop_fables","reason":"aesop_slice_short:2/5844","ts":"2026-09-30T20:57:00.590Z"}
+{"type":"ingest_skip","slug":"grimm_tales","reason":"slice_short:2/2785","ts":"2026-09-30T20:57:00.631Z"}
+{"type":"ingest_skip","slug":"poe_stories","reason":"slice_short:2/3196","ts":"2026-09-30T20:57:00.654Z"}
+{"type":"ingest_skip","slug":"ohenry_million","reason":"slice_short:3/2975","ts":"2026-09-30T20:57:00.672Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/902/902-0.txt","cache":"text_902","ts":"2026-09-30T20:57:03.836Z"}
+{"type":"ingest_skip","slug":"wilde_fairy_tales","reason":"slice_short:3/2819","ts":"2026-09-30T20:57:03.843Z"}
+{"type":"ingest_skip","slug":"chekhov_ward6","reason":"few_pages:15","ts":"2026-09-30T20:57:03.869Z"}
+{"type":"ingest_skip","slug":"twain_jumping_frog","reason":"fetch:HTTP 404","ts":"2026-09-30T20:57:06.231Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/14522/14522-0.txt","cache":"text_14522","ts":"2026-09-30T20:57:09.204Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2048/2048-0.txt","cache":"text_2048","ts":"2026-09-30T20:57:12.338Z"}
+{"type":"ingest_skip","slug":"rip_van_winkle","reason":"extract_oob:435","ts":"2026-09-30T20:57:12.353Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/174/174-0.txt","cache":"text_174","ts":"2026-09-30T20:57:15.466Z"}
+{"type":"ingest_skip","slug":"dorian_gray_short","reason":"too_long:78979","ts":"2026-09-30T20:57:15.493Z"}
+{"type":"ingest_skip","slug":"maupassant_best","reason":"slice_short:0/0","ts":"2026-09-30T20:57:15.556Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/1081/1081-0.txt","cache":"text_1081","ts":"2026-09-30T20:57:18.687Z"}
+{"type":"ingest_skip","slug":"kipling_stories","reason":"slice_short:2/2537","ts":"2026-09-30T20:57:18.739Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/1162/1162-0.txt","cache":"text_1162","ts":"2026-09-30T20:57:21.858Z"}
+{"type":"ingest_skip","slug":"london_south_sea","reason":"slice_short:1/3901","ts":"2026-09-30T20:57:21.896Z"}
+{"type":"ingest_skip","slug":"twain_diaries","reason":"fetch:HTTP 404","ts":"2026-09-30T20:57:24.253Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/3044/3044-0.txt","cache":"text_3044","ts":"2026-09-30T20:57:27.729Z"}
+{"type":"ingest_skip","slug":"james_beast_jungle","reason":"fetch:HTTP 404","ts":"2026-09-30T20:57:30.145Z"}
+{"type":"ingest_skip","slug":"wharton_bunner_sisters","reason":"too_long:34717","ts":"2026-09-30T20:57:30.166Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/1093/1093.txt","key":"text_1093","ts":"2026-09-30T21:01:31.661Z"}
+{"type":"ingest_skip","slug":"beast_in_jungle","reason":"too_long:21565","ts":"2026-09-30T21:01:31.665Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/389/389-0.txt","key":"text_389","ts":"2026-09-30T21:01:34.523Z"}
+{"type":"ingest_skip","slug":"great_god_pan","reason":"too_long:21715","ts":"2026-09-30T21:01:34.530Z"}
+{"type":"ingest_skip","slug":"time_machine","reason":"too_long:32454","ts":"2026-09-30T21:01:34.540Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/36/36-0.txt","key":"text_36","ts":"2026-09-30T21:01:37.547Z"}
+{"type":"ingest_skip","slug":"war_worlds_short","reason":"too_long:60075","ts":"2026-09-30T21:01:37.556Z"}
+{"type":"fetch_fail","url":"https://www.gutenberg.org/files/5230/5230-8.txt","err":"HTTP 404","ts":"2026-09-30T21:01:39.928Z"}
+{"type":"download","url":"https://www.gutenberg.org/cache/epub/5230/pg5230.txt","key":"text_5230","ts":"2026-09-30T21:01:43.556Z"}
+{"type":"ingest_skip","slug":"invisible_man","reason":"too_long:48500","ts":"2026-09-30T21:01:43.565Z"}
+{"type":"ingest_skip","slug":"aesop_fables","reason":"WORD_OOB:12651","ts":"2026-09-30T21:01:43.593Z"}
+{"type":"ingest_skip","slug":"ohenry_million","reason":"WORD_OOB:12155","ts":"2026-09-30T21:01:43.679Z"}
+{"type":"ingest_skip","slug":"maupassant_stories","reason":"WORD_OOB:12180","ts":"2026-09-30T21:01:43.784Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/269/269-0.txt","key":"text_269","ts":"2026-09-30T21:01:46.891Z"}
+{"type":"download","url":"https://www.gutenberg.org/files/2833/2833-0.txt","key":"text_2833","ts":"2026-09-30T21:01:50.097Z"}

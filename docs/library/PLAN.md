@@ -54,3 +54,8 @@ Phase 0: DONE. Phase 1: DONE (pending Gate 1 approval). Phase 2: WAITING.
 - **Compilations:** YES. Approved for A1/A2 slots where no single text fits.
 - **words_per_page:** 121 (measured from live catalog). Chapters must contain ~100–150 words each.
 - **Gate 1 status: APPROVED. Phase 2 is now unlocked.**
+
+## 9. GATE 2 USER DECISION (2026-09-30)
+- **Option Y APPROVED**: Strict 2,420–12,100 word range. Accept honest gaps.
+- Compilations remain approved for A1/A2 slots.
+- Phase 3 is now UNLOCKED.

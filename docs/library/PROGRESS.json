@@ -1,9 +1,26 @@
 {
-  "phase": 2,
-  "discovered": 400,
-  "unique_candidates": 56,
-  "spot_checked": 8,
-  "passed_word_range": 1,
-  "excluded_copyright": 1,
-  "updated_at": "2026-09-30T21:16:00+01:00"
+  "phase": 3,
+  "books_total": 17,
+  "integrity_passed": 17,
+  "integrity_failed": 0,
+  "coverage": {
+    "A1-culture": 1,
+    "A2-culture": 2,
+    "A2-life": 1,
+    "B1-culture": 1,
+    "B1-life": 2,
+    "B1-travel": 2,
+    "B2-culture": 2,
+    "B2-history": 2,
+    "B2-life": 1,
+    "B2-travel": 1
+  },
+  "gap_cells": [
+    "A1-travel","A1-life","A1-history","A1-business","A1-science","A1-technology",
+    "A2-science","A2-history","A2-business","A2-travel","A2-technology",
+    "B1-history","B1-business","B1-science","B1-technology",
+    "B2-science","B2-business","B2-technology",
+    "C1-life","C1-culture","C1-history","C1-science","C1-business","C1-technology"
+  ],
+  "updated_at": "2026-09-30T22:05:00+01:00"
 }

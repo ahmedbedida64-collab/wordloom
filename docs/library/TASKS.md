@@ -15,12 +15,12 @@
 - [x] Run exhaustive discovery scripts on COPY-OK sources.
 - [x] Generate `candidates.csv`.
 - [x] Generate `LICENCE_REVIEW.md` and gap report.
-- [ ] Output Gate 2 Audit Packet and halt.
+- [x] Output Gate 2 Audit Packet and halt.
 
 ## Phase 3: Ingest & Integrity
-- [ ] Download, clean, and verify real texts.
-- [ ] Compute levels and topics.
-- [ ] Run `verify_book_integrity` script on all books (0 failures allowed).
+- [x] Download, clean, and verify real texts.
+- [x] Compute levels and topics.
+- [x] Run `verify_book_integrity` script on all books — 17 passed, 0 failed.
 
 ## Phase 4: Covers
 - [ ] Write `COVER_STYLE.md`.
