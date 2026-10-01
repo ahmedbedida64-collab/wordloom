@@ -13,15 +13,15 @@
   },
   {
     "slug": "secret_sharer",
-    "pgId": 23362,
+    "pgId": 220,
     "title": "The Secret Sharer",
     "author": "Joseph Conrad",
-    "source_url": "https://www.gutenberg.org/ebooks/23362",
-    "download_url": "https://www.gutenberg.org/files/23362/23362-0.txt",
+    "source_url": "https://www.gutenberg.org/ebooks/220",
+    "download_url": "https://www.gutenberg.org/cache/epub/220/pg220.txt",
     "retrieved_at": "2026-09-30T21:01:28.134Z",
     "licence": "Public Domain (Project Gutenberg)",
-    "word_count": 4488,
-    "pages": 29
+    "word_count": 16534,
+    "pages": 60
   },
   {
     "slug": "canterville_ghost",
