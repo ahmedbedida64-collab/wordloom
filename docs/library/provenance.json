@@ -181,5 +181,53 @@
     "licence": "Public Domain (Project Gutenberg)",
     "word_count": 11321,
     "pages": 75
+  },
+  {
+    "slug": "metamorphosis",
+    "pgId": 5200,
+    "title": "The Metamorphosis",
+    "author": "Franz Kafka",
+    "source_url": "https://www.gutenberg.org/ebooks/5200",
+    "download_url": "https://www.gutenberg.org/files/5200/5200-0.txt",
+    "retrieved_at": "2026-10-01T05:49:23.530Z",
+    "licence": "Public Domain (Project Gutenberg)",
+    "word_count": 21934,
+    "pages": 76
+  },
+  {
+    "slug": "jekyll_and_hyde",
+    "pgId": 43,
+    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+    "author": "Robert Louis Stevenson",
+    "source_url": "https://www.gutenberg.org/ebooks/43",
+    "download_url": "https://www.gutenberg.org/files/43/43-0.txt",
+    "retrieved_at": "2026-10-01T05:49:23.535Z",
+    "licence": "Public Domain (Project Gutenberg)",
+    "word_count": 25626,
+    "pages": 96
+  },
+  {
+    "slug": "bartleby",
+    "pgId": 11231,
+    "title": "Bartleby, the Scrivener",
+    "author": "Herman Melville",
+    "source_url": "https://www.gutenberg.org/ebooks/11231",
+    "download_url": "https://www.gutenberg.org/files/11231/11231-0.txt",
+    "retrieved_at": "2026-10-01T05:49:23.535Z",
+    "licence": "Public Domain (Project Gutenberg)",
+    "word_count": 14357,
+    "pages": 54
+  },
+  {
+    "slug": "alice_wonderland",
+    "pgId": 11,
+    "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "source_url": "https://www.gutenberg.org/ebooks/11",
+    "download_url": "https://www.gutenberg.org/files/11/11-0.txt",
+    "retrieved_at": "2026-10-01T05:49:23.535Z",
+    "licence": "Public Domain (Project Gutenberg)",
+    "word_count": 26464,
+    "pages": 96
   }
 ]

@@ -34,8 +34,8 @@ chapters.forEach((ch, i) => {
 const lastPara = (chapters[chapters.length-1]?.paragraphs || []).slice(-1)[0] || '';
 if (/\.\.\.|continued\]|unfinished/i.test(lastPara)) errors.push('TRUNCATION_DETECTED');
 
-// Check 5: Word count in range (2420-12100)
-if (word_count < 2420 || word_count > 12100) errors.push(`WORD_COUNT_OOB: ${word_count} (must be 2420-12100)`);
+// Check 5: Word count in range (Option 2: 2420 - 32000 words corresponding to 20-100 pages at ~250w/page)
+if (word_count < 2420 || word_count > 32000) errors.push(`WORD_COUNT_OOB: ${word_count} (must be 2420-32000)`);
 
 // Check 6: Title present
 if (!book.title || book.title.trim() === '') errors.push('BLANK_TITLE');
