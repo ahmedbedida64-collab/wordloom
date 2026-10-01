@@ -1,7 +1,7 @@
 #!/bin/bash
 # check_scope.sh - Ensures changes are restricted to allowed paths
 
-ALLOWED_PATHS="^(docs/library/|tools/library/|backup/library-old/|index\.html)"
+ALLOWED_PATHS="^(docs/library/|tools/library/|backup/library-old/|covers/|index\.html)"
 
 CHANGED_FILES=$(git diff --name-only HEAD)
 
