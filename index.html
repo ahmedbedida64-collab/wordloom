@@ -8022,34 +8022,13 @@ body[class*="theme-"] .library-tab.active {
     .review-cover-flash { background: linear-gradient(150deg, #5c3b2e, #3e2415 58%, #22120a) !important; }
     .review-cover-match { background: linear-gradient(150deg, #304a3f, #1a2a23 58%, #0d1712) !important; }
 
-    /* Hide the span if it rendered via updated JS, because we are using pseudo-elements now */
-    .cover-meaning-symbol { display: none !important; }
-
-    .cover-technology .cover-overlay::before, .cover-technology .cover-art::before { content: "⚙"; }
-    .cover-history .cover-overlay::before, .cover-history .cover-art::before { content: "🏛"; }
-    .cover-business .cover-overlay::before, .cover-business .cover-art::before { content: "⚖"; }
-    .cover-travel .cover-overlay::before, .cover-travel .cover-art::before { content: "⎈"; }
-    .cover-science .cover-overlay::before, .cover-science .cover-art::before { content: "⚛"; }
-    .cover-culture .cover-overlay::before, .cover-culture .cover-art::before { content: "⚜"; }
-    .cover-life .cover-overlay::before, .cover-life .cover-art::before { content: "❧"; }
-
-    .mini-cover .cover-overlay::before, .book-preview-cover .cover-art::before {
-      font-family: "Newsreader", serif;
-      font-size: 110px;
-      color: rgba(255, 255, 255, 0.16);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 1;
-      line-height: 1;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .book-preview-cover .cover-art::before {
-      font-size: 240px;
-      color: rgba(255, 255, 255, 0.1);
+    /* Clean photo-cover frame: strictly no watermarks, glyphs, or pseudo-elements in the center */
+    .cover-meaning-symbol,
+    .cover-overlay::before,
+    .cover-art::before,
+    .book-preview-mark {
+      display: none !important;
+      content: none !important;
     }
 
     /* ====== ALIVE REVIEW COVERS ====== */
@@ -22870,7 +22849,6 @@ function renderBooks() {
     return `<article class="mini-book" data-book="${book.title}">
       <div class="book-cover-frame mini-cover ${bookCoverClass(book)}" data-read-book="${book.title}" tabindex="0" role="button" aria-label="Read ${book.title}">
         <img class="cover-photo" src="${photo}" alt="${book.title}" loading="lazy" />
-        <span class="cover-meaning-symbol" aria-hidden="true">${bookCoverSymbol(book)}</span>
         <div class="cover-overlay">
           <div class="cover-top-badges">
             <span class="difficulty-badge level-${book.level.toLowerCase()}">${book.level}</span>
@@ -22901,9 +22879,6 @@ function renderBookPreviewModal() {
     <button class="modal-close" data-book-preview-close type="button" aria-label="Close book preview">Close</button>
     <div class="book-preview-cover ${bookCoverClass(activeBook)}" aria-hidden="true">
       <img class="cover-photo" src="${photo}" alt="${activeBook.title}" />
-      <span class="cover-meaning-symbol" aria-hidden="true">${bookCoverSymbol(activeBook)}</span>
-      <span class="cover-art"></span>
-      <span class="book-preview-mark">${cover[2]}</span>
       <span class="book-preview-kicker">${cover[0]}</span>
     </div>
     <div class="book-preview-copy">
