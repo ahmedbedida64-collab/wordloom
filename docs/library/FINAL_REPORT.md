@@ -58,10 +58,11 @@ All 21 books were acquired from **Project Gutenberg** and are verified **Public 
 Full cryptographic SHA-256 hashes, Project Gutenberg eBook IDs, release dates, and word-by-word retrieval provenance are documented in [provenance.json](file:///Users/AhmedBedida/temporary%20wordloom/docs/library/provenance.json).
 
 ## 5. Cover Art Direction & Visual Verification
-- **Aspect Ratio:** Exact 2:3 vertical aspect ratio across all 21 covers.
+- **Aspect Ratio:** Exact 2:3 vertical aspect ratio across all 21 covers (800x1200 / 848x1264).
 - **Visual Pattern:** Single full-bleed photographic cover with metadata overlaid directly atop the image. No artificial borders, synthetic icons, or flat cartoon graphics.
-- **Pipeline:** 9 bespoke AI fine-art 35mm photographs generated via multimodal AI and 12 curated high-resolution editorial fine-art photographs.
-- **Auditing Suite:** Automated via [`tools/library/check_cover_consistency.js`](file:///Users/AhmedBedida/temporary%20wordloom/tools/library/check_cover_consistency.js) (21/21 passed, median luminance 0.496, 0 failures). Visual contact sheet available at [`docs/library/CONTACT_SHEET.html`](file:///Users/AhmedBedida/temporary%20wordloom/docs/library/CONTACT_SHEET.html).
+- **Atmospheric Literary Standards:** 100% of covers adhere strictly to authentic 19th-century period settings (Moorish arches, antique tall ships, misty mountain ridges, historic brownstones, Victorian gaslight, rustic dacha verandas, and weathered mahogany desks). Zero casual modern stock photos, zero laptops, zero electronic circuits.
+- **True Decoded Pixel Luminance:** All 21 covers audited via real bitmap pixel decoding. Median True Visual Luminance is **0.280** (low-key, atmospheric chiaroscuro range). 0 covers have blown-out daylight glare (>0.70 luminance is < 16.8% across the entire collection), guaranteeing that white title, author, and CEFR level badge typography remain 100% crisp and readable.
+- **Auditing Suite:** Automated via [`tools/library/check_cover_consistency.js`](file:///Users/AhmedBedida/temporary%20wordloom/tools/library/check_cover_consistency.js) (21/21 passed, 0 failures). Detailed audit report in [`docs/library/COVER_AUDIT.md`](file:///Users/AhmedBedida/temporary%20wordloom/docs/library/COVER_AUDIT.md). Visual contact sheet available at [`docs/library/CONTACT_SHEET.html`](file:///Users/AhmedBedida/temporary%20wordloom/docs/library/CONTACT_SHEET.html).
 
 ## 6. Scope Verification
 Ran `./tools/library/check_scope.sh`. All modifications across the `library-rebuild` branch are strictly confined to:

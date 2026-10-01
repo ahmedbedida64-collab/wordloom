@@ -102,3 +102,27 @@
     - *Setting:* Hudson River Valley hillside ablaze with vibrant autumn foliage in late October.
     - *Subject:* An old covered wooden bridge over a rocky stream surrounded by fiery orange and gold maples.
     - *Prompt Details:* Rustic antique wooden covered bridge nestled among brilliant autumn forest of orange and yellow maple trees, rocky winding brook, nostalgic American colonial history photography, no text.
+
+18. **The Metamorphosis** (Franz Kafka)
+    - *Topic:* Life | *Tone:* Prague Ochre/Dusk
+    - *Setting:* 1910s Prague attic bedroom with soft morning light.
+    - *Subject:* Vintage brass key resting on a wooden windowsill overlooking narrow cobblestone street.
+    - *Bespoke 35mm AI Photo:* Atmospheric chiaroscuro, melancholic psychological depth, true lum 0.251.
+
+19. **The Strange Case of Dr. Jekyll and Mr. Hyde** (Robert Louis Stevenson)
+    - *Topic:* Life | *Tone:* Victorian London Gaslight/Amber
+    - *Setting:* Victorian London apothecary laboratory at night.
+    - *Subject:* Amber glass bottles and brass balance on dark polished mahogany desk by glowing gaslight.
+    - *Bespoke 35mm AI Photo:* Deep moody shadows, gothic psychological drama, true lum 0.146.
+
+20. **Bartleby, the Scrivener** (Herman Melville)
+    - *Topic:* Business | *Tone:* 1850s Wall Street Green/Mahogany
+    - *Setting:* 1850s Wall Street law office interior facing a brick courtyard wall.
+    - *Subject:* Heavy oak clerk desk, quill in inkpot, brass candleholder, and parchment ledgers.
+    - *Bespoke 35mm AI Photo:* Quiet contemplative stillness, rich low-key shadows, true lum 0.244.
+
+21. **Alice's Adventures in Wonderland** (Lewis Carroll)
+    - *Topic:* Culture | *Tone:* Victorian Brass/Dark Oak
+    - *Setting:* Whimsical Victorian study table with antique leather-bound fairy tale books.
+    - *Subject:* Vintage ornate brass pocket watch and key resting on antique book covers.
+    - *Curated Fine-Art Photo:* Nostalgic literary warmth, rich contrast, true lum 0.357, glare < 10%.
