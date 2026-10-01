@@ -1,10 +1,16 @@
 {
-  "phase": 4,
+  "phase": 5,
+  "status": "PAUSED_READY_FOR_HANDOFF",
   "books_total": 17,
-  "covers_total": 17,
-  "covers_directory": "covers/",
-  "aspect_ratio": "2:3",
-  "style": "Photo Cover Family (warm cinematic 35mm aesthetic, zero text)",
-  "contact_sheet": "docs/library/CONTACT_SHEET.html",
-  "updated_at": "2026-09-30T22:30:00+01:00"
+  "books_under_20_pages": 0,
+  "covers": {
+    "total": 17,
+    "ai_generated": 6,
+    "curated_editorial": 11,
+    "aspect_ratio": "2:3",
+    "quota_reset_est_utc": "2026-10-01T10:32:00Z"
+  },
+  "next_trigger": "go",
+  "next_persona": "ADHD Senior Developers & Designers Collaborative Ensemble",
+  "updated_at": "2026-10-01T06:45:00+01:00"
 }
