@@ -20,7 +20,7 @@
 ## Phase 3: Ingest & Integrity
 - [x] Download, clean, and verify real texts.
 - [x] Compute levels and topics.
-- [x] Run `verify_book_integrity` script on all books — 17 passed, 0 failed.
+- [x] Run `verify_book_integrity` script on all books — 21 passed, 0 failed.
 
 ## Phase 4: Covers
 - [x] Write `COVER_STYLE.md`.
