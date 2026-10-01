@@ -1,0 +1,26 @@
+{
+  "name": "wordloom",
+  "version": "1.0.0",
+  "description": "Dependency-free standalone English reading laboratory with CEFR level filters and interactive vocabulary",
+  "main": "index.html",
+  "scripts": {
+    "test": "node tools/run_all_tests.js",
+    "test:buttons": "node tools/library/verify_brown_frame_buttons.js",
+    "test:reader": "node tools/library/verify_browser_reader.js",
+    "test:auth": "node tools/library/verify_recreated_auth_and_custom_books.js",
+    "test:settings": "node tools/library/screenshot_settings_fullscreen.js",
+    "serve": "python3 -m http.server 8765"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  },
+  "keywords": [
+    "wordloom",
+    "reading",
+    "cefr",
+    "graded-reader",
+    "vocabulary"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1353,7 +1353,9 @@ body::before { content: ''; position: fixed; inset: 0; pointer-events: none; opa
 #add-book:hover, .primary-button:hover, .read-button:hover, .small-read-button:hover, #finish-welcome:hover, #save-preferences:hover { background: linear-gradient(135deg, var(--green-dark), #1a4a43); }
 .reader-page { transform: none; background: transparent; border-color: transparent; box-shadow: none; }
 .reader-page p { color: #f8fafc; }
-.reader-page .word:hover, .reader-page .word:focus { color: #f0abfc !important; text-shadow: 0 0 18px rgba(236, 72, 153, .7); }
+.reader-page .word { appearance: none !important; background: transparent !important; color: inherit !important; border: none !important; border-bottom: 1px dotted rgba(92, 64, 51, 0.45) !important; border-radius: 3px !important; padding: 0 2px !important; cursor: pointer !important; transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease !important; }
+.reader-page .word:hover, .reader-page .word:focus { background: rgba(139, 90, 43, 0.14) !important; color: #5C4033 !important; border-bottom: 1.5px solid #8B5A2B !important; text-shadow: none !important; outline: none !important; }
+body.theme-dark .reader-page .word:hover, body.theme-dark .reader-page .word:focus { background: rgba(217, 119, 6, 0.22) !important; color: #fef3c7 !important; border-bottom: 1.5px solid #d97706 !important; text-shadow: none !important; }
 .modal-backdrop { background: rgba(11, 7, 18, .58); backdrop-filter: blur(20px); }
 .modal, .welcome-modal, .source-modal { animation: cosmic-pop .46s cubic-bezier(.2,.9,.25,1.2); box-shadow: 0 0 0 1px rgba(168, 85, 247, .08), 0 24px 90px rgba(139, 92, 246, .3); }
 
@@ -7607,24 +7609,308 @@ body #settings-view.hidden {
   display: none !important;
 }
 
+/* ==========================================================================
+   FULL SCREEN SETTINGS & EXPANDED CUSTOM BOOKS PAGES
+   ========================================================================== */
+
 body #custom-book-view:not(.hidden),
 #custom-book-view:not(.hidden) {
   display: block !important;
-  max-width: 1100px !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
   margin: 0 auto !important;
-  padding: 36px clamp(18px, 4vw, 48px) 140px !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
   background: transparent !important;
   animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
 }
 
 body #settings-view:not(.hidden),
 #settings-view:not(.hidden) {
   display: block !important;
-  max-width: 820px !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
   margin: 0 auto !important;
-  padding: 36px clamp(18px, 4vw, 48px) 140px !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
   background: transparent !important;
   animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+/* Full Screen Settings Header */
+.settings-header-banner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-header-copy {
+  flex: 1 !important;
+  min-width: 280px !important;
+}
+
+.settings-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Full Screen Multi-Card Responsive Grid */
+.settings-grid-layout {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+.settings-grid-col-7 {
+  grid-column: span 7 !important;
+}
+
+.settings-grid-col-5 {
+  grid-column: span 5 !important;
+}
+
+.settings-grid-col-6 {
+  grid-column: span 6 !important;
+}
+
+.settings-grid-col-12 {
+  grid-column: span 12 !important;
+}
+
+@media (max-width: 960px) {
+  .settings-grid-col-7,
+  .settings-grid-col-5,
+  .settings-grid-col-6 {
+    grid-column: span 12 !important;
+  }
+  .settings-header-banner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .settings-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* High-craft Full Screen Settings Cards */
+.settings-card {
+  background: #FFFDF9 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 30px 32px !important;
+  box-shadow: 0 4px 20px rgba(80, 40, 0, 0.05), 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.settings-card:hover {
+  border-color: rgba(139, 90, 43, 0.35) !important;
+  box-shadow: 0 8px 28px rgba(80, 40, 0, 0.08) !important;
+}
+
+.settings-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.14) !important;
+}
+
+.settings-card-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 10px !important;
+  background: rgba(139, 90, 43, 0.1) !important;
+  border: 1px solid rgba(139, 90, 43, 0.22) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8B5A2B !important;
+  font-size: 20px !important;
+  font-family: "Newsreader", serif !important;
+  font-weight: 700 !important;
+}
+
+.settings-card-header h2 {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #3E271F !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.settings-card-header p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 13px !important;
+  color: #5C4033 !important;
+  margin: 3px 0 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Full Width Settings Selects in Full Screen Layout */
+body #settings-view .standalone-select,
+body.mood-purple #settings-view .standalone-select,
+body.theme-dark #settings-view .standalone-select,
+#settings-view select {
+  background: #FAF3E8 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.25) !important;
+  border-radius: 8px !important;
+  color: #3E271F !important;
+  padding: 12px 14px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Full Width Account Profile Badge */
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.account-avatar {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 17px !important;
+  color: #3E271F !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  color: #8C786A !important;
+}
+
+/* Interactive Mood Selector */
+.mood-pill-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+}
+
+.mood-chip-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(139, 90, 43, 0.25) !important;
+  background: #FAF3E8 !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.mood-chip-btn:hover,
+.mood-chip-btn.active {
+  background: #8B5A2B !important;
+  color: #FFFFFF !important;
+  border-color: #8B5A2B !important;
+  transform: translateY(-1px) !important;
+}
+
+.mood-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* Preview quote box */
+.settings-preview-box {
+  background: #FAF4EB !important;
+  border: 1px dashed rgba(139, 90, 43, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-top: 8px !important;
+}
+
+.settings-preview-box p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #5C4033 !important;
+  margin: 0 !important;
+  font-style: italic !important;
+}
+
+/* Sticky / Bottom Footer Actions */
+.settings-footer-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 24px 0 !important;
+  margin-top: 28px !important;
+  border-top: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.settings-hint-text {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  color: #8C7565 !important;
 }
 
 /* Page Headers */
@@ -8135,11 +8421,11 @@ body[class*="theme-"] .library-tab.active {
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // 'important: true' ensures Tailwind classes beat Wordloom's legacy !important CSS
-    // 'preflight: false' ensures Wordloom's text and layout don't break
-    tailwind.config = { 
-        important: true,
-        corePlugins: { preflight: false } 
+    if (window.tailwind) {
+      tailwind.config = { 
+          important: true,
+          corePlugins: { preflight: false } 
+      };
     }
   </script>
   <!-- React & ReactDOM (UMD) -->
@@ -8433,8 +8719,1882 @@ body[class*="theme-"] .library-tab.active {
   box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
 }
 
+/* ==========================================================================
+   BROWN NATURAL FRAME BUTTON DESIGN (BACK & FORWARD BUTTONS)
+   ========================================================================== */
+
+#reading-view #back-to-library,
+body #reading-view .back-link,
+#back-to-library,
+#review-back-btn,
+body #settings-view .back-link,
+body #custom-book-view .back-link,
+.settings-form-actions .back-link,
+.custom-book-footer-nav .back-link,
+.reader-control,
+#reader-prev-btn,
+#reader-next-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 20px !important;
+  font-family: "Source Serif 4", "DM Sans", serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  color: #5C4033 !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(92, 64, 51, 0.08) !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease !important;
+  text-transform: none !important;
+}
+
+#reading-view #back-to-library:hover,
+body #reading-view .back-link:hover,
+#back-to-library:hover,
+#review-back-btn:hover,
+body #settings-view .back-link:hover,
+body #custom-book-view .back-link:hover,
+.settings-form-actions .back-link:hover,
+.custom-book-footer-nav .back-link:hover,
+.reader-control:hover:not(:disabled),
+#reader-prev-btn:hover:not(:disabled),
+#reader-next-btn:hover:not(:disabled) {
+  background: #F0E5D5 !important;
+  border-color: #5C4033 !important;
+  color: #3E271F !important;
+  box-shadow: 0 2px 6px rgba(92, 64, 51, 0.15) !important;
+  transform: translateY(-1px) !important;
+  text-decoration: none !important;
+}
+
+#reader-prev-btn:disabled,
+#reader-next-btn:disabled,
+.reader-control:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  background: #FAF4EB !important;
+  border-color: rgba(139, 90, 43, 0.3) !important;
+  color: #8C7565 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+body.theme-dark #reading-view #back-to-library,
+body.theme-dark #reading-view .back-link,
+body.theme-dark #back-to-library,
+body.theme-dark #review-back-btn,
+body.theme-dark #settings-view .back-link,
+body.theme-dark #custom-book-view .back-link,
+body.theme-dark .settings-form-actions .back-link,
+body.theme-dark .custom-book-footer-nav .back-link,
+body.theme-dark .reader-control,
+body.theme-dark #reader-prev-btn,
+body.theme-dark #reader-next-btn {
+  background: #241D17 !important;
+  border-color: #9E744A !important;
+  color: #EFE4D6 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.theme-dark #reading-view #back-to-library:hover,
+body.theme-dark #reading-view .back-link:hover,
+body.theme-dark #back-to-library:hover,
+body.theme-dark #review-back-btn:hover,
+body.theme-dark #settings-view .back-link:hover,
+body.theme-dark #custom-book-view .back-link:hover,
+body.theme-dark .settings-form-actions .back-link:hover,
+body.theme-dark .custom-book-footer-nav .back-link:hover,
+body.theme-dark .reader-control:hover:not(:disabled),
+body.theme-dark #reader-prev-btn:hover:not(:disabled),
+body.theme-dark #reader-next-btn:hover:not(:disabled) {
+  background: #2F241C !important;
+  border-color: #B88958 !important;
+  color: #FFFDF9 !important;
+}
+
+/* ==========================================================================
+   CUSTOM BOOKS ACTION BUTTONS (BROWN NATURAL FRAME STYLING)
+   ========================================================================== */
+body #custom-book-view #import-local-book,
+#custom-book-view #import-local-book,
+body #custom-book-view #download-full-catalog,
+#custom-book-view #download-full-catalog {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 10px 20px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  color: #5C4033 !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(92, 64, 51, 0.08) !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease !important;
+  text-transform: none !important;
+}
+
+body #custom-book-view #import-local-book:hover,
+#custom-book-view #import-local-book:hover,
+body #custom-book-view #download-full-catalog:hover,
+#custom-book-view #download-full-catalog:hover {
+  background: #F0E5D5 !important;
+  border-color: #5C4033 !important;
+  color: #3E271F !important;
+  box-shadow: 0 2px 6px rgba(92, 64, 51, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+body.theme-dark #custom-book-view #import-local-book,
+body.theme-dark #custom-book-view #download-full-catalog {
+  background: #241D17 !important;
+  border-color: #9E744A !important;
+  color: #EFE4D6 !important;
+}
+
+body.theme-dark #custom-book-view #import-local-book:hover,
+body.theme-dark #custom-book-view #download-full-catalog:hover {
+  background: #2F241C !important;
+  border-color: #B88958 !important;
+  color: #FFFDF9 !important;
+}
+
+/* ==========================================================================
+   21ST-AUTH RECREATED AUTHENTICATION / LOGIN PAGE SYSTEM
+   ========================================================================== */
+#auth-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  z-index: 100000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #110e0c !important;
+  background: radial-gradient(circle at 50% 20%, #291d17 0%, #171210 50%, #0d0a09 100%) !important;
+  padding: 32px 16px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#auth-screen.hidden {
+  display: none !important;
+}
+
+.app-shell.auth-locked,
+body:has(#auth-screen:not(.hidden)) .app-shell,
+body:has(#auth-screen:not(.hidden)) #react-nav-root,
+#react-nav-root.hidden,
+body:has(#reading-view:not(.hidden)) #react-nav-root,
+body:has(#reading-view:not([hidden])) #react-nav-root {
+  display: none !important;
+}
+
+.auth-ambient-glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(480px, 90vw);
+  max-width: 100%;
+  height: 280px;
+  background: radial-gradient(circle, rgba(184, 137, 88, 0.18) 0%, rgba(139, 90, 43, 0.05) 50%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.auth-card-modern {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  background: #191412 !important;
+  border: 1px solid rgba(184, 137, 88, 0.25) !important;
+  border-radius: 20px !important;
+  padding: 36px 30px 30px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  color: #FAF4EB !important;
+  z-index: 10 !important;
+}
+
+.auth-card-top-beam {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #B88958 50%, transparent 100%);
+  border-radius: 2px;
+}
+
+.auth-brand-emblem {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2D231E 0%, #1C1613 100%);
+  border: 1px solid rgba(184, 137, 88, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.auth-eyebrow {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  color: #D4A373 !important;
+  text-transform: uppercase !important;
+  margin: 0 0 4px !important;
+}
+
+.auth-card-title {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 26px !important;
+  font-weight: 600 !important;
+  color: #FFFDF9 !important;
+  margin: 0 0 6px !important;
+  text-align: center !important;
+  letter-spacing: -0.01em !important;
+}
+
+.auth-card-sub {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  font-style: italic !important;
+  color: #C8BAAF !important;
+  margin: 0 0 20px !important;
+  text-align: center !important;
+}
+
+.auth-toggle-pill {
+  display: flex !important;
+  background: #110D0B !important;
+  border: 1px solid rgba(184, 137, 88, 0.2) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.auth-toggle-btn {
+  flex: 1 !important;
+  padding: 8px 12px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 7px !important;
+  color: #A99B90 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  text-align: center !important;
+}
+
+.auth-toggle-btn.active {
+  background: #33261F !important;
+  color: #FAF4EB !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid rgba(184, 137, 88, 0.3) !important;
+}
+
+.auth-form-modern {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+
+.auth-field-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.auth-field-group.hidden {
+  display: none !important;
+}
+
+.auth-label {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #D4A373 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+.auth-input-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.auth-input-icon {
+  position: absolute !important;
+  left: 12px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #8C786A !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: none !important;
+}
+
+.auth-input,
+.auth-select {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #120E0C !important;
+  border: 1.5px solid rgba(184, 137, 88, 0.25) !important;
+  border-radius: 8px !important;
+  padding: 11px 14px 11px 38px !important;
+  color: #FAF4EB !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important;
+}
+
+.auth-input:focus,
+.auth-select:focus {
+  border-color: #D4A373 !important;
+  background: #17120F !important;
+  box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.18) !important;
+}
+
+.auth-input::placeholder {
+  color: #6B5B50 !important;
+}
+
+.auth-select {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23D4A373' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  padding-right: 32px !important;
+  cursor: pointer !important;
+}
+
+.auth-select option {
+  background: #191412 !important;
+  color: #FAF4EB !important;
+}
+
+.auth-password-toggle {
+  position: absolute !important;
+  right: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #8C786A !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.auth-password-toggle:hover {
+  color: #D4A373 !important;
+}
+
+.auth-eye-icon-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.auth-eye-icon-wrap .hidden {
+  display: none !important;
+}
+
+.auth-field-hint {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 11px !important;
+  color: #8C786A !important;
+}
+
+.auth-demo-pill {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(212, 163, 115, 0.08) !important;
+  border: 1px dashed rgba(212, 163, 115, 0.28) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 11.5px !important;
+  color: #C8BAAF !important;
+}
+
+.auth-demo-icon {
+  font-size: 16px !important;
+  color: #D4A373 !important;
+  flex-shrink: 0 !important;
+}
+
+.auth-fill-demo-btn {
+  margin-left: auto !important;
+  background: #FAF4EB !important;
+  border: 1px solid #8B5A2B !important;
+  color: #5C4033 !important;
+  border-radius: 4px !important;
+  padding: 2px 8px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease !important;
+}
+
+.auth-fill-demo-btn:hover {
+  background: #F0E5D5 !important;
+}
+
+.auth-error-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(220, 38, 38, 0.12) !important;
+  border: 1px solid rgba(220, 38, 38, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 9px 12px !important;
+}
+
+.auth-error-wrap.hidden {
+  display: none !important;
+}
+
+.auth-error-icon {
+  color: #F87171 !important;
+  font-size: 18px !important;
+  flex-shrink: 0 !important;
+}
+
+.auth-error-msg {
+  color: #FECACA !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.auth-submit-btn {
+  width: 100% !important;
+  padding: 12px 20px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 8px !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.18s ease !important;
+  text-align: center !important;
+  margin-top: 4px !important;
+}
+
+.auth-submit-btn:hover {
+  background: #F0E5D5 !important;
+  border-color: #5C4033 !important;
+  color: #3E271F !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+.auth-divider {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 20px 0 16px !important;
+  gap: 12px !important;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '' !important;
+  flex: 1 !important;
+  height: 1px !important;
+  background: rgba(184, 137, 88, 0.2) !important;
+}
+
+.auth-divider span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 11px !important;
+  color: #8C786A !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+.auth-social-stack {
+  display: flex !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.btn-auth-social {
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 10px 14px !important;
+  background: #140F0D !important;
+  border: 1px solid rgba(184, 137, 88, 0.22) !important;
+  border-radius: 8px !important;
+  color: #FAF4EB !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+}
+
+.btn-auth-social:hover {
+  background: #231B17 !important;
+  border-color: rgba(184, 137, 88, 0.45) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-auth-guest {
+  background: transparent !important;
+  border: none !important;
+  color: #D4A373 !important;
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-style: italic !important;
+  font-size: 14px !important;
+  margin-top: 18px !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+  transition: color 0.18s ease !important;
+}
+
+.btn-auth-guest:hover {
+  color: #FFFDF9 !important;
+}
+
+/* Settings View: Active Account & Sign Out */
+.account-settings-field {
+  margin-top: 24px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid rgba(139, 90, 43, 0.2) !important;
+}
+
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  margin-top: 10px !important;
+}
+
+.account-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 16px !important;
+  color: #5C4033 !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12px !important;
+  color: #8C786A !important;
+}
+
+#auth-signout {
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 6px !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#auth-signout:hover {
+  background: #F0E5D5 !important;
+  border-color: #5C4033 !important;
+  color: #3E271F !important;
+}
+
 /* ========================================================================== */
 
+
+/* ==========================================================================
+   FULL SCREEN SETTINGS & EXPANDED CUSTOM BOOKS PAGES
+   ========================================================================== */
+
+body #custom-book-view:not(.hidden),
+#custom-book-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+body #settings-view:not(.hidden),
+#settings-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+/* Full Screen Settings Header */
+.settings-header-banner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-header-copy {
+  flex: 1 !important;
+  min-width: 280px !important;
+}
+
+.settings-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Full Screen Multi-Card Responsive Grid */
+.settings-grid-layout {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+.settings-grid-col-7 {
+  grid-column: span 7 !important;
+}
+
+.settings-grid-col-5 {
+  grid-column: span 5 !important;
+}
+
+.settings-grid-col-6 {
+  grid-column: span 6 !important;
+}
+
+.settings-grid-col-12 {
+  grid-column: span 12 !important;
+}
+
+@media (max-width: 960px) {
+  .settings-grid-col-7,
+  .settings-grid-col-5,
+  .settings-grid-col-6 {
+    grid-column: span 12 !important;
+  }
+  .settings-header-banner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .settings-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* High-craft Full Screen Settings Cards */
+.settings-card {
+  background: #FFFDF9 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 30px 32px !important;
+  box-shadow: 0 4px 20px rgba(80, 40, 0, 0.05), 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.settings-card:hover {
+  border-color: rgba(139, 90, 43, 0.35) !important;
+  box-shadow: 0 8px 28px rgba(80, 40, 0, 0.08) !important;
+}
+
+.settings-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.14) !important;
+}
+
+.settings-card-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 10px !important;
+  background: rgba(139, 90, 43, 0.1) !important;
+  border: 1px solid rgba(139, 90, 43, 0.22) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8B5A2B !important;
+  font-size: 20px !important;
+  font-family: "Newsreader", serif !important;
+  font-weight: 700 !important;
+}
+
+.settings-card-header h2 {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #3E271F !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.settings-card-header p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 13px !important;
+  color: #5C4033 !important;
+  margin: 3px 0 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Full Width Settings Selects in Full Screen Layout */
+body #settings-view .standalone-select,
+body.mood-purple #settings-view .standalone-select,
+body.theme-dark #settings-view .standalone-select,
+#settings-view select {
+  background: #FAF3E8 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.25) !important;
+  border-radius: 8px !important;
+  color: #3E271F !important;
+  padding: 12px 14px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Full Width Account Profile Badge */
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.account-avatar {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 17px !important;
+  color: #3E271F !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  color: #8C786A !important;
+}
+
+/* Interactive Mood Selector */
+.mood-pill-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+}
+
+.mood-chip-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(139, 90, 43, 0.25) !important;
+  background: #FAF3E8 !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.mood-chip-btn:hover,
+.mood-chip-btn.active {
+  background: #8B5A2B !important;
+  color: #FFFFFF !important;
+  border-color: #8B5A2B !important;
+  transform: translateY(-1px) !important;
+}
+
+.mood-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* Preview quote box */
+.settings-preview-box {
+  background: #FAF4EB !important;
+  border: 1px dashed rgba(139, 90, 43, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-top: 8px !important;
+}
+
+.settings-preview-box p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #5C4033 !important;
+  margin: 0 !important;
+  font-style: italic !important;
+}
+
+/* Sticky / Bottom Footer Actions */
+.settings-footer-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 24px 0 !important;
+  margin-top: 28px !important;
+  border-top: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.settings-hint-text {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  color: #8C7565 !important;
+}
+
+/* ==========================================================================
+   FULL SCREEN SETTINGS & EXPANDED CUSTOM BOOKS PAGES
+   ========================================================================== */
+
+body #custom-book-view:not(.hidden),
+#custom-book-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+body #settings-view:not(.hidden),
+#settings-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+/* Full Screen Settings Header */
+.settings-header-banner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-header-copy {
+  flex: 1 !important;
+  min-width: 280px !important;
+}
+
+.settings-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Full Screen Multi-Card Responsive Grid */
+.settings-grid-layout {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+.settings-grid-col-7 {
+  grid-column: span 7 !important;
+}
+
+.settings-grid-col-5 {
+  grid-column: span 5 !important;
+}
+
+.settings-grid-col-6 {
+  grid-column: span 6 !important;
+}
+
+.settings-grid-col-12 {
+  grid-column: span 12 !important;
+}
+
+@media (max-width: 960px) {
+  .settings-grid-col-7,
+  .settings-grid-col-5,
+  .settings-grid-col-6 {
+    grid-column: span 12 !important;
+  }
+  .settings-header-banner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .settings-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* High-craft Full Screen Settings Cards */
+.settings-card {
+  background: #FFFDF9 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 30px 32px !important;
+  box-shadow: 0 4px 20px rgba(80, 40, 0, 0.05), 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.settings-card:hover {
+  border-color: rgba(139, 90, 43, 0.35) !important;
+  box-shadow: 0 8px 28px rgba(80, 40, 0, 0.08) !important;
+}
+
+.settings-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.14) !important;
+}
+
+.settings-card-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 10px !important;
+  background: rgba(139, 90, 43, 0.1) !important;
+  border: 1px solid rgba(139, 90, 43, 0.22) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8B5A2B !important;
+  font-size: 20px !important;
+  font-family: "Newsreader", serif !important;
+  font-weight: 700 !important;
+}
+
+.settings-card-header h2 {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #3E271F !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.settings-card-header p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 13px !important;
+  color: #5C4033 !important;
+  margin: 3px 0 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Full Width Settings Selects in Full Screen Layout */
+body #settings-view .standalone-select,
+body.mood-purple #settings-view .standalone-select,
+body.theme-dark #settings-view .standalone-select,
+#settings-view select {
+  background: #FAF3E8 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.25) !important;
+  border-radius: 8px !important;
+  color: #3E271F !important;
+  padding: 12px 14px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Full Width Account Profile Badge */
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.account-avatar {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 17px !important;
+  color: #3E271F !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  color: #8C786A !important;
+}
+
+/* Interactive Mood Selector */
+.mood-pill-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+}
+
+.mood-chip-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(139, 90, 43, 0.25) !important;
+  background: #FAF3E8 !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.mood-chip-btn:hover,
+.mood-chip-btn.active {
+  background: #8B5A2B !important;
+  color: #FFFFFF !important;
+  border-color: #8B5A2B !important;
+  transform: translateY(-1px) !important;
+}
+
+.mood-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* Preview quote box */
+.settings-preview-box {
+  background: #FAF4EB !important;
+  border: 1px dashed rgba(139, 90, 43, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-top: 8px !important;
+}
+
+.settings-preview-box p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #5C4033 !important;
+  margin: 0 !important;
+  font-style: italic !important;
+}
+
+/* Sticky / Bottom Footer Actions */
+.settings-footer-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 24px 0 !important;
+  margin-top: 28px !important;
+  border-top: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.settings-hint-text {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  color: #8C7565 !important;
+}
+
+/* ==========================================================================
+   FULL SCREEN SETTINGS & EXPANDED CUSTOM BOOKS PAGES
+   ========================================================================== */
+
+body #custom-book-view:not(.hidden),
+#custom-book-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+body #settings-view:not(.hidden),
+#settings-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+/* Full Screen Settings Header */
+.settings-header-banner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-header-copy {
+  flex: 1 !important;
+  min-width: 280px !important;
+}
+
+.settings-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Full Screen Multi-Card Responsive Grid */
+.settings-grid-layout {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+.settings-grid-col-7 {
+  grid-column: span 7 !important;
+}
+
+.settings-grid-col-5 {
+  grid-column: span 5 !important;
+}
+
+.settings-grid-col-6 {
+  grid-column: span 6 !important;
+}
+
+.settings-grid-col-12 {
+  grid-column: span 12 !important;
+}
+
+@media (max-width: 960px) {
+  .settings-grid-col-7,
+  .settings-grid-col-5,
+  .settings-grid-col-6 {
+    grid-column: span 12 !important;
+  }
+  .settings-header-banner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .settings-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* High-craft Full Screen Settings Cards */
+.settings-card {
+  background: #FFFDF9 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 30px 32px !important;
+  box-shadow: 0 4px 20px rgba(80, 40, 0, 0.05), 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.settings-card:hover {
+  border-color: rgba(139, 90, 43, 0.35) !important;
+  box-shadow: 0 8px 28px rgba(80, 40, 0, 0.08) !important;
+}
+
+.settings-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.14) !important;
+}
+
+.settings-card-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 10px !important;
+  background: rgba(139, 90, 43, 0.1) !important;
+  border: 1px solid rgba(139, 90, 43, 0.22) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8B5A2B !important;
+  font-size: 20px !important;
+  font-family: "Newsreader", serif !important;
+  font-weight: 700 !important;
+}
+
+.settings-card-header h2 {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #3E271F !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.settings-card-header p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 13px !important;
+  color: #5C4033 !important;
+  margin: 3px 0 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Full Width Settings Selects in Full Screen Layout */
+body #settings-view .standalone-select,
+body.mood-purple #settings-view .standalone-select,
+body.theme-dark #settings-view .standalone-select,
+#settings-view select {
+  background: #FAF3E8 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.25) !important;
+  border-radius: 8px !important;
+  color: #3E271F !important;
+  padding: 12px 14px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Full Width Account Profile Badge */
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.account-avatar {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 17px !important;
+  color: #3E271F !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  color: #8C786A !important;
+}
+
+/* Interactive Mood Selector */
+.mood-pill-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+}
+
+.mood-chip-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(139, 90, 43, 0.25) !important;
+  background: #FAF3E8 !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.mood-chip-btn:hover,
+.mood-chip-btn.active {
+  background: #8B5A2B !important;
+  color: #FFFFFF !important;
+  border-color: #8B5A2B !important;
+  transform: translateY(-1px) !important;
+}
+
+.mood-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* Preview quote box */
+.settings-preview-box {
+  background: #FAF4EB !important;
+  border: 1px dashed rgba(139, 90, 43, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-top: 8px !important;
+}
+
+.settings-preview-box p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #5C4033 !important;
+  margin: 0 !important;
+  font-style: italic !important;
+}
+
+/* Sticky / Bottom Footer Actions */
+.settings-footer-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 24px 0 !important;
+  margin-top: 28px !important;
+  border-top: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.settings-hint-text {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  color: #8C7565 !important;
+}
+
+/* ==========================================================================
+   FULL SCREEN SETTINGS & EXPANDED CUSTOM BOOKS PAGES
+   ========================================================================== */
+
+body #custom-book-view:not(.hidden),
+#custom-book-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+body #settings-view:not(.hidden),
+#settings-view:not(.hidden) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1360px !important;
+  min-height: calc(100vh - 80px) !important;
+  margin: 0 auto !important;
+  padding: 44px clamp(20px, 4vw, 64px) 160px !important;
+  background: transparent !important;
+  animation: view-arrive .45s cubic-bezier(.2, .8, .2, 1) both;
+  box-sizing: border-box !important;
+}
+
+/* Full Screen Settings Header */
+.settings-header-banner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-header-copy {
+  flex: 1 !important;
+  min-width: 280px !important;
+}
+
+.settings-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Full Screen Multi-Card Responsive Grid */
+.settings-grid-layout {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+.settings-grid-col-7 {
+  grid-column: span 7 !important;
+}
+
+.settings-grid-col-5 {
+  grid-column: span 5 !important;
+}
+
+.settings-grid-col-6 {
+  grid-column: span 6 !important;
+}
+
+.settings-grid-col-12 {
+  grid-column: span 12 !important;
+}
+
+@media (max-width: 960px) {
+  .settings-grid-col-7,
+  .settings-grid-col-5,
+  .settings-grid-col-6 {
+    grid-column: span 12 !important;
+  }
+  .settings-header-banner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .settings-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* High-craft Full Screen Settings Cards */
+.settings-card {
+  background: #FFFDF9 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 30px 32px !important;
+  box-shadow: 0 4px 20px rgba(80, 40, 0, 0.05), 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.settings-card:hover {
+  border-color: rgba(139, 90, 43, 0.35) !important;
+  box-shadow: 0 8px 28px rgba(80, 40, 0, 0.08) !important;
+}
+
+.settings-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.14) !important;
+}
+
+.settings-card-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 10px !important;
+  background: rgba(139, 90, 43, 0.1) !important;
+  border: 1px solid rgba(139, 90, 43, 0.22) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8B5A2B !important;
+  font-size: 20px !important;
+  font-family: "Newsreader", serif !important;
+  font-weight: 700 !important;
+}
+
+.settings-card-header h2 {
+  font-family: "Newsreader", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #3E271F !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.settings-card-header p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 13px !important;
+  color: #5C4033 !important;
+  margin: 3px 0 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Full Width Settings Selects in Full Screen Layout */
+body #settings-view .standalone-select,
+body.mood-purple #settings-view .standalone-select,
+body.theme-dark #settings-view .standalone-select,
+#settings-view select {
+  background: #FAF3E8 !important;
+  border: 1.5px solid rgba(92, 64, 51, 0.25) !important;
+  border-radius: 8px !important;
+  color: #3E271F !important;
+  padding: 12px 14px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Full Width Account Profile Badge */
+.account-profile-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #FAF4EB !important;
+  border: 1.5px solid #8B5A2B !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.account-avatar {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: #8B5A2B !important;
+  color: #FAF4EB !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Newsreader", serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.account-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.account-info strong {
+  font-family: "Newsreader", serif !important;
+  font-size: 17px !important;
+  color: #3E271F !important;
+}
+
+.account-info span {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  color: #8C786A !important;
+}
+
+/* Interactive Mood Selector */
+.mood-pill-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+}
+
+.mood-chip-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(139, 90, 43, 0.25) !important;
+  background: #FAF3E8 !important;
+  color: #5C4033 !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.mood-chip-btn:hover,
+.mood-chip-btn.active {
+  background: #8B5A2B !important;
+  color: #FFFFFF !important;
+  border-color: #8B5A2B !important;
+  transform: translateY(-1px) !important;
+}
+
+.mood-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* Preview quote box */
+.settings-preview-box {
+  background: #FAF4EB !important;
+  border: 1px dashed rgba(139, 90, 43, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-top: 8px !important;
+}
+
+.settings-preview-box p {
+  font-family: "Source Serif 4", Georgia, serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #5C4033 !important;
+  margin: 0 !important;
+  font-style: italic !important;
+}
+
+/* Sticky / Bottom Footer Actions */
+.settings-footer-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 24px 0 !important;
+  margin-top: 28px !important;
+  border-top: 1.5px solid rgba(139, 90, 43, 0.2) !important;
+  width: 100% !important;
+}
+
+.settings-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.settings-hint-text {
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 13px !important;
+  color: #8C7565 !important;
+}
 </style>
 </head>
 <body>
@@ -8463,26 +10623,126 @@ body[class*="theme-"] .library-tab.active {
   </script>
   <canvas id="bg"></canvas>
   <main id="auth-screen" class="auth-screen">
-    <section class="auth-card">
-      <p class="eyebrow">Wordloom</p>
-      <h1>Read more. Understand more.</h1>
-      <p>Build your English through stories made for your level.</p>
-      <form id="auth-form">
-        <label for="auth-name">Your name<input id="auth-name" type="text" autocomplete="name" maxlength="40" required placeholder="What should we call you?"></label>
-        <label for="auth-language">Mother language
-          <select id="auth-language">
-            <option value="ar" selected>العربية</option>
-            <option value="en">English</option>
-            <option value="fr">français</option>
-            <option value="es">español</option>
-            <option value="tr">Türkçe</option>
-            <option value="de">Deutsch</option>
-          </select>
-        </label>
-        <p id="auth-error" role="alert"></p>
-        <button type="submit">Start reading →</button>
+    <!-- Ambient top glow -->
+    <div class="auth-ambient-glow" aria-hidden="true"></div>
+
+    <section class="auth-card-modern">
+      <!-- Top subtle accent line -->
+      <div class="auth-card-top-beam" aria-hidden="true"></div>
+
+      <!-- Brand Emblem -->
+      <div class="auth-brand-emblem" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+          <path d="M9 10h6" />
+          <path d="M12 7v6" />
+        </svg>
+      </div>
+
+      <p class="auth-eyebrow">WORDLOOM</p>
+      <h1 class="auth-card-title" id="auth-card-title">Welcome back</h1>
+      <p class="auth-card-sub" id="auth-card-sub">Sign in to resume your reading journey</p>
+
+      <!-- Mode Switcher Toggle Pill -->
+      <div class="auth-toggle-pill" role="tablist" aria-label="Authentication mode">
+        <button type="button" class="auth-toggle-btn active" id="auth-tab-signin" role="tab" aria-selected="true">Sign In</button>
+        <button type="button" class="auth-toggle-btn" id="auth-tab-signup" role="tab" aria-selected="false">Create Account</button>
+      </div>
+
+      <form id="auth-form" class="auth-form-modern" novalidate>
+        <!-- Full Name (Visible in Sign Up mode) -->
+        <div class="auth-field-group hidden" id="auth-name-group">
+          <label for="auth-name" class="auth-label">Full Name</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <input id="auth-name" class="auth-input" type="text" autocomplete="name" maxlength="50" placeholder="e.g. Elena Rostova">
+          </div>
+        </div>
+
+        <!-- Email / Username -->
+        <div class="auth-field-group">
+          <label for="auth-email" class="auth-label">Email or Username</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <input id="auth-email" class="auth-input" type="text" autocomplete="username" placeholder="name@example.com" value="demo@wordloom.com" required>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="auth-field-group">
+          <label for="auth-password" class="auth-label">Password</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input id="auth-password" class="auth-input" type="password" autocomplete="current-password" placeholder="••••••••" value="wordloom123" required>
+            <button type="button" id="auth-password-toggle" class="auth-password-toggle" aria-label="Toggle password visibility">
+              <span id="auth-password-eye-icon" class="auth-eye-icon-wrap" aria-hidden="true">
+                <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <svg class="eye-closed hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mother Language (Visible in Sign Up mode) -->
+        <div class="auth-field-group hidden" id="auth-language-group">
+          <label for="auth-language" class="auth-label">Mother Language</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <select id="auth-language" class="auth-select">
+              <option value="ar" selected>العربية (Arabic)</option>
+              <option value="en">English</option>
+              <option value="fr">Français (French)</option>
+              <option value="es">Español (Spanish)</option>
+              <option value="tr">Türkçe (Turkish)</option>
+              <option value="de">Deutsch (German)</option>
+            </select>
+          </div>
+          <span class="auth-field-hint">Used for instant contextual definitions and translations.</span>
+        </div>
+
+        <!-- Quick Demo Hint Pill (Sign In mode) -->
+        <div class="auth-demo-pill" id="auth-demo-hint">
+          <svg class="auth-demo-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Demo: <strong>demo@wordloom.com</strong> · <strong>wordloom123</strong></span>
+          <button type="button" id="auth-fill-demo" class="auth-fill-demo-btn">Fill</button>
+        </div>
+
+        <!-- Error Banner -->
+        <div id="auth-error-wrap" class="auth-error-wrap hidden">
+          <svg class="auth-error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <p id="auth-error" class="auth-error-msg" role="alert"></p>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="auth-submit-btn" class="auth-submit-btn" type="submit">Sign In</button>
       </form>
-      <button id="auth-guest" class="text-button" type="button">Continue as guest</button>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or continue with</span>
+      </div>
+
+      <!-- Social Login Buttons -->
+      <div class="auth-social-stack">
+        <button type="button" class="btn-auth-social" id="auth-google-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 12s.7 2.3 1.9 4.7l3.7-1.9z"/>
+            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.8 7.5 23 12 23z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+        <button type="button" class="btn-auth-social" id="auth-github-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span>Continue with GitHub</span>
+        </button>
+      </div>
+
+      <!-- Guest Access Link -->
+      <button id="auth-guest" class="btn-auth-guest" type="button">Continue as guest</button>
     </section>
   </main>
 
@@ -8644,7 +10904,7 @@ body[class*="theme-"] .library-tab.active {
 
       <section id="reading-view" class="view hidden" hidden>
         <div class="reader-chrome">
-          <button id="back-to-library" class="text-button back-link" type="button">← Library</button>
+          <button id="back-to-library" class="text-button back-link" type="button">Library</button>
           <span id="reader-status" class="reader-status"></span>
         </div>
         <div class="reading-paper-wrap">
@@ -8671,11 +10931,8 @@ body[class*="theme-"] .library-tab.active {
           </article>
         </div>
         <div class="reader-controls">
-          <button id="reader-prev-btn" class="reader-control" type="button" aria-label="Previous page">← Previous</button>
-          <button id="reader-next-btn" class="reader-control turn-page-button" type="button" aria-label="Next page">
-            <span class="btn-text">Turn Page</span>
-            <span class="material-symbols-outlined btn-arrow" aria-hidden="true">arrow_forward</span>
-          </button>
+          <button id="reader-prev-btn" class="reader-control" type="button" aria-label="Previous page">Previous</button>
+          <button id="reader-next-btn" class="reader-control turn-page-button" type="button" aria-label="Next page">Next</button>
         </div>
       </section>
 
@@ -8795,7 +11052,7 @@ body[class*="theme-"] .library-tab.active {
       </section>
       <section id="game-view" class="view hidden" hidden>
         <div id="review-inside">
-          <button id="review-back-btn" class="text-button back-link" type="button">← All methods</button>
+          <button id="review-back-btn" class="text-button back-link" type="button">All methods</button>
         </div>
 
         <div id="flashcard-stage" style="display:none; width:100%; max-width:440px; margin:0 auto;"></div>
@@ -8828,30 +11085,28 @@ body[class*="theme-"] .library-tab.active {
 
       <!-- SETTINGS PAGE (FULL SCREEN VIEW) -->
       <section id="settings-view" class="view hidden" hidden>
-        <div class="view-heading">
-          <div>
-            <p class="eyebrow">Your reading room</p>
+        <div class="settings-header-banner">
+          <div class="settings-header-copy">
+            <p class="eyebrow">✦ Your reading room</p>
             <h1>Settings</h1>
-            <p class="view-intro">Shape Wordloom around the way you learn.</p>
+            <p class="view-intro">Shape Wordloom around the way you learn · Reading typography, vocabulary benchmarks, and account profile.</p>
+          </div>
+          <div class="settings-header-actions">
+            <button class="text-button back-link" type="button" onclick="window.showView('library')">Back to Library</button>
+            <button id="save-preferences-top" class="primary-button standalone-save-btn" type="button" onclick="savePreferences()">Save settings</button>
           </div>
         </div>
 
-        <div class="page-panel-wrap">
-          <div class="standalone-page-card settings-card">
-            <form id="settings-page-form" class="settings-form" onsubmit="event.preventDefault();">
-              <div class="settings-field">
-                <label for="mother-language">
-                  <span class="field-title">Mother language</span>
-                  <span class="field-description">Used for instant contextual definitions and vocabulary translations.</span>
-                  <select id="mother-language" class="standalone-select">
-                    <option value="ar">العربية (Arabic)</option>
-                    <option value="en">English</option>
-                    <option value="fr">français (French)</option>
-                    <option value="es">español (Spanish)</option>
-                    <option value="tr">Türkçe (Turkish)</option>
-                    <option value="de">Deutsch (German)</option>
-                  </select>
-                </label>
+        <form id="settings-page-form" class="settings-form" onsubmit="event.preventDefault();">
+          <div class="settings-grid-layout">
+            <!-- Left Column: Typography & Pacing (Span 7) -->
+            <div class="settings-card settings-grid-col-7">
+              <div class="settings-card-header">
+                <div class="settings-card-icon" aria-hidden="true">Aa</div>
+                <div>
+                  <h2>Reading Typography & Rhythm</h2>
+                  <p>Fine-tune your reading cadence, line pacing, and native language environment.</p>
+                </div>
               </div>
 
               <div class="settings-field">
@@ -8867,27 +11122,128 @@ body[class*="theme-"] .library-tab.active {
               </div>
 
               <div class="settings-field">
-                <label for="learner-level">
-                  <span class="field-title">Learner level</span>
-                  <span class="field-description">Calibrates your recommended catalog stories and vocabulary benchmarks.</span>
-                  <select id="learner-level" class="standalone-select">
-                    <option value="A1">A1 · Beginner</option>
-                    <option value="A2">A2 · Easy</option>
-                    <option value="B1">B1 · Intermediate</option>
-                    <option value="B2">B2 · Upper intermediate</option>
-                    <option value="C1">C1 · Advanced</option>
-                    <option value="C2">C2 · Proficient</option>
+                <label for="mother-language">
+                  <span class="field-title">Mother language</span>
+                  <span class="field-description">Used for instant contextual definitions and vocabulary translations.</span>
+                  <select id="mother-language" class="standalone-select">
+                    <option value="ar">العربية (Arabic)</option>
+                    <option value="en">English</option>
+                    <option value="fr">français (French)</option>
+                    <option value="es">español (Spanish)</option>
+                    <option value="tr">Türkçe (Turkish)</option>
+                    <option value="de">Deutsch (German)</option>
                   </select>
                 </label>
               </div>
 
-              <div class="settings-form-actions">
-                <button id="save-preferences" class="primary-button standalone-save-btn" type="button">Save settings</button>
-                <button class="text-button back-link" type="button" onclick="window.showView('library')">← Back to Library</button>
+              <div class="settings-preview-box">
+                <span style="display:block; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; color:#8B5A2B; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Reader Typography Sample</span>
+                <p>“One hot summer day a Fox was walking through an orchard until he came to a bunch of Grapes just ripening on a vine trained over a high branch.”</p>
               </div>
-            </form>
+            </div>
+
+            <!-- Right Column: Reader Account & Profile (Span 5) -->
+            <div class="settings-card settings-grid-col-5">
+              <div class="settings-card-header">
+                <div class="settings-card-icon" aria-hidden="true">👤</div>
+                <div>
+                  <h2>Reader Account</h2>
+                  <p>Manage your Wordloom reader profile and active session.</p>
+                </div>
+              </div>
+
+              <div class="settings-field account-settings-field" style="margin: 0 !important; padding: 0 !important; border: none !important;">
+                <div class="account-profile-badge">
+                  <div class="account-avatar" id="account-avatar">R</div>
+                  <div class="account-info">
+                    <strong id="account-user-name">Reader</strong>
+                    <span id="account-user-email">demo@wordloom.com</span>
+                  </div>
+                  <button id="auth-signout" type="button">Sign Out</button>
+                </div>
+              </div>
+
+              <div style="background: rgba(139, 90, 43, 0.06); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5C4033; font-weight: 600;">Session status</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #2D6559; background: #E8F3EE; padding: 3px 8px; border-radius: 999px; font-weight: 700;">● Active</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5C4033; font-weight: 600;">Offline library</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #8B5A2B; font-weight: 600;">IndexedDB & LocalStorage</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lower Left Column: Benchmark & Goals (Span 6) -->
+            <div class="settings-card settings-grid-col-6">
+              <div class="settings-card-header">
+                <div class="settings-card-icon" aria-hidden="true">🎯</div>
+                <div>
+                  <h2>Learning Benchmark</h2>
+                  <p>Calibrates your recommended catalog stories and vocabulary benchmarks.</p>
+                </div>
+              </div>
+
+              <div class="settings-field">
+                <label for="learner-level">
+                  <span class="field-title">Learner level</span>
+                  <span class="field-description">Select your target CEFR comprehension band.</span>
+                  <select id="learner-level" class="standalone-select">
+                    <option value="A1">A1 · Beginner (Foundational)</option>
+                    <option value="A2">A2 · Easy (Simple narratives)</option>
+                    <option value="B1">B1 · Intermediate (Classic fables)</option>
+                    <option value="B2">B2 · Upper intermediate (Literary prose)</option>
+                    <option value="C1">C1 · Advanced (Rich literature)</option>
+                    <option value="C2">C2 · Proficient (Unabridged classics)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <!-- Lower Right Column: Color Mood (Span 6) -->
+            <div class="settings-card settings-grid-col-6">
+              <div class="settings-card-header">
+                <div class="settings-card-icon" aria-hidden="true">🎨</div>
+                <div>
+                  <h2>Color Mood & Canvas</h2>
+                  <p>Harmonize the app palette with your reading environment.</p>
+                </div>
+              </div>
+
+              <div class="settings-field">
+                <span class="field-title">Ambient Palette</span>
+                <span class="field-description">Click a mood to apply it to your reading environment immediately.</span>
+                <div class="mood-pill-grid">
+                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('purple'); localStorage.setItem('wordloom-mood', 'purple'); showToast('Mood: Antique Parchment');">
+                    <span class="mood-dot" style="background: #8B5A2B;"></span> Parchment
+                  </button>
+                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('fern'); localStorage.setItem('wordloom-mood', 'fern'); showToast('Mood: Emerald Fern');">
+                    <span class="mood-dot" style="background: #2D6559;"></span> Fern
+                  </button>
+                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('coral'); localStorage.setItem('wordloom-mood', 'coral'); showToast('Mood: Warm Coral');">
+                    <span class="mood-dot" style="background: #E2765F;"></span> Coral
+                  </button>
+                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('sky'); localStorage.setItem('wordloom-mood', 'sky'); showToast('Mood: Ocean Sky');">
+                    <span class="mood-dot" style="background: #3D78A0;"></span> Sky
+                  </button>
+                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('amber'); localStorage.setItem('wordloom-mood', 'amber'); showToast('Mood: Amber Gold');">
+                    <span class="mood-dot" style="background: #B47D2E;"></span> Amber
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+
+          <!-- Bottom Footer Action Bar -->
+          <div class="settings-footer-bar">
+            <span class="settings-hint-text">Preferences are stored locally in your browser.</span>
+            <div class="settings-form-actions settings-footer-actions">
+              <button id="save-preferences" class="primary-button standalone-save-btn" type="button">Save settings</button>
+              <button class="text-button back-link" type="button" onclick="window.showView('library')">Back to Library</button>
+            </div>
+          </div>
+        </form>
       </section>
 
       <!-- CUSTOM BOOKS PAGE (FULL SCREEN VIEW) -->
@@ -8905,7 +11261,7 @@ body[class*="theme-"] .library-tab.active {
           <div class="standalone-page-card import-hero-card">
             <div class="import-hero-content">
               <div class="import-hero-icon-wrap">
-                <span class="material-symbols-outlined import-hero-icon">upload_file</span>
+                <svg class="import-hero-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
               </div>
               <div class="import-hero-text">
                 <h2>Import from your device</h2>
@@ -8930,37 +11286,37 @@ body[class*="theme-"] .library-tab.active {
                 <span class="source-icon">F</span>
                 <strong>Fabulang</strong>
                 <span>CEFR graded stories across A1–C2 levels.</span>
-                <small>Explore stories →</small>
+                <small>Explore stories</small>
               </a>
               <a class="source-card" href="https://learnenglish-new.com/" target="_blank" rel="noopener" data-source-label="LearnEnglish-New">
                 <span class="source-icon">L</span>
                 <strong>LearnEnglish-New</strong>
                 <span>Classic adapted literature and short stories.</span>
-                <small>Browse classics →</small>
+                <small>Browse classics</small>
               </a>
               <a class="source-card" href="https://readlang.com/en/library" target="_blank" rel="noopener" data-source-label="Readlang">
                 <span class="source-icon">R</span>
                 <strong>Readlang Library</strong>
                 <span>Extensive reading texts and articles.</span>
-                <small>Explore library →</small>
+                <small>Explore library</small>
               </a>
               <a class="source-card" href="https://standardebooks.org/" target="_blank" rel="noopener" data-source-label="Standard Ebooks">
                 <span class="source-icon">S</span>
                 <strong>Standard Ebooks</strong>
                 <span>Carefully formatted free editions of literature.</span>
-                <small>Open catalog →</small>
+                <small>Open catalog</small>
               </a>
               <a class="source-card" href="https://www.gutenberg.org/ebooks/search/?query=language+learning" target="_blank" rel="noopener" data-source-label="Project Gutenberg">
                 <span class="source-icon">G</span>
                 <strong>Project Gutenberg</strong>
                 <span>Free public-domain books.</span>
-                <small>Browse classics →</small>
+                <small>Browse classics</small>
               </a>
             </div>
           </div>
 
           <div class="custom-book-footer-nav">
-            <button class="text-button back-link" type="button" onclick="window.showView('library')">← Back to Library</button>
+            <button class="text-button back-link" type="button" onclick="window.showView('library')">Back to Library</button>
           </div>
         </div>
       </section>
@@ -22143,27 +24499,366 @@ const books = (typeof WORDLOOM_CATALOG !== 'undefined' && Array.isArray(WORDLOOM
   : buildOpdsSeedLibrary();
 const authScreen = document.querySelector('#auth-screen');
 const appShell = document.querySelector('.app-shell');
-const authSession = localStorage.getItem('wordloom-session');
+
+/* === WORDLOOM CLIENT-SIDE AUTH ENGINE & CONTROLLER === */
+let authCurrentMode = 'signin';
+
+const WordloomAuth = {
+  USERS_KEY: 'wordloom-users',
+  SESSION_KEY: 'wordloom-session',
+
+  init() {
+    const existing = this.getUsers();
+    if (!existing || existing.length === 0) {
+      const defaultUsers = [
+        {
+          id: 'usr_demo',
+          email: 'demo@wordloom.com',
+          passwordHash: this.hash('wordloom123'),
+          name: 'Demo Reader',
+          language: 'ar',
+          createdAt: Date.now()
+        },
+        {
+          id: 'usr_ahmed',
+          email: 'ahmed@wordloom.com',
+          passwordHash: this.hash('wordloom123'),
+          name: 'Ahmed',
+          language: 'ar',
+          createdAt: Date.now()
+        }
+      ];
+      localStorage.setItem(this.USERS_KEY, JSON.stringify(defaultUsers));
+    }
+  },
+
+  hash(pwd) {
+    let hash = 0x811c9dc5;
+    const str = 'wl_salt_' + pwd;
+    for (let i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash = Math.imul(hash, 0x01000193);
+    }
+    return (hash >>> 0).toString(16);
+  },
+
+  getUsers() {
+    try {
+      const u = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
+      return Array.isArray(u) ? u : [];
+    } catch {
+      return [];
+    }
+  },
+
+  saveUsers(users) {
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+  },
+
+  getSession() {
+    try {
+      const s = localStorage.getItem(this.SESSION_KEY);
+      if (!s) return null;
+      if (s === 'active') return { name: 'Demo Reader', email: 'demo@wordloom.com', language: 'ar' };
+      return JSON.parse(s);
+    } catch {
+      return null;
+    }
+  },
+
+  login(identifier, password) {
+    const cleanId = (identifier || '').trim().toLowerCase();
+    const cleanPwd = (password || '').trim();
+    if (!cleanId) throw new Error('Please enter your email or username.');
+    if (!cleanPwd) throw new Error('Please enter your password.');
+
+    const users = this.getUsers();
+    const user = users.find(u =>
+      (u.email && u.email.toLowerCase() === cleanId) ||
+      (u.name && u.name.toLowerCase() === cleanId)
+    );
+
+    if (!user) {
+      throw new Error('Account not found. Switch to "Create Account" or use demo@wordloom.com');
+    }
+    if (user.passwordHash !== this.hash(cleanPwd)) {
+      throw new Error('Incorrect password. Please try again.');
+    }
+
+    const session = {
+      token: 'wl_' + Math.random().toString(36).substring(2) + Date.now().toString(36),
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      language: user.language || 'ar',
+      loggedInAt: Date.now()
+    };
+    this.createSession(session);
+    return session;
+  },
+
+  register(data) {
+    const name = (data.name || '').trim();
+    const email = (data.email || '').trim().toLowerCase();
+    const password = (data.password || '').trim();
+    const language = data.language || 'ar';
+
+    if (!name) throw new Error('Please enter your full name.');
+    if (!email || !email.includes('@')) throw new Error('Please enter a valid email address.');
+    if (!password || password.length < 6) throw new Error('Password must be at least 6 characters.');
+
+    const users = this.getUsers();
+    if (users.some(u => u.email && u.email.toLowerCase() === email)) {
+      throw new Error('An account with this email already exists. Please sign in.');
+    }
+
+    const newUser = {
+      id: 'usr_' + Date.now().toString(36) + Math.random().toString(36).substring(2, 6),
+      email,
+      passwordHash: this.hash(password),
+      name,
+      language,
+      createdAt: Date.now()
+    };
+    users.push(newUser);
+    this.saveUsers(users);
+
+    const session = {
+      token: 'wl_' + Math.random().toString(36).substring(2) + Date.now().toString(36),
+      userId: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+      language: newUser.language,
+      loggedInAt: Date.now()
+    };
+    this.createSession(session);
+    return session;
+  },
+
+  socialLogin(provider) {
+    const isGoogle = provider === 'google';
+    const mockEmail = isGoogle ? 'reader.google@wordloom.com' : 'reader.github@wordloom.com';
+    const mockName = isGoogle ? 'Google Reader' : 'GitHub Reader';
+    const users = this.getUsers();
+    let user = users.find(u => u.email === mockEmail);
+    if (!user) {
+      user = {
+        id: 'usr_' + provider + '_' + Date.now().toString(36),
+        email: mockEmail,
+        passwordHash: this.hash('oauth_social_login'),
+        name: mockName,
+        language: 'ar',
+        provider,
+        createdAt: Date.now()
+      };
+      users.push(user);
+      this.saveUsers(users);
+    }
+    const session = {
+      token: 'wl_' + provider + '_' + Date.now().toString(36),
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      language: user.language || 'ar',
+      provider,
+      loggedInAt: Date.now()
+    };
+    this.createSession(session);
+    if (typeof showToast === 'function') showToast(`Signed in with ${isGoogle ? 'Google' : 'GitHub'}!`);
+    return session;
+  },
+
+  guestLogin() {
+    const session = {
+      token: 'wl_guest_' + Date.now().toString(36),
+      userId: 'usr_guest',
+      email: 'guest@wordloom.local',
+      name: 'Guest reader',
+      language: localStorage.getItem('wordloom-language') || 'ar',
+      isGuest: true,
+      loggedInAt: Date.now()
+    };
+    this.createSession(session);
+    return session;
+  },
+
+  loginSocial(provider) {
+    return this.socialLogin(provider);
+  },
+
+  loginGuest() {
+    return this.guestLogin();
+  },
+
+  createSession(session) {
+    localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
+    localStorage.setItem('wordloom-welcome-complete', 'true');
+    if (session.language) {
+      localStorage.setItem('wordloom-language', session.language);
+      motherLanguage = session.language;
+    }
+  },
+
+  signOut() {
+    localStorage.removeItem(this.SESSION_KEY);
+    syncAuthUI();
+    const form = document.querySelector('#auth-form');
+    if (form) form.reset();
+    setAuthMode('signin');
+    clearAuthError();
+    if (typeof showToast === 'function') showToast('Signed out of Wordloom.');
+  }
+};
+
+WordloomAuth.init();
+
+function showAuthError(msg) {
+  const wrap = document.querySelector('#auth-error-wrap');
+  const errorEl = document.querySelector('#auth-error');
+  if (wrap && errorEl) {
+    errorEl.textContent = msg;
+    wrap.classList.remove('hidden');
+  }
+}
+
+function clearAuthError() {
+  const wrap = document.querySelector('#auth-error-wrap');
+  const errorEl = document.querySelector('#auth-error');
+  if (wrap && errorEl) {
+    errorEl.textContent = '';
+    wrap.classList.add('hidden');
+  }
+}
+
+function setAuthMode(mode) {
+  authCurrentMode = mode;
+  const tabSignin = document.querySelector('#auth-tab-signin');
+  const tabSignup = document.querySelector('#auth-tab-signup');
+  const nameGroup = document.querySelector('#auth-name-group');
+  const langGroup = document.querySelector('#auth-language-group');
+  const demoHint = document.querySelector('#auth-demo-hint');
+  const cardTitle = document.querySelector('#auth-card-title');
+  const cardSub = document.querySelector('#auth-card-sub');
+  const submitBtn = document.querySelector('#auth-submit-btn');
+  const emailInput = document.querySelector('#auth-email');
+  const passwordInput = document.querySelector('#auth-password');
+
+  clearAuthError();
+
+  if (mode === 'signin') {
+    tabSignin?.classList.add('active');
+    tabSignin?.setAttribute('aria-selected', 'true');
+    tabSignup?.classList.remove('active');
+    tabSignup?.setAttribute('aria-selected', 'false');
+    nameGroup?.classList.add('hidden');
+    langGroup?.classList.add('hidden');
+    demoHint?.classList.remove('hidden');
+    if (nameGroup) nameGroup.style.display = 'none';
+    if (langGroup) langGroup.style.display = 'none';
+    if (demoHint) demoHint.style.display = 'flex';
+    if (cardTitle) cardTitle.textContent = 'Welcome back';
+    if (cardSub) cardSub.textContent = 'Sign in to resume your reading journey';
+    if (submitBtn) submitBtn.textContent = 'Sign In';
+    if (emailInput) {
+      emailInput.setAttribute('autocomplete', 'username');
+      if (!emailInput.value) emailInput.value = 'demo@wordloom.com';
+    }
+    if (passwordInput) {
+      passwordInput.setAttribute('autocomplete', 'current-password');
+      if (!passwordInput.value) passwordInput.value = 'wordloom123';
+    }
+  } else {
+    tabSignup?.classList.add('active');
+    tabSignup?.setAttribute('aria-selected', 'true');
+    tabSignin?.classList.remove('active');
+    tabSignin?.setAttribute('aria-selected', 'false');
+    nameGroup?.classList.remove('hidden');
+    langGroup?.classList.remove('hidden');
+    demoHint?.classList.add('hidden');
+    if (nameGroup) nameGroup.style.display = 'flex';
+    if (langGroup) langGroup.style.display = 'flex';
+    if (demoHint) demoHint.style.display = 'none';
+    if (cardTitle) cardTitle.textContent = 'Create your account';
+    if (cardSub) cardSub.textContent = 'Start reading stories crafted for your level';
+    if (submitBtn) submitBtn.textContent = 'Create Account';
+    if (emailInput) {
+      emailInput.setAttribute('autocomplete', 'email');
+      if (emailInput.value === 'demo@wordloom.com') emailInput.value = '';
+    }
+    if (passwordInput) {
+      passwordInput.setAttribute('autocomplete', 'new-password');
+      if (passwordInput.value === 'wordloom123') passwordInput.value = '';
+    }
+  }
+}
+
+function updateUserProfileUI(session) {
+  const userNameEl = document.querySelector('#account-user-name');
+  const userEmailEl = document.querySelector('#account-user-email');
+  const avatarEl = document.querySelector('#account-avatar');
+  if (session) {
+    if (userNameEl) userNameEl.textContent = session.name || 'Reader';
+    if (userEmailEl) userEmailEl.textContent = session.email || (session.isGuest ? 'Guest Session' : '');
+    if (avatarEl) avatarEl.textContent = (session.name ? session.name[0] : 'R').toUpperCase();
+  }
+}
+
 function openWelcome() { }
+
 function unlockApp(session) {
-  localStorage.setItem('wordloom-session', JSON.stringify(session));
-  localStorage.setItem('wordloom-welcome-complete', 'true');
-  authScreen.classList.add('hidden');
-  appShell.classList.remove('auth-locked');
-  document.querySelector('#mother-language').value = motherLanguage;
+  WordloomAuth.createSession(session);
+  syncAuthUI();
+  const motherLangSelect = document.querySelector('#mother-language');
+  if (motherLangSelect && motherLanguage) {
+    motherLangSelect.value = motherLanguage;
+  }
   openWelcome();
 }
-function submitAuth(event) {
-  event.preventDefault();
-  const name = document.querySelector('#auth-name').value.trim();
-  const language = document.querySelector('#auth-language').value;
-  const error = document.querySelector('#auth-error');
-  if (!name) { error.textContent = 'Enter your name to start reading.'; return; }
-  motherLanguage = language;
-  localStorage.setItem('wordloom-language', language);
-  unlockApp({ name, language });
+
+function syncAuthUI() {
+  const session = WordloomAuth.getSession();
+  const navRoot = document.querySelector('#react-nav-root');
+  if (session) {
+    authScreen?.classList.add('hidden');
+    appShell?.classList.remove('auth-locked');
+    if (navRoot) navRoot.style.display = '';
+    updateUserProfileUI(session);
+  } else {
+    authScreen?.classList.remove('hidden');
+    appShell?.classList.add('auth-locked');
+    if (navRoot) navRoot.style.display = 'none';
+  }
 }
-if (authSession) { authScreen.classList.add('hidden'); appShell.classList.remove('auth-locked'); }
+
+function submitAuth(event) {
+  if (event) event.preventDefault();
+  clearAuthError();
+
+  const emailInput = document.querySelector('#auth-email');
+  const passwordInput = document.querySelector('#auth-password');
+  const nameInput = document.querySelector('#auth-name');
+  const langSelect = document.querySelector('#auth-language');
+
+  const email = emailInput ? emailInput.value.trim() : '';
+  const password = passwordInput ? passwordInput.value.trim() : '';
+  const name = nameInput ? nameInput.value.trim() : '';
+  const language = langSelect ? langSelect.value : 'ar';
+
+  try {
+    let session;
+    if (authCurrentMode === 'signup') {
+      session = WordloomAuth.register({ name, email, password, language });
+    } else {
+      session = WordloomAuth.login(email, password);
+    }
+    unlockApp(session);
+  } catch (err) {
+    showAuthError(err.message || 'Authentication failed.');
+  }
+}
+
+syncAuthUI();
+
 const vocabulary = [['restless', 'unable to relax or stay still', 'B1'], ['distant', 'far away in space or time', 'B1'], ['familiar', 'well known from experience', 'A2'], ['visibility', 'how clearly something can be seen', 'B2'], ['steady', 'firm and not changing', 'B1'], ['veil', 'a covering that hides something', 'B2'], ['value', 'the worth or importance of something', 'A2'], ['city', 'a large populated place with streets and buildings', 'A1'], ['nature', 'the natural world around us', 'A2'], ['emotion', 'a feeling such as joy, fear, or sadness', 'B1']];
 const extraTitles = { life: ['Morning Rituals', 'The Friendly Neighbor', 'A Room of One’s Own', 'Making Time', 'The Sunday Table'], travel: ['Across the Desert', 'The Harbor Road', 'Three Days in Rome', 'The Island Journal', 'A Guide to New Streets', 'Night Train North'], culture: ['The Language of Music', 'Stories We Carry', 'The Open Gallery', 'Food and Memory', 'Theatre Lights', 'A Letter to Home'], science: ['The Life of Bees', 'Inside the Human Body', 'Weather Patterns', 'The Language of Plants', 'Ocean Currents', 'The Science of Sleep'], business: ['The Small Enterprise', 'Leading with Care', 'Ideas that Scale', 'The Customer Story', 'Work in Progress', 'The Value of Time', 'A Better Meeting', 'Building Trust'], technology: ['The Digital Garden', 'Understanding the Internet', 'Robots at Work', 'The Future of Energy', 'A Human Interface', 'Learning to Code', 'Data and Decisions', 'The Connected Home'], history: ['The Silk Road', 'Women Who Changed History', 'The Industrial Age', 'A People’s Archive', 'The First Cities', 'The Long Voyage', 'Revolutions in Print', 'The Story of Numbers'] };
 
@@ -22238,6 +24933,61 @@ const dictionary = {
   emotion: ['عاطفة', 'a strong feeling such as joy, sadness, anger, or fear', 'noun', 'The music filled her with emotion.']
 };
 const translations = { ar: 'العربية', en: 'English', fr: 'français', es: 'español', tr: 'Türkçe', de: 'Deutsch' };
+const definitionsCache = {
+  morning: 'The early part of the day, between dawn and noon.',
+  the: 'Used to refer to a person, place, or thing that is unique or already known.',
+  sea: 'The continuous expanse of salt water that covers most of the Earth.',
+  restless: 'Unable to relax, rest, or remain still; unsettled or agitated.',
+  evening: 'The period of time between the end of the afternoon and bedtime.',
+  folding: 'Bending or closing something over upon itself.',
+  dark: 'With little or no light; deep in shade or color.',
+  blue: 'The primary color resembling the clear daytime sky or deep sea.',
+  cafe: 'A small casual restaurant serving coffee, drinks, and light meals.',
+  sleeves: 'The parts of a garment covering all or part of the arm.',
+  lighthouse: 'A tower with a bright beacon light to guide and warn sailors at sea.',
+  keeper: 'A person responsible for guarding, tending, or maintaining something.',
+  checked: 'Examined carefully in order to verify condition, safety, or accuracy.',
+  familiar: 'Well known from long association, study, or past experience.',
+  village: 'A clustered settlement in a rural area, smaller than a town.',
+  disappear: 'To cease to be visible; vanish out of sight.',
+  veil: 'A piece of fabric worn as a covering; anything that conceals or screens.',
+  rain: 'Water falling in drops condensed from vapor in the atmosphere.',
+  distant: 'Far off or apart in space or time; remote.',
+  warning: 'A statement, signal, or sign alerting to possible danger.',
+  logbook: 'An official journal recording events, weather, and navigation details.',
+  carefully: 'With close attention, precision, and effort to avoid errors or harm.',
+  visibility: 'The state or distance over which objects can be clearly seen.',
+  steady: 'Firmly placed, fixed, stable, and not shaking or wavering.',
+  boat: 'A watercraft designed for travel across lakes, rivers, or seas.',
+  thought: 'An idea, opinion, or mental impression formed in the mind.',
+  value: 'The regard that something is held to deserve; importance or worth.',
+  city: 'A large, densely populated human settlement with streets and buildings.',
+  nature: 'The physical world and all living organisms not created by humans.',
+  emotion: 'A strong feeling deriving from one\'s circumstances, mood, or relationships.',
+  danger: 'The possibility of suffering harm, injury, damage, or loss.',
+  ships: 'Large ocean-going vessels propelled by sails or engines.',
+  tower: 'A tall, narrow building or structure rising high above its base.',
+  rocks: 'Solid mineral material forming part of the surface of the earth.',
+  water: 'A clear, colorless, odorless liquid essential for all plant and animal life.',
+  coast: 'The land along the edge of a sea, ocean, or lake.',
+  island: 'A piece of land entirely surrounded by water.',
+  century: 'A period of one hundred successive years.',
+  centuries: 'Multiple periods of one hundred years; great stretches of time.',
+  sailors: 'Persons whose profession is navigating ships or working at sea.',
+  ancient: 'Belonging to a very distant past, especially centuries or millennia ago.',
+  symbols: 'Marks, signs, or objects that represent or stand for something else.',
+  safety: 'The condition of being protected from or unlikely to cause danger or harm.',
+  guidance: 'Direction, advice, or counsel that points the right way forward.',
+  horizon: 'The line at which the earth\'s surface and the sky appear to meet.',
+  difficult: 'Needing much effort, skill, or courage to do, deal with, or understand.',
+  important: 'Of great significance, value, or consequence.',
+  quiet: 'Making little or no noise; calm, peaceful, and untroubled.'
+};
+try {
+  const storedDefs = JSON.parse(localStorage.getItem('wordloom-definitions-cache') || '{}');
+  Object.assign(definitionsCache, storedDefs);
+} catch (e) {}
+
 const customTranslations = {
   morning: { ar: 'صباح', en: 'morning', fr: 'matin', es: 'mañana', tr: 'sabah', de: 'Morgen' },
   the: { ar: 'الـ', en: 'the', fr: 'le / la', es: 'el / la', tr: 'belirli tanımlık', de: 'der / die / das' }, 
@@ -22268,8 +25018,30 @@ const customTranslations = {
   value: { ar: 'قيمة', en: 'value', fr: 'valeur', es: 'valor', tr: 'değer', de: 'Wert' },
   city: { ar: 'مدينة', en: 'city', fr: 'ville', es: 'ciudad', tr: 'şehir', de: 'Stadt' },
   nature: { ar: 'طبيعة', en: 'nature', fr: 'nature', es: 'naturaleza', tr: 'doğa', de: 'Natur' },
-  emotion: { ar: 'عاطفة', en: 'emotion', fr: 'émotion', es: 'emoción', tr: 'duygu', de: 'Emotion' }
+  emotion: { ar: 'عاطفة', en: 'emotion', fr: 'émotion', es: 'emoción', tr: 'duygu', de: 'Emotion' },
+  danger: { ar: 'خطر', en: 'danger', fr: 'danger', es: 'peligro', tr: 'tehlike', de: 'Gefahr' },
+  ships: { ar: 'سفن', en: 'ships', fr: 'navires', es: 'barcos', tr: 'gemiler', de: 'Schiffe' },
+  tower: { ar: 'برج', en: 'tower', fr: 'tour', es: 'torre', tr: 'kule', de: 'Turm' },
+  rocks: { ar: 'صخور', en: 'rocks', fr: 'rochers', es: 'rocas', tr: 'kayalar', de: 'Felsen' },
+  water: { ar: 'ماء', en: 'water', fr: 'eau', es: 'agua', tr: 'su', de: 'Wasser' },
+  coast: { ar: 'ساحل', en: 'coast', fr: 'côte', es: 'costa', tr: 'sahil', de: 'Küste' },
+  island: { ar: 'جزيرة', en: 'island', fr: 'île', es: 'isla', tr: 'ada', de: 'Insel' },
+  century: { ar: 'قرن', en: 'century', fr: 'siècle', es: 'siglo', tr: 'yüzyıl', de: 'Jahrhundert' },
+  centuries: { ar: 'قرون', en: 'centuries', fr: 'siècles', es: 'siglos', tr: 'yüzyıllar', de: 'Jahrhunderte' },
+  sailors: { ar: 'بحارة', en: 'sailors', fr: 'marins', es: 'marineros', tr: 'denizciler', de: 'Matrosen' },
+  ancient: { ar: 'قديم / عتيق', en: 'ancient', fr: 'ancien', es: 'antiguo', tr: 'antik', de: 'antike' },
+  symbols: { ar: 'رموز', en: 'symbols', fr: 'symboles', es: 'símbolos', tr: 'semboller', de: 'Symbole' },
+  safety: { ar: 'سلامة / أمان', en: 'safety', fr: 'sécurité', es: 'seguridad', tr: 'güvenlik', de: 'Sicherheit' },
+  guidance: { ar: 'إرشاد / توجيه', en: 'guidance', fr: 'orientation', es: 'guía', tr: 'rehberlik', de: 'Führung' },
+  horizon: { ar: 'أفق', en: 'horizon', fr: 'horizon', es: 'horizonte', tr: 'ufuk', de: 'Horizont' },
+  difficult: { ar: 'صعب', en: 'difficult', fr: 'difficile', es: 'difícil', tr: 'zor', de: 'schwierig' },
+  important: { ar: 'مهم', en: 'important', fr: 'important', es: 'importante', tr: 'önemli', de: 'wichtig' },
+  quiet: { ar: 'هادئ', en: 'quiet', fr: 'calme', es: 'tranquilo', tr: 'sessiz', de: 'ruhig' }
 };
+try {
+  const storedTrans = JSON.parse(localStorage.getItem('wordloom-custom-translations') || '{}');
+  Object.assign(customTranslations, storedTrans);
+} catch (e) {}
 const story = 'A lighthouse is a tower with a bright light that helps ships find their way at night or in bad weather. It is often built on a coast, an island, or a rocky shore. The light is usually produced by a lamp, a lens, and a rotating mechanism that sends flashes across the water. For centuries, sailors depended on these lights to know where land was and to avoid dangerous rocks. The first large lighthouses were built in ancient times, and many of them became symbols of safety and guidance. In a way, a lighthouse is both a building and a warning: it tells ships where to go and what dangers may still be near.';
 const readerChapters = [
   {
@@ -23239,7 +26011,7 @@ function renderReaderState() {
     prevButton.setAttribute('aria-disabled', String(isFirstPage));
   }
   if (nextButton) {
-    nextButton.textContent = isLastPage ? 'Finished ✓' : 'Next →';
+    nextButton.textContent = isLastPage ? 'Finished ✓' : 'Next';
     nextButton.disabled = false;
   }
 }
@@ -23267,48 +26039,119 @@ function showView(viewName) {
   const breadcrumb = document.querySelector('.breadcrumb strong');
   if (breadcrumb) breadcrumb.textContent = labelMap[viewName] || 'Library';
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
+  const reactNavRoot = document.querySelector('#react-nav-root');
+  if (reactNavRoot) {
+    if (viewName === 'reading' || viewName === 'game') {
+      reactNavRoot.classList.add('hidden');
+      reactNavRoot.style.setProperty('display', 'none', 'important');
+    } else if (typeof WordloomAuth !== 'undefined' && !WordloomAuth.getSession()) {
+      reactNavRoot.classList.add('hidden');
+      reactNavRoot.style.setProperty('display', 'none', 'important');
+    } else {
+      reactNavRoot.classList.remove('hidden');
+      reactNavRoot.style.removeProperty('display');
+    }
+  }
 }
 function openReader(bookTitle = activeBook.title) { activeBook = books.find(book => book.title === bookTitle) || activeBook; learnerLevel = activeBook.level || learnerLevel; recordReadingHistory(activeBook.title, 1); readerState = { page: 0 }; closeBookPreview(); showView('reading'); renderReaderState(); }
 function closeModals() { document.querySelectorAll('.modal-backdrop').forEach(modal => { modal.classList.add('hidden'); modal.setAttribute('hidden', ''); modal.setAttribute('aria-hidden', 'true'); }); }
 function saveWordToVocabulary(key, sentence) {
-  const data = dictionary[key] || [key, 'A useful word from this story.', 'word', ''];
-  vocabularyRecords[key] = vocabularyRecords[key] || { word: key, meaning: data[1], level: 'B1', sentence, repetitions: 0, interval: 0, nextReview: Date.now() };
-  vocabularyRecords[key].sentence = sentence;
-  vocabularyRecords[key].meaning = data[1];
+  const cachedTrans = customTranslations[key]?.[motherLanguage] || (dictionary[key]?.[0] && dictionary[key][0] !== key ? dictionary[key][0] : null);
+  const cachedDef = definitionsCache[key] || (dictionary[key]?.[1] && !dictionary[key][1].startsWith('A useful word') ? dictionary[key][1] : null);
+  const bestMeaning = cachedTrans || cachedDef || (sentence ? `Used in: "${sentence.trim().slice(0, 80)}..."` : 'Saved vocabulary');
+  vocabularyRecords[key] = vocabularyRecords[key] || { word: key, meaning: bestMeaning, level: 'B1', sentence, repetitions: 0, interval: 0, nextReview: Date.now() };
+  vocabularyRecords[key].sentence = sentence || vocabularyRecords[key].sentence;
+  if (cachedTrans || cachedDef) {
+    vocabularyRecords[key].meaning = bestMeaning;
+  }
   localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords));
   savedWords.add(key);
   localStorage.setItem('wordloom-saved-words', JSON.stringify([...savedWords]));
 }
-function fetchArabicTranslationIfMissing(key, contentEl) {
-  if (motherLanguage === 'ar') {
-    const data = dictionary[key] || [key, ''];
-    const currentTranslation = getWordTranslation(key, data);
-    if (!/[؀-ۿ]/.test(currentTranslation)) {
-      const noteEl = contentEl.querySelector('.translation-note');
-      if (noteEl) noteEl.innerHTML = '<span style="color:var(--amber);">Fetching Arabic translation...</span>';
-      fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(key)}&langpair=en|ar`)
-        .then(r => r.json())
-        .then(result => {
-          if (result?.responseData?.translatedText) {
-            const ar = result.responseData.translatedText.split(',')[0].trim();
-            if (/[؀-ۿ]/.test(ar)) {
-              window.customTranslations = window.customTranslations || {};
-              window.customTranslations[key] = window.customTranslations[key] || {};
-              window.customTranslations[key]['ar'] = ar;
-              if (vocabularyRecords[key]) {
-                vocabularyRecords[key].meaning = ar;
-                localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords));
-              }
-              const strongEls = contentEl.querySelectorAll('.translation-line strong');
-              strongEls.forEach(el => el.textContent = ar);
-              if (noteEl) noteEl.remove();
+
+function fetchTranslationAndDefinition(key, contentEl, contextSentence) {
+  if (!key || !contentEl) return;
+  const targetLang = motherLanguage || 'ar';
+  
+  if (targetLang !== 'en' && !customTranslations[key]?.[targetLang] && !(targetLang === 'ar' && dictionary[key]?.[0] && /[؀-ۿ]/.test(dictionary[key][0]))) {
+    fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(key)}&langpair=en|${targetLang}`)
+      .then(r => r.json())
+      .then(result => {
+        if (result?.responseData?.translatedText) {
+          let trans = result.responseData.translatedText.split(',')[0].trim();
+          trans = trans.replace(/^[«"']|[»"']$/g, '').trim();
+          if (trans.toLowerCase() !== key.toLowerCase() && (targetLang !== 'ar' || /[؀-ۿ]/.test(trans))) {
+            customTranslations[key] = customTranslations[key] || {};
+            customTranslations[key][targetLang] = trans;
+            try { localStorage.setItem('wordloom-custom-translations', JSON.stringify(customTranslations)); } catch (e) {}
+            if (vocabularyRecords[key]) {
+              vocabularyRecords[key].meaning = trans;
+              try { localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords)); } catch (e) {}
             }
+            const strongEls = contentEl.querySelectorAll('.translation-line strong');
+            strongEls.forEach(el => {
+              el.textContent = trans;
+            });
           }
-        }).catch(() => {
-          if (noteEl) noteEl.innerHTML = 'No direct translation yet; the English explanation is shown instead.';
-        });
-    }
+        }
+      })
+      .catch(() => {});
   }
+
+  const hasDefinition = definitionsCache[key] || (dictionary[key]?.[1] && !dictionary[key][1].startsWith('A useful word'));
+  if (!hasDefinition) {
+    fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(key)}&md=d&max=1`)
+      .then(r => r.json())
+      .then(result => {
+        if (Array.isArray(result) && result[0]?.defs?.length > 0) {
+          const rawDef = result[0].defs.find(d => !d.startsWith('N\t"')) || result[0].defs[0];
+          let cleanDef = rawDef.replace(/^[a-z]+\t/i, '').trim();
+          cleanDef = cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1);
+          definitionsCache[key] = cleanDef;
+          try { localStorage.setItem('wordloom-definitions-cache', JSON.stringify(definitionsCache)); } catch (e) {}
+          const explEl = contentEl.querySelector('.context-box p');
+          if (explEl) {
+            explEl.textContent = cleanDef;
+          }
+        } else {
+          const explEl = contentEl.querySelector('.context-box p');
+          if (explEl) {
+            const fallback = (contextSentence && !contextSentence.includes('The word “') && contextSentence.length > 5)
+              ? `“${contextSentence.trim()}”`
+              : `Literary vocabulary from “${activeBook?.title || 'this story'}”.`;
+            explEl.textContent = fallback;
+          }
+        }
+      })
+      .catch(() => {
+        const explEl = contentEl.querySelector('.context-box p');
+        if (explEl) {
+          const fallback = (contextSentence && !contextSentence.includes('The word “') && contextSentence.length > 5)
+            ? `“${contextSentence.trim()}”`
+            : `Literary vocabulary from “${activeBook?.title || 'this story'}”.`;
+          explEl.textContent = fallback;
+        }
+      });
+  }
+}
+const fetchArabicTranslationIfMissing = (key, contentEl) => fetchTranslationAndDefinition(key, contentEl, activeWordContext);
+
+function getWordTranslation(key, data) {
+  if (!key) return null;
+  if (motherLanguage !== 'en' && customTranslations[key]?.[motherLanguage]) {
+    return customTranslations[key][motherLanguage];
+  }
+  if (motherLanguage === 'ar') {
+    if (dictionary[key]?.[0] && /[؀-ۿ]/.test(dictionary[key][0])) return dictionary[key][0];
+    if (data && data[0] && /[؀-ۿ]/.test(data[0])) return data[0];
+    if (data && data[1] && /[؀-ۿ]/.test(data[1])) return data[1];
+    if (vocabularyRecords[key]?.meaning && /[؀-ۿ]/.test(vocabularyRecords[key].meaning)) return vocabularyRecords[key].meaning;
+  }
+  if (motherLanguage === 'en') {
+    const englishLookup = (data && data[1] && !data[1].startsWith('A useful word')) ? data[1] : (definitionsCache[key] || dictionary[key]?.[1]);
+    return englishLookup || null;
+  }
+  return null;
 }
 
 function showDictionary(word) {
@@ -23316,15 +26159,31 @@ function showDictionary(word) {
   const modal = document.querySelector('#dictionary-modal');
   const key = word?.dataset?.word ? wordKey(word.dataset.word) : wordKey(word?.textContent || '');
   if (!content || !modal || !key) return;
-  const data = dictionary[key] || [key, 'A useful word from this story.', 'word', `The word “${key}” appears in this story.`];
-  const translation = getWordTranslation(key, data);
-  try { activeWordContext = decodeURIComponent(word.dataset.context || data[3]); } catch { activeWordContext = data[3]; }
+
+  const data = dictionary[key] || [key, '', 'word', ''];
+  try { activeWordContext = decodeURIComponent(word.dataset.context || ''); } catch { activeWordContext = ''; }
+  if (!activeWordContext && data[3]) activeWordContext = data[3];
+
   readingMetrics.lookups = (readingMetrics.lookups || 0) + 1;
   localStorage.setItem('wordloom-reading-metrics', JSON.stringify(readingMetrics));
   updateReadingStats();
+
   const languageLabel = translations[motherLanguage] || translations.en;
-  const translationText = translation || data[1] || key;
-  const translationNote = translation ? '' : '<small class="translation-note">No direct translation yet; the English explanation is shown instead.</small>';
+  const translation = getWordTranslation(key, data);
+  const definition = definitionsCache[key] || (data[1] && !data[1].startsWith('A useful word') ? data[1] : null);
+
+  const translationHtml = translation 
+    ? translation 
+    : `<span class="translation-loading" style="font-size: 18px; color: #8B5A2B; font-style: italic; font-weight: 500;">${motherLanguage === 'ar' ? 'جارٍ الترجمة...' : 'Translating...'}</span>`;
+
+  const explanationHtml = definition
+    ? definition
+    : (activeWordContext && !activeWordContext.includes('The word “') && activeWordContext.length > 5
+        ? `“${activeWordContext.trim()}”`
+        : `<span class="explanation-loading" style="color: #8B5A2B; font-style: italic;">Loading explanation...</span>`);
+
+  const isSaved = savedWords.has(key);
+
   content.innerHTML = `
     <div style="text-align: center; margin-bottom: 24px;">
       <span style="font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: #8B5A2B; text-transform: uppercase;">Word Details</span>
@@ -23335,15 +26194,14 @@ function showDictionary(word) {
       
       <div class="translation-line" style="text-align: center; margin-bottom: 16px; background: transparent !important; border: none !important; padding: 0 !important;">
         <span style="font-family: sans-serif; font-size: 11px; font-weight: 700; color: #8B5A2B !important; text-transform: uppercase; letter-spacing: 0.05em;">Translation · ${languageLabel}</span>
-        <strong style="display: block; margin-top: 6px; font-size: 26px; color: #1a1a1a !important; font-family: 'Playfair Display', serif; font-weight: 700;">${translationText}</strong>
-        ${translationNote}
+        <strong style="display: block; margin-top: 6px; font-size: 26px; color: #1a1a1a !important; font-family: 'Playfair Display', serif; font-weight: 700; min-height: 34px; line-height: 1.3;">${translationHtml}</strong>
       </div>
 
       <div style="height: 1px; background-color: rgba(139, 90, 43, 0.2); margin: 0 20px 16px 20px;"></div>
 
       <div class="context-box" style="text-align: center; padding: 0 !important; background: transparent !important; border: none !important;">
         <span class="phrase-label" style="font-family: sans-serif; font-size: 11px; font-weight: 700; color: #8B5A2B !important; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px;">Word Explanation</span>
-        <p style="margin: 0; font-family: sans-serif; font-size: 15px; line-height: 1.6; color: #1a1a1a !important;">${data[1]}</p>
+        <p style="margin: 0; font-family: sans-serif; font-size: 15px; line-height: 1.6; color: #1a1a1a !important;">${explanationHtml}</p>
       </div>
 
     </div>
@@ -23352,8 +26210,8 @@ function showDictionary(word) {
       <button class="speak-word" data-speak="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #ffffff !important; border: 2px solid #5C4033 !important; color: #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;">
         🔊 Listen
       </button>
-      <button class="modal-save" data-learn-word="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #5C4033 !important; color: #ffffff !important; border: 2px solid #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;"${savedWords.has(key) ? ' disabled' : ''}>
-        ${savedWords.has(key) ? '✓ Saved' : '+ Save Word'}
+      <button class="modal-save" data-learn-word="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #5C4033 !important; color: #ffffff !important; border: 2px solid #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;"${isSaved ? ' disabled' : ''}>
+        ${isSaved ? '✓ In Review' : '+ Add to Review'}
       </button>
     </div>
   `;
@@ -23375,23 +26233,29 @@ function showDictionary(word) {
   }
   modal.querySelector('[data-close-modal]')?.focus();
   document.querySelector('#quick-word-popover')?.classList.add('hidden');
-  fetchArabicTranslationIfMissing(key, content);
+  fetchTranslationAndDefinition(key, content, activeWordContext);
 }
-function getWordTranslation(key, data) {
-  if (motherLanguage !== 'en' && customTranslations[key]?.[motherLanguage]) return customTranslations[key][motherLanguage];
-  const englishLookup = data && data[1] && data[1] !== 'A useful word from this story.' ? data[1] : dictionary[key]?.[1];
-  if (motherLanguage === 'ar') return data[0] && data[0] !== key ? data[0] : englishLookup;
-  if (motherLanguage === 'en') return englishLookup || key;
-  if (englishLookup) return englishLookup;
-  return key;
-}
+
 function showFullDictionary(key) { 
   const modal = document.querySelector('#dictionary-modal'); 
   const content = document.querySelector('#dictionary-content'); 
-  const data = dictionary[key] || [key, 'A useful word from this story.', 'word', `The word “${key}” appears in this story.`]; 
+  if (!content || !modal || !key) return;
+  const data = dictionary[key] || [key, '', 'word', '']; 
   const translation = getWordTranslation(key, data); 
+  const definition = definitionsCache[key] || (data[1] && !data[1].startsWith('A useful word') ? data[1] : null);
   const languageLabel = translations[motherLanguage] || translations.en; 
-  const translationText = translation || data[1] || key; 
+  
+  const translationHtml = translation 
+    ? translation 
+    : `<span class="translation-loading" style="font-size: 18px; color: #8B5A2B; font-style: italic; font-weight: 500;">${motherLanguage === 'ar' ? 'جارٍ الترجمة...' : 'Translating...'}</span>`;
+
+  const explanationHtml = definition
+    ? definition
+    : (activeWordContext && !activeWordContext.includes('The word “') && activeWordContext.length > 5
+        ? `“${activeWordContext.trim()}”`
+        : `<span class="explanation-loading" style="color: #8B5A2B; font-style: italic;">Loading explanation...</span>`);
+
+  const isSaved = savedWords.has(key);
   
   content.innerHTML = `
     <div style="text-align: center; margin-bottom: 24px;">
@@ -23403,15 +26267,14 @@ function showFullDictionary(key) {
       
       <div class="translation-line" style="text-align: center; margin-bottom: 16px; background: transparent !important; border: none !important; padding: 0 !important;">
         <span style="font-family: sans-serif; font-size: 11px; font-weight: 700; color: #8B5A2B !important; text-transform: uppercase; letter-spacing: 0.05em;">Translation · ${languageLabel}</span>
-        <strong style="display: block; margin-top: 6px; font-size: 26px; color: #1a1a1a !important; font-family: 'Playfair Display', serif; font-weight: 700;">${translationText}</strong>
-        ${translationNote}
+        <strong style="display: block; margin-top: 6px; font-size: 26px; color: #1a1a1a !important; font-family: 'Playfair Display', serif; font-weight: 700; min-height: 34px; line-height: 1.3;">${translationHtml}</strong>
       </div>
 
       <div style="height: 1px; background-color: rgba(139, 90, 43, 0.2); margin: 0 20px 16px 20px;"></div>
 
       <div class="context-box" style="text-align: center; padding: 0 !important; background: transparent !important; border: none !important;">
         <span class="phrase-label" style="font-family: sans-serif; font-size: 11px; font-weight: 700; color: #8B5A2B !important; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px;">Word Explanation</span>
-        <p style="margin: 0; font-family: sans-serif; font-size: 15px; line-height: 1.6; color: #1a1a1a !important;">${data[1]}</p>
+        <p style="margin: 0; font-family: sans-serif; font-size: 15px; line-height: 1.6; color: #1a1a1a !important;">${explanationHtml}</p>
       </div>
 
     </div>
@@ -23420,8 +26283,8 @@ function showFullDictionary(key) {
       <button class="speak-word" data-speak="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #ffffff !important; border: 2px solid #5C4033 !important; color: #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;">
         🔊 Listen
       </button>
-      <button class="modal-save" data-learn-word="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #5C4033 !important; color: #ffffff !important; border: 2px solid #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;"${savedWords.has(key) ? ' disabled' : ''}>
-        ${savedWords.has(key) ? '✓ Saved' : '+ Save Word'}
+      <button class="modal-save" data-learn-word="${key}" type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #5C4033 !important; color: #ffffff !important; border: 2px solid #5C4033 !important; border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; min-height: 48px;"${isSaved ? ' disabled' : ''}>
+        ${isSaved ? '✓ In Review' : '+ Add to Review'}
       </button>
     </div>
   `; 
@@ -23442,7 +26305,7 @@ function showFullDictionary(key) {
     }
   }
   document.querySelector('#quick-word-popover')?.classList.add('hidden'); 
-  fetchArabicTranslationIfMissing(key, content);
+  fetchTranslationAndDefinition(key, content, activeWordContext);
 }
 function applyColorMood(mood) { const moods = ['mood-purple', 'mood-sky', 'mood-starlight']; const selectedMood = moods.includes(`mood-${mood}`) ? mood : 'purple'; document.body.classList.remove('theme-dark', ...moods); document.body.classList.add(`mood-${selectedMood}`); if (window.setMood) window.setMood(selectedMood); }
 function savePreferences() { motherLanguage = document.querySelector('#mother-language')?.value || motherLanguage; learnerLevel = document.querySelector('#learner-level')?.value || learnerLevel; readingLine = document.querySelector('#line-size-shape')?.value || readingLine; localStorage.setItem('wordloom-language', motherLanguage); localStorage.setItem('wordloom-level', learnerLevel); localStorage.setItem('wordloom-line-size', readingLine); renderBooks(); renderVocabulary(); closeModals(); applyReadingLine(); showToast('Settings saved'); }
@@ -23727,6 +26590,57 @@ renderStory();
 renderVocabulary();
 attachTouchFeedback();
 document.querySelector('#auth-form')?.addEventListener('submit', submitAuth);
+document.querySelector('#auth-tab-signin')?.addEventListener('click', () => setAuthMode('signin'));
+document.querySelector('#auth-tab-signup')?.addEventListener('click', () => setAuthMode('signup'));
+document.querySelector('#auth-fill-demo')?.addEventListener('click', () => {
+  const emailInput = document.querySelector('#auth-email');
+  const passwordInput = document.querySelector('#auth-password');
+  if (emailInput) emailInput.value = 'demo@wordloom.com';
+  if (passwordInput) passwordInput.value = 'wordloom123';
+  clearAuthError();
+});
+document.querySelector('#auth-google-btn')?.addEventListener('click', () => {
+  try {
+    const session = WordloomAuth.loginSocial('google');
+    unlockApp(session);
+  } catch (err) {
+    showAuthError(err.message);
+  }
+});
+document.querySelector('#auth-github-btn')?.addEventListener('click', () => {
+  try {
+    const session = WordloomAuth.loginSocial('github');
+    unlockApp(session);
+  } catch (err) {
+    showAuthError(err.message);
+  }
+});
+document.querySelector('#auth-guest')?.addEventListener('click', () => {
+  try {
+    const session = WordloomAuth.loginGuest();
+    unlockApp(session);
+  } catch (err) {
+    showAuthError(err.message);
+  }
+});
+document.querySelector('#auth-password-toggle')?.addEventListener('click', () => {
+  const pwdInput = document.querySelector('#auth-password');
+  const eyeOpen = document.querySelector('#auth-password-eye-icon .eye-open');
+  const eyeClosed = document.querySelector('#auth-password-eye-icon .eye-closed');
+  if (!pwdInput) return;
+  if (pwdInput.type === 'password') {
+    pwdInput.type = 'text';
+    eyeOpen?.classList.add('hidden');
+    eyeClosed?.classList.remove('hidden');
+  } else {
+    pwdInput.type = 'password';
+    eyeOpen?.classList.remove('hidden');
+    eyeClosed?.classList.add('hidden');
+  }
+});
+document.querySelector('#auth-signout')?.addEventListener('click', () => {
+  WordloomAuth.signOut();
+});
 document.querySelector('#download-library')?.addEventListener('click', downloadLibrary);
 if (localStorage.getItem('wordloom-library-downloaded') === 'true' && document.querySelector('#library-download-status')) document.querySelector('#library-download-status').textContent = 'Ready offline';
 document.querySelector('#add-book')?.addEventListener('click', () => showView('customBook'));
@@ -23737,12 +26651,8 @@ document.querySelectorAll('[data-source-url]').forEach(source => source.addEvent
   const query = window.prompt(`Search ${source.dataset.sourceLabel}`, 'English reading');
   if (query?.trim()) window.open(`${source.dataset.sourceUrl}${encodeURIComponent(query.trim())}`, '_blank', 'noopener');
 }));
-document.querySelector('#auth-guest')?.addEventListener('click', () => unlockApp({ name: 'Guest reader' }));
 
-const savedMood = ['purple', 'fern', 'coral', 'sky', 'amber'].includes(localStorage.getItem('wordloom-mood')) ? localStorage.getItem('wordloom-mood') : 'purple';
-document.querySelector('#mother-language').value = motherLanguage; const lineSizeShapeSelect = document.querySelector('#line-size-shape'); if (lineSizeShapeSelect) lineSizeShapeSelect.value = readingLine; applyColorMood(savedMood); applyReadingLine();
-updateFlowMetric();
-document.querySelectorAll('.nav-item').forEach(button => button.addEventListener('click', () => { if (button.dataset.action === 'settings' || button.dataset.action === 'profile') { showView('settings'); return; } if (button.dataset.action === 'custom-book') { showView('customBook'); return; } button.dataset.view === 'reading' ? openReader() : showView(button.dataset.view); })); document.querySelector('.library-tab[data-library-tab="all"]')?.addEventListener('click', () => { activeLibraryTab = 'all'; renderBooks(); updateLibraryTabs(); }); document.querySelector('.library-tab[data-library-tab="favorites"]')?.addEventListener('click', () => { activeLibraryTab = 'favorites'; renderBooks(); updateLibraryTabs(); }); document.querySelector('.library-tab[data-library-tab="history"]')?.addEventListener('click', () => { activeLibraryTab = 'history'; renderBooks(); updateLibraryTabs(); }); document.querySelector('#back-to-library')?.addEventListener('click', () => showView('library')); document.querySelector('#import-pdf')?.addEventListener('click', () => document.querySelector('#pdf-input').click()); document.querySelector('#pdf-input')?.addEventListener('change', event => { const file = event.target.files[0]; if (file) showToast(`${file.name} added. PDF reader setup is next.`); event.target.value = ''; });
+document.querySelector('#back-to-library')?.addEventListener('click', () => showView('library')); document.querySelector('#import-pdf')?.addEventListener('click', () => document.querySelector('#pdf-input').click()); document.querySelector('#pdf-input')?.addEventListener('change', event => { const file = event.target.files[0]; if (file) showToast(`${file.name} added. PDF reader setup is next.`); event.target.value = ''; });
 document.querySelector('.settings-button')?.addEventListener('click', () => openModal('#preferences-modal')); document.querySelector('#save-preferences')?.addEventListener('click', savePreferences); document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModals)); document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.addEventListener('click', event => { if (event.target !== backdrop || backdrop.id === 'book-preview-modal') return; closeModals(); })); document.querySelectorAll('#library-topic-filter .topic-button').forEach(button => button.addEventListener('click', () => { if (!button.dataset.topic) return; document.querySelectorAll('#library-topic-filter .topic-button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-pressed', 'false'); }); button.classList.add('active'); button.setAttribute('aria-pressed', 'true'); selectedTopic = button.dataset.topic; document.querySelector('#library-topic-filter').classList.add('hidden'); const topicToggle = document.querySelector('#library-topic-toggle'); if (topicToggle) { topicToggle.setAttribute('aria-expanded', 'false'); topicToggle.classList.toggle('has-filter', selectedTopic !== 'all'); } renderBooks(); }));
 document.querySelector('#book-preview-modal')?.addEventListener('click', event => {
   if (!event.target.closest('[data-book-preview-close]') && event.target !== event.currentTarget) return;
@@ -23829,7 +26739,7 @@ document.addEventListener('click', event => {
 
   const word = event.target.closest('.word'); if (word) { showDictionary(word); return; }
   const more = event.target.closest('[data-more-word]'); if (more) { showFullDictionary(more.dataset.moreWord); return; }
-  const learn = event.target.closest('[data-learn-word]'); if (learn) { saveWordToVocabulary(learn.dataset.learnWord, activeWordContext); learn.textContent = 'Added to review'; learn.disabled = true; closeModals(); showToast(`${learn.dataset.learnWord} added to your review cards`); return; }
+  const learn = event.target.closest('[data-learn-word]'); if (learn) { saveWordToVocabulary(learn.dataset.learnWord, activeWordContext); learn.textContent = '✓ In Review'; learn.disabled = true; closeModals(); showToast(`${learn.dataset.learnWord} added to your review cards`); return; }
   const unknown = event.target.closest('[data-unknown-word]'); if (unknown) { saveWordToVocabulary(unknown.dataset.unknownWord, activeWordContext); vocabularyRecords[unknown.dataset.unknownWord].unknown = true; vocabularyRecords[unknown.dataset.unknownWord].repetitions = 0; localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords)); unknown.textContent = 'Added to review'; showToast(`${unknown.dataset.unknownWord} added to your review game`); return; }
   const know = event.target.closest('[data-know-word]'); if (know) { saveWordToVocabulary(know.dataset.knowWord, activeWordContext); vocabularyRecords[know.dataset.knowWord].unknown = false; vocabularyRecords[know.dataset.knowWord].repetitions = 4; localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords)); know.textContent = 'Known'; showToast(`${know.dataset.knowWord} marked as known`); return; }
   const reviewListen = event.target.closest('[data-review-speak]'); if (reviewListen) { speakText(reviewListen.dataset.reviewSpeak); return; }
@@ -24140,7 +27050,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-window.showView = showView; window.openModal = openModal; window.closeModals = closeModals; window.renderBooks = renderBooks;
+WordloomAuth.init(); window.WordloomAuth = WordloomAuth; window.setAuthMode = setAuthMode; window.showView = showView; window.openModal = openModal; window.closeModals = closeModals; window.renderBooks = renderBooks;
 
 </script>
 </body>

@@ -6,50 +6,43 @@ See [README.md](README.md) for the user-facing feature summary and hosting guida
 
 ## Current product conventions
 
-- The navigation is intentionally two-item: Library and Review. It renders as a sidebar on wider screens and a balanced compact dock on smaller screens.
+- The navigation uses a balanced 4-item floating gradient menu dock: Library, Review, Custom Book, and Settings. It automatically hides during active reading and game views for a distraction-free experience.
 - Book cards in the library are styled as a single photo-cover frame with details (title, author, level badge, length) overlaid directly on the photo. Directly beneath the frame sit only two controls: one reading button ("Read" / "Continue") and the favorite heart toggle.
-- Reader flow is a distraction-free "single paper" sheet with the book title featured atop the first page only, and two simple navigation buttons ("← Previous" and "Next →").
-- Topbar settings and search controls are cleanly sized icon buttons that maintain their dimensions and alignments across all screen sizes.
+- Reader flow is a distraction-free "single paper" sheet with the book title featured atop the first page only, and two simple navigation buttons ("Previous" and "Next") without directional arrows.
+- Back and forward buttons strictly follow the Brown Natural Frame design standard: `1.5px solid #8B5A2B`, background `#FAF4EB`, color `#5C4033`, radius `6px`, with zero arrow glyphs (`←`, `→`).
+- Settings page is an expansive full-screen 1360px dashboard with typography rhythm, reader profile, CEFR benchmarks, and ambient color mood swatches.
 - The reading plan, reading history, vocabulary review, favorites, color mood, level, and learning goal are browser-local product state; preserve their existing storage keys and object shapes.
 
 ## Project shape
 
-- [index.html](index.html): unified standalone app containing app shell, views, modals, full stylesheets in `<style>`, story catalog, and logic in `<script>`.
+- [index.html](index.html): unified standalone app containing app shell, views, modals, full stylesheets in `<style>`, story catalog (`WORDLOOM_CATALOG` 21 books), and logic in `<script>`.
 - [sw.js](sw.js): caches the standalone app shell (`index.html`, `manifest.json`, `icon.svg`) and runtime GET requests.
 - [manifest.json](manifest.json): web application manifest.
 - [icon.svg](icon.svg): app icon.
-- [archive.tar.gz](archive.tar.gz): compressed archive of historical assets and separate modular source files.
+- [package.json](package.json): standard npm workflow scripts (`test`, `serve`, etc.).
+- [docs/WORKFLOW.md](docs/WORKFLOW.md): comprehensive engineering guide, architecture, and verification protocol.
+- [tools/run_all_tests.js](tools/run_all_tests.js): canonical automated test runner executing all 4 validation suites.
 
 ## Development and validation
 
-- No build step, package install, or framework tooling is required.
-- Run locally with a static server such as `python3 -m http.server 8765` from the repo root, then open the page in a browser.
-- Validate at minimum 390x844 and 1440x900.
-- Check for: no horizontal overflow, no nav gaps or dead slots, correct active states, modal hidden states, and keyboard focus on new controls.
-- For game changes, distinguish the legacy UI handlers in [app.js](app.js) from the reusable engines in [game-module.js](game-module.js), and run the QA harness when the domain behavior changes.
+- No build step or package compilation is required for production.
+- Run locally with `npm run serve` (or `python3 -m http.server 8765`), then open the page in a browser.
+- Run automated verification with `npm test` (or `node tools/run_all_tests.js`).
+- Validate at minimum 390x844 (mobile) and 1440x900 (desktop).
+- Check for: no horizontal overflow, correct brown natural frame button styling, single pair of reader buttons without arrows, and full-screen settings responsiveness.
 - If stale CSS or JS is suspected, unregister or clear the service worker before re-testing.
 
 ## Editing guardrails
 
-- Inspect the real DOM selectors before changing handlers; the app has legacy and duplicate event paths.
-- Prefer delegated clicks over adding ad hoc listeners to each rerendered card.
+- `index.html` is a 2.2MB standalone file containing the complete 21-book catalog. Always target precise ranges or use verified builder scripts in `tools/library/` to prevent accidental file truncation.
+- Always run syntax verification on the script blocks after editing (`node tools/run_all_tests.js`).
+- Inspect real DOM selectors before changing handlers; the app has legacy event paths.
 - Keep CSS cascade behavior predictable: final overrides belong in the last-loaded stylesheet only when necessary.
-- Preserve localStorage and IndexedDB keys unless a migration is intentional. Important localStorage contracts include `wordloom-session`, `wordloom-welcome-complete`, `wordloom-language`, `wordloom-level`, `wordloom-goal`, `wordloom-mood`, favorites/history/metrics, vocabulary records/saved words, and offline-library status. IndexedDB `wordloom-library` stores explicitly downloaded generated pages; it is not a general fallback.
-- Do not describe authentication as production security; this is a front-end demo gate.
-- Imported PDF/text files are acknowledged but not fully parsed; do not imply support beyond the current implementation.
-- Reader pages are generated in memory and reader position is not currently persisted. Do not promise full EPUB/PDF import, account sync, or server-backed dictionary behavior.
-- Keep the navigation compact and aligned with the current app state: no empty notes placeholder, no hidden dead column, and no extra spacing from stale note-era styling.
-
-## Current implementation boundaries
-
-- There is no notes view or notes persistence in the current app, even if older copy or README text mentions notes.
-- `app.js` owns the browser-facing game cards and event delegation; `game-module.js` owns reusable game-domain behavior and schemas. Fix the owner of the behavior under test rather than duplicating logic.
-- The optional download-library path uses IndexedDB for generated book pages and localStorage for its ready flag. Imported local files currently produce an acknowledgement toast only.
-- The service worker can serve stale JavaScript/CSS during browser checks. Bump its cache name or unregister/clear it when validating asset changes.
+- Preserve localStorage keys: `wordloom-session`, `wordloom-language`, `wordloom-level`, `wordloom-line-size`, `wordloom-mood`, `wordloom-vocabulary-records`.
 
 ## Useful prompts for future agents
 
-- "Fix the three-item nav spacing and active states on mobile and desktop."
-- "Debug the library tab/favorite/history flow after rerendering cards."
-- "Add a focused visual fix without reintroducing the stale notes layout."
-- "Validate the reader preview + back button flow and ensure no horizontal overflow."
+- "Run npm test to verify all 4 quality gates pass."
+- "Validate the full-screen settings page across desktop and mobile viewports."
+- "Check reader controls in #reading-view to ensure exactly one Previous and Next button appears."
+
