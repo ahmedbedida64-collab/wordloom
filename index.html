@@ -6997,81 +6997,126 @@ body.theme-antique .cover-length-badge {
 }
 
 /* ==========================================================================
-   FILTER BUTTONS: UNIFIED NATURAL BROWN (#8B5A2B) SYSTEM
-   Zero gradients, zero glow, crisp solid opaque parchment and natural brown.
+   UNIFIED MATCHED FILTER BARS & BUTTONS PATTERN (DEEP ESPRESSO #5C4033)
+   Segmented capsule pill tracks, borderless inactive pills, active hero glow.
    ========================================================================== */
-.library-tools .filter-dropdown-toggle {
-  background: #FAF3E8 !important;
-  background-image: none !important;
-  color: #8B5A2B !important;
-  border: 1.5px solid #8B5A2B !important;
-  border-radius: 9999px !important;
-  font-family: inherit !important;
+#library-filter-toggle,
+#library-topic-toggle,
+.library-tools .filter-dropdown-toggle,
+body .library-level-filter .level-button,
+body .library-level-filter .topic-button,
+body .level-button,
+body .topic-button,
+body .library-tab {
+  text-transform: none !important;
+  font-family: "DM Sans", -apple-system, sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
-  padding: 6px 16px !important;
-  height: 36px !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1 !important;
+}
+
+/* 1. Topbar Filter Toggles (Levels & Topics) */
+#library-filter-toggle,
+#library-topic-toggle,
+.library-tools .filter-dropdown-toggle {
+  background: rgba(92, 64, 51, 0.06) !important;
+  background-image: none !important;
+  border: 1px solid rgba(92, 64, 51, 0.18) !important;
+  color: #5C4033 !important;
+  border-radius: 9999px !important;
+  padding: 7px 18px !important;
+  height: 38px !important;
   cursor: pointer !important;
   box-shadow: none !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: background-color 0.15s ease, color 0.15s ease !important;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-.library-tools .filter-dropdown-toggle:hover {
-  background: #EEDCC8 !important;
-  border-color: #8B5A2B !important;
-  color: #8B5A2B !important;
-}
-
-.library-tools .filter-dropdown-toggle[aria-expanded="true"],
-.library-tools .filter-dropdown-toggle.has-filter {
-  background: #8B5A2B !important;
-  background-image: none !important;
-  border-color: #8B5A2B !important;
-  color: #ffffff !important;
+#library-filter-toggle:hover:not([aria-expanded="true"]):not(.has-filter),
+#library-topic-toggle:hover:not([aria-expanded="true"]):not(.has-filter),
+.library-tools .filter-dropdown-toggle:hover:not([aria-expanded="true"]):not(.has-filter) {
+  background: rgba(92, 64, 51, 0.14) !important;
+  border-color: rgba(92, 64, 51, 0.3) !important;
+  color: #5C4033 !important;
+  transform: none !important;
   box-shadow: none !important;
 }
 
-/* Inactive Filter Pills (Levels & Topics) */
+#library-filter-toggle[aria-expanded="true"],
+#library-topic-toggle[aria-expanded="true"],
+#library-filter-toggle.has-filter,
+#library-topic-toggle.has-filter,
+.library-tools .filter-dropdown-toggle[aria-expanded="true"],
+.library-tools .filter-dropdown-toggle.has-filter {
+  background: #5C4033 !important;
+  background-image: none !important;
+  border-color: #5C4033 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
+}
+
+/* 2. Drawer Filter Bar Tracks (Levels & Topics) */
+#library-level-filter,
+#library-topic-filter,
+body .library-level-filter,
+.library-level-filter {
+  display: flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  background: rgba(92, 64, 51, 0.07) !important;
+  border: 1px solid rgba(92, 64, 51, 0.12) !important;
+  border-radius: 9999px !important;
+  padding: 5px !important;
+  gap: 4px !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  box-shadow: inset 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  margin-bottom: 14px !important;
+}
+
+/* Inactive Segmented Pills (Levels & Topics) */
+body .library-level-filter .level-button,
+body .library-level-filter .topic-button,
 .library-level-filter .level-button,
 .library-level-filter .topic-button {
-  background: #FAF3E8 !important; /* Solid opaque warm parchment */
-  background-image: none !important; /* Zero gradients */
-  color: #8B5A2B !important;
-  border: 1.5px solid #8B5A2B !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 1px solid transparent !important;
+  color: #6E5549 !important;
   border-radius: 9999px !important;
-  font-family: inherit !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  padding: 6px 16px !important;
+  padding: 7px 18px !important;
   height: 34px !important;
   cursor: pointer !important;
   box-shadow: none !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: background-color 0.15s ease, color 0.15s ease !important;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
+body .library-level-filter .level-button:hover:not(.active),
+body .library-level-filter .topic-button:hover:not(.active),
 .library-level-filter .level-button:hover:not(.active),
 .library-level-filter .topic-button:hover:not(.active) {
-  background: #EEDCC8 !important;
-  border-color: #8B5A2B !important;
-  color: #8B5A2B !important;
+  background: rgba(92, 64, 51, 0.12) !important;
+  color: #5C4033 !important;
 }
 
-/* Active Filter Pill: Exactly ONE solid degree of Natural Brown (#8B5A2B) */
+/* Active Filter Pill across Drawer Bars */
+body .library-level-filter .level-button.active,
+body .library-level-filter .topic-button.active,
+body .library-level-filter .level-button[aria-pressed="true"],
+body .library-level-filter .topic-button[aria-pressed="true"],
 .library-level-filter .level-button.active,
-.library-level-filter .topic-button.active,
-.library-level-filter .level-button[aria-pressed="true"],
-.library-level-filter .topic-button[aria-pressed="true"] {
-  background: #8B5A2B !important; /* 100% Solid Natural Brown */
-  background-image: none !important; /* Zero graduation */
-  border: 1.5px solid #8B5A2B !important;
+.library-level-filter .topic-button.active {
+  background: #5C4033 !important;
+  background-image: none !important;
+  border: 1px solid #5C4033 !important;
   color: #ffffff !important;
-  box-shadow: none !important; /* Zero glow */
+  box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -8173,86 +8218,130 @@ body[class*="theme-"] .library-tab.active {
       animation: floatCard 2s ease-in-out infinite;
     }
 
-    /* ====== UNIFIED NATURAL BROWN FILTER BUTTON SYSTEM ====== */
-    /* 1. Filter dropdown toggles: "Levels" and "Topics" */
-    .library-tools .filter-dropdown-toggle {
-      background: #FAF3E8 !important; /* Solid opaque warm parchment */
-      background-image: none !important; /* Zero gradients */
-      border: 1.5px solid #8B5A2B !important;
-      color: #8B5A2B !important;
-      border-radius: 9999px !important;
-      box-shadow: none !important; /* Zero glow */
-      text-shadow: none !important;
-      padding: 6px 16px !important;
-      min-width: auto !important;
-      height: 36px !important;
-      font-family: "DM Sans", sans-serif !important;
+    /* ====== UNIFIED MATCHED FILTER BARS & BUTTONS PATTERN (DEEP ESPRESSO #5C4033) ====== */
+    
+    /* Universal Typography & Casing: Clean Title Case across all filter controls */
+    #library-filter-toggle,
+    #library-topic-toggle,
+    .library-tools .filter-dropdown-toggle,
+    body .library-level-filter .level-button,
+    body .library-level-filter .topic-button,
+    body .level-button,
+    body .topic-button,
+    body .library-tab {
+      text-transform: none !important;
+      font-family: "DM Sans", -apple-system, sans-serif !important;
       font-size: 13px !important;
       font-weight: 600 !important;
+      letter-spacing: 0.01em !important;
       line-height: 1 !important;
+    }
+
+    /* 1. Topbar Filter Toggles (Levels & Topics) */
+    #library-filter-toggle,
+    #library-topic-toggle,
+    .library-tools .filter-dropdown-toggle,
+    body .library-tools .filter-dropdown-toggle {
+      background: rgba(92, 64, 51, 0.06) !important;
+      background-image: none !important;
+      border: 1px solid rgba(92, 64, 51, 0.18) !important;
+      color: #5C4033 !important;
+      border-radius: 9999px !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      padding: 7px 18px !important;
+      min-width: auto !important;
+      height: 38px !important;
       cursor: pointer !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      transition: background-color 0.15s ease, color 0.15s ease !important;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
     }
-    .library-tools .filter-dropdown-toggle:hover {
-      background: #EEDCC8 !important;
-      border-color: #8B5A2B !important;
-      color: #8B5A2B !important;
-    }
-    .library-tools .filter-dropdown-toggle[aria-expanded="true"],
-    .library-tools .filter-dropdown-toggle.has-filter {
-      background: #8B5A2B !important; /* 100% Solid Natural Brown */
-      background-image: none !important;
-      border-color: #8B5A2B !important;
-      color: #ffffff !important;
+    #library-filter-toggle:hover:not([aria-expanded="true"]):not(.has-filter),
+    #library-topic-toggle:hover:not([aria-expanded="true"]):not(.has-filter),
+    .library-tools .filter-dropdown-toggle:hover:not([aria-expanded="true"]):not(.has-filter) {
+      background: rgba(92, 64, 51, 0.14) !important;
+      border-color: rgba(92, 64, 51, 0.3) !important;
+      color: #5C4033 !important;
+      transform: none !important;
       box-shadow: none !important;
     }
+    #library-filter-toggle[aria-expanded="true"],
+    #library-topic-toggle[aria-expanded="true"],
+    #library-filter-toggle.has-filter,
+    #library-topic-toggle.has-filter,
+    .library-tools .filter-dropdown-toggle[aria-expanded="true"],
+    .library-tools .filter-dropdown-toggle.has-filter {
+      background: #5C4033 !important;
+      background-image: none !important;
+      border-color: #5C4033 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
+    }
 
-    /* 2. Filter Option Pills in Drawers (Levels & Topics) */
-    body .library-level-filter .level-button,
-    body .library-level-filter .topic-button {
-      background: #FAF3E8 !important; /* Solid opaque warm parchment - never transparent */
-      background-image: none !important; /* Absolute zero gradients */
-      border: 1.5px solid #8B5A2B !important;
-      color: #8B5A2B !important;
+    /* 2. Drawer Filter Bar Tracks (Levels & Topics) */
+    #library-level-filter,
+    #library-topic-filter,
+    body .library-level-filter,
+    .library-level-filter {
+      display: flex !important;
+      width: fit-content !important;
+      max-width: 100% !important;
+      background: rgba(92, 64, 51, 0.07) !important;
+      border: 1px solid rgba(92, 64, 51, 0.12) !important;
       border-radius: 9999px !important;
-      box-shadow: none !important; /* No light/glow */
-      text-shadow: none !important;
-      padding: 6px 16px !important;
-      min-width: auto !important;
+      padding: 5px !important;
+      gap: 4px !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      box-shadow: inset 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+      margin-bottom: 14px !important;
+    }
+
+    /* Inactive Segmented Pills (Levels & Topics) */
+    body .library-level-filter .level-button,
+    body .library-level-filter .topic-button,
+    .library-level-filter .level-button,
+    .library-level-filter .topic-button {
+      background: transparent !important;
+      background-image: none !important;
+      border: 1px solid transparent !important;
+      color: #6E5549 !important;
+      border-radius: 9999px !important;
+      padding: 7px 18px !important;
       height: 34px !important;
-      font-family: "DM Sans", sans-serif !important;
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      line-height: 1 !important;
       cursor: pointer !important;
+      box-shadow: none !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      transition: background-color 0.15s ease, color 0.15s ease !important;
-    }
-    body .library-level-filter .level-button:hover:not(.active),
-    body .library-level-filter .topic-button:hover:not(.active) {
-      background: #EEDCC8 !important;
-      border-color: #8B5A2B !important;
-      color: #8B5A2B !important;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
     }
 
-    /* 3. Active filter pill: Exactly ONE solid degree of Natural Brown (#8B5A2B) */
+    body .library-level-filter .level-button:hover:not(.active),
+    body .library-level-filter .topic-button:hover:not(.active),
+    .library-level-filter .level-button:hover:not(.active),
+    .library-level-filter .topic-button:hover:not(.active) {
+      background: rgba(92, 64, 51, 0.12) !important;
+      color: #5C4033 !important;
+    }
+
+    /* Active Filter Pill across Drawer Bars */
     body .library-level-filter .level-button.active,
     body .library-level-filter .topic-button.active,
     body .library-level-filter .level-button[aria-pressed="true"],
-    body .library-level-filter .topic-button[aria-pressed="true"] {
-      background: #8B5A2B !important; /* Pure Solid Natural Brown */
-      background-image: none !important; /* Zero graduation */
-      border: 1.5px solid #8B5A2B !important;
+    body .library-level-filter .topic-button[aria-pressed="true"],
+    .library-level-filter .level-button.active,
+    .library-level-filter .topic-button.active {
+      background: #5C4033 !important;
+      background-image: none !important;
+      border: 1px solid #5C4033 !important;
       color: #ffffff !important;
-      box-shadow: none !important;
+      box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
     }
 
-    /* 4. Strict Drawer Hide: Prevents drawers from appearing until tapped */
+    /* Strict Drawer Hide */
     #library-level-filter.hidden,
     #library-topic-filter.hidden,
     .library-level-filter.hidden,
@@ -8288,30 +8377,50 @@ body[class*="theme-"] #dictionary-modal .modal > button[data-close-modal] {
   margin-bottom: 12px !important;
 }
 
-/* 2. Library Filter Tabs Override */
+/* 2. Library Filter Tabs Track: Matching Segmented Capsule Pattern */
 body .library-tabs,
 body[class*="mood-"] .library-tabs,
-body[class*="theme-"] .library-tabs {
-  background: rgba(92, 64, 51, 0.08) !important;
-  border: 1px solid rgba(92, 64, 51, 0.1) !important;
+body[class*="theme-"] .library-tabs,
+.library-tabs {
+  display: flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  background: rgba(92, 64, 51, 0.07) !important;
+  border: 1px solid rgba(92, 64, 51, 0.12) !important;
   border-radius: 9999px !important;
-  padding: 6px !important;
+  padding: 5px !important;
+  gap: 4px !important;
+  align-items: center !important;
+  box-shadow: inset 0 1px 3px rgba(80, 40, 0, 0.03) !important;
+  margin-bottom: 24px !important;
 }
 
 body .library-tab,
 body[class*="mood-"] .library-tab,
-body[class*="theme-"] .library-tab {
+body[class*="theme-"] .library-tab,
+.library-tab {
   background: transparent !important;
-  color: #8c5a35 !important;
-  border: none !important;
-  font-weight: 700 !important;
-  transition: all 0.2s ease !important;
+  color: #6E5549 !important;
+  border: 1px solid transparent !important;
+  border-radius: 9999px !important;
+  font-family: "DM Sans", -apple-system, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  padding: 7px 20px !important;
+  height: 34px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 body .library-tab:hover:not(.active),
 body[class*="mood-"] .library-tab:hover:not(.active),
 body[class*="theme-"] .library-tab:hover:not(.active) {
-  background: rgba(92, 64, 51, 0.15) !important;
+  background: rgba(92, 64, 51, 0.12) !important;
   color: #5C4033 !important;
 }
 
@@ -8320,7 +8429,8 @@ body[class*="mood-"] .library-tab.active,
 body[class*="theme-"] .library-tab.active {
   background: #5C4033 !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(92, 64, 51, 0.2) !important;
+  border-color: #5C4033 !important;
+  box-shadow: 0 4px 12px rgba(92, 64, 51, 0.22) !important;
 }
 
 /* ========================================================================== */
