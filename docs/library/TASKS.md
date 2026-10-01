@@ -29,9 +29,9 @@
 - [x] Run automated consistency checks (size, palette) — 21 passed, 0 failures.
 - [x] Output contact sheet and review table.
 
-## Phase 5: Swap & Verification
-- [ ] Build new library in staging using frozen schema.
-- [ ] Conduct browser tests (first page, last page).
-- [ ] Take before/after layout screenshots.
-- [ ] Swap atomically in `index.html`.
-- [ ] Generate final report and rollback commands.
+## Phase 5: Swap & Verification (Completed)
+- [x] Build new library in staging using frozen schema (21 books in books_staging/).
+- [x] Conduct browser tests (first page, last page) — verify_browser_reader.js 21/21 passed.
+- [x] Take before/after layout screenshots and verify contact sheet (CONTACT_SHEET.html).
+- [x] Swap atomically in `index.html` (21 books active in WORDLOOM_CATALOG).
+- [x] Generate final report and rollback commands (FINAL_REPORT.md updated).
