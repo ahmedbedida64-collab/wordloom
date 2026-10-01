@@ -8009,7 +8009,7 @@ body[class*="theme-"] .library-tab.active {
 
   <style>
     /* ====== WARM & MEANINGFUL ANTIQUE COVERS ====== */
-    .cover-photo { display: none !important; } /* Force hide real photos to bypass JS caching */
+    /* Cover photos active */
 
     .cover-technology { background: #6b3e2e !important; }
     .cover-history { background: #8c5a35 !important; }
@@ -22135,6 +22135,7 @@ function renderBooks() {
     const isFavorite = favoriteBooks.has(book.title);
     return `<article class="mini-book" data-book="${book.title}">
       <div class="book-cover-frame mini-cover ${bookCoverClass(book)}" data-read-book="${book.title}" tabindex="0" role="button" aria-label="Read ${book.title}">
+        <img class="cover-photo" src="${photo}" alt="${book.title}" loading="lazy" />
         <span class="cover-meaning-symbol" aria-hidden="true">${bookCoverSymbol(book)}</span>
         <div class="cover-overlay">
           <div class="cover-top-badges">
@@ -22165,6 +22166,7 @@ function renderBookPreviewModal() {
   preview.innerHTML = `
     <button class="modal-close" data-book-preview-close type="button" aria-label="Close book preview">Close</button>
     <div class="book-preview-cover ${bookCoverClass(activeBook)}" aria-hidden="true">
+      <img class="cover-photo" src="${photo}" alt="${activeBook.title}" />
       <span class="cover-meaning-symbol" aria-hidden="true">${bookCoverSymbol(activeBook)}</span>
       <span class="cover-art"></span>
       <span class="book-preview-mark">${cover[2]}</span>
