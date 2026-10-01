@@ -26,7 +26,7 @@
 - [x] Write `COVER_STYLE.md`.
 - [x] Generate concept briefs per book.
 - [x] Generate covers in consistent photo pattern with 2:3 aspect ratio.
-- [ ] Run automated consistency checks (size, palette).
+- [x] Run automated consistency checks (size, palette) — 21 passed, 0 failures.
 - [x] Output contact sheet and review table.
 
 ## Phase 5: Swap & Verification
