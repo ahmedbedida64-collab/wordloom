@@ -1,17 +1,22 @@
 {
   "phase": 5,
-  "status": "OPTION_2_COMPLETE",
-  "option_executed": "Option 2 (250 words per page natural boundary chunking)",
+  "status": "OPTION_4_BATCH_COMPLETE",
   "books_total": 21,
   "books_under_20_pages": 0,
   "integrity_passed": 21,
   "integrity_failed": 0,
   "covers": {
     "total": 21,
-    "ai_generated": 6,
-    "curated_editorial": 15,
+    "ai_generated": 9,
+    "curated_editorial": 12,
     "aspect_ratio": "2:3",
+    "recent_ai_additions": [
+      "cover_metamorphosis.jpg",
+      "cover_jekyll_hyde.jpg",
+      "cover_bartleby.jpg"
+    ],
+    "quota_reset_est_utc": "2026-10-01T10:52:00Z",
     "contact_sheet": "docs/library/CONTACT_SHEET.html"
   },
-  "updated_at": "2026-10-01T06:51:00+01:00"
+  "updated_at": "2026-10-01T06:55:00+01:00"
 }
