@@ -26058,7 +26058,7 @@ function closeModals() { document.querySelectorAll('.modal-backdrop').forEach(mo
 function saveWordToVocabulary(key, sentence) {
   const cachedTrans = customTranslations[key]?.[motherLanguage] || (dictionary[key]?.[0] && dictionary[key][0] !== key ? dictionary[key][0] : null);
   const cachedDef = definitionsCache[key] || (dictionary[key]?.[1] && !dictionary[key][1].startsWith('A useful word') ? dictionary[key][1] : null);
-  const bestMeaning = cachedTrans || cachedDef || (sentence ? `Used in: "${sentence.trim().slice(0, 80)}..."` : 'Saved vocabulary');
+  const bestMeaning = cachedTrans || cachedDef || (dictionary[key]?.[1] && !dictionary[key][1].startsWith('A useful word') ? dictionary[key][1] : null) || (sentence ? `Used in: "${sentence.trim().slice(0, 80)}..."` : (key.charAt(0).toUpperCase() + key.slice(1)));
   vocabularyRecords[key] = vocabularyRecords[key] || { word: key, meaning: bestMeaning, level: 'B1', sentence, repetitions: 0, interval: 0, nextReview: Date.now() };
   vocabularyRecords[key].sentence = sentence || vocabularyRecords[key].sentence;
   if (cachedTrans || cachedDef) {
@@ -26072,15 +26072,19 @@ function saveWordToVocabulary(key, sentence) {
 function fetchTranslationAndDefinition(key, contentEl, contextSentence) {
   if (!key || !contentEl) return;
   const targetLang = motherLanguage || 'ar';
-  
-  if (targetLang !== 'en' && !customTranslations[key]?.[targetLang] && !(targetLang === 'ar' && dictionary[key]?.[0] && /[؀-ۿ]/.test(dictionary[key][0]))) {
-    fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(key)}&langpair=en|${targetLang}`)
+
+  // --- TRANSLATION FETCH with 4s timeout ---
+  if (targetLang !== 'en' && !customTranslations[key]?.[targetLang] && !(targetLang === 'ar' && dictionary[key]?.[0] && /[\u0600-\u06FF]/.test(dictionary[key][0]))) {
+    const transController = new AbortController();
+    const transTimer = setTimeout(() => transController.abort(), 4000);
+    fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(key)}&langpair=en|${targetLang}`, { signal: transController.signal })
       .then(r => r.json())
       .then(result => {
+        clearTimeout(transTimer);
         if (result?.responseData?.translatedText) {
           let trans = result.responseData.translatedText.split(',')[0].trim();
-          trans = trans.replace(/^[«"']|[»"']$/g, '').trim();
-          if (trans.toLowerCase() !== key.toLowerCase() && (targetLang !== 'ar' || /[؀-ۿ]/.test(trans))) {
+          trans = trans.replace(/^[«\"']|[»\"']$/g, '').trim();
+          if (trans.toLowerCase() !== key.toLowerCase() && (targetLang !== 'ar' || /[\u0600-\u06FF]/.test(trans))) {
             customTranslations[key] = customTranslations[key] || {};
             customTranslations[key][targetLang] = trans;
             try { localStorage.setItem('wordloom-custom-translations', JSON.stringify(customTranslations)); } catch (e) {}
@@ -26089,20 +26093,24 @@ function fetchTranslationAndDefinition(key, contentEl, contextSentence) {
               try { localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocabularyRecords)); } catch (e) {}
             }
             const strongEls = contentEl.querySelectorAll('.translation-line strong');
-            strongEls.forEach(el => {
-              el.textContent = trans;
-            });
+            strongEls.forEach(el => { el.textContent = trans; });
+            return;
           }
         }
+        _showTranslationFallback(key, contentEl);
       })
-      .catch(() => {});
+      .catch(() => { clearTimeout(transTimer); _showTranslationFallback(key, contentEl); });
   }
 
+  // --- DEFINITION FETCH with 4s timeout ---
   const hasDefinition = definitionsCache[key] || (dictionary[key]?.[1] && !dictionary[key][1].startsWith('A useful word'));
   if (!hasDefinition) {
-    fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(key)}&md=d&max=1`)
+    const defController = new AbortController();
+    const defTimer = setTimeout(() => defController.abort(), 4000);
+    fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(key)}&md=d&max=1`, { signal: defController.signal })
       .then(r => r.json())
       .then(result => {
+        clearTimeout(defTimer);
         if (Array.isArray(result) && result[0]?.defs?.length > 0) {
           const rawDef = result[0].defs.find(d => !d.startsWith('N\t"')) || result[0].defs[0];
           let cleanDef = rawDef.replace(/^[a-z]+\t/i, '').trim();
@@ -26110,48 +26118,71 @@ function fetchTranslationAndDefinition(key, contentEl, contextSentence) {
           definitionsCache[key] = cleanDef;
           try { localStorage.setItem('wordloom-definitions-cache', JSON.stringify(definitionsCache)); } catch (e) {}
           const explEl = contentEl.querySelector('.context-box p');
-          if (explEl) {
-            explEl.textContent = cleanDef;
-          }
+          if (explEl) explEl.textContent = cleanDef;
         } else {
-          const explEl = contentEl.querySelector('.context-box p');
-          if (explEl) {
-            const fallback = (contextSentence && !contextSentence.includes('The word “') && contextSentence.length > 5)
-              ? `“${contextSentence.trim()}”`
-              : `Literary vocabulary from “${activeBook?.title || 'this story'}”.`;
-            explEl.textContent = fallback;
-          }
+          _showDefinitionFallback(key, contentEl, contextSentence);
         }
       })
-      .catch(() => {
-        const explEl = contentEl.querySelector('.context-box p');
-        if (explEl) {
-          const fallback = (contextSentence && !contextSentence.includes('The word “') && contextSentence.length > 5)
-            ? `“${contextSentence.trim()}”`
-            : `Literary vocabulary from “${activeBook?.title || 'this story'}”.`;
-          explEl.textContent = fallback;
-        }
-      });
+      .catch(() => { clearTimeout(defTimer); _showDefinitionFallback(key, contentEl, contextSentence); });
+  }
+}
+function _showTranslationFallback(key, contentEl) {
+  const fallback = dictionary[key]?.[0] && dictionary[key][0] !== key
+    ? dictionary[key][0]
+    : (definitionsCache[key] || dictionary[key]?.[1] || (key.charAt(0).toUpperCase() + key.slice(1)));
+  const strongEls = contentEl.querySelectorAll('.translation-line strong');
+  strongEls.forEach(el => {
+    if (el.querySelector('.translation-loading') || el.textContent.includes('Translating') || el.textContent.includes('\u062c\u0627\u0631\u064d')) {
+      el.textContent = fallback;
+    }
+  });
+}
+function _showDefinitionFallback(key, contentEl, contextSentence) {
+  const explEl = contentEl.querySelector('.context-box p');
+  if (!explEl) return;
+  const dictDef = dictionary[key]?.[1];
+  const pos = dictionary[key]?.[2];
+  if (dictDef && !dictDef.startsWith('A useful word')) {
+    explEl.textContent = dictDef;
+    definitionsCache[key] = dictDef;
+  } else if (contextSentence && !contextSentence.includes('The word "') && contextSentence.length > 5) {
+    explEl.textContent = `"${contextSentence.trim()}"`;
+  } else if (pos) {
+    explEl.textContent = `A ${pos} used in literary English.`;
+  } else {
+    explEl.textContent = `A word encountered in "${activeBook?.title || 'this story'}".`;
   }
 }
 const fetchArabicTranslationIfMissing = (key, contentEl) => fetchTranslationAndDefinition(key, contentEl, activeWordContext);
 
 function getWordTranslation(key, data) {
   if (!key) return null;
+  // 1. Check customTranslations for the active language (works for all non-English)
   if (motherLanguage !== 'en' && customTranslations[key]?.[motherLanguage]) {
     return customTranslations[key][motherLanguage];
   }
+  // 2. Arabic-specific: check dictionary Arabic field and vocabulary records
   if (motherLanguage === 'ar') {
     if (dictionary[key]?.[0] && /[؀-ۿ]/.test(dictionary[key][0])) return dictionary[key][0];
     if (data && data[0] && /[؀-ۿ]/.test(data[0])) return data[0];
     if (data && data[1] && /[؀-ۿ]/.test(data[1])) return data[1];
     if (vocabularyRecords[key]?.meaning && /[؀-ۿ]/.test(vocabularyRecords[key].meaning)) return vocabularyRecords[key].meaning;
   }
+  // 3. English: use definition
   if (motherLanguage === 'en') {
     const englishLookup = (data && data[1] && !data[1].startsWith('A useful word')) ? data[1] : (definitionsCache[key] || dictionary[key]?.[1]);
-    return englishLookup || null;
+    return englishLookup || key.charAt(0).toUpperCase() + key.slice(1);
   }
-  return null;
+  // 4. Fallback chain for ANY language when customTranslation is not yet cached:
+  //    Try vocabulary record meaning, then dictionary Arabic, then English definition
+  if (vocabularyRecords[key]?.meaning && vocabularyRecords[key].meaning !== 'Saved vocabulary' && !vocabularyRecords[key].meaning.startsWith('Used in:')) {
+    return vocabularyRecords[key].meaning;
+  }
+  if (dictionary[key]?.[0] && dictionary[key][0] !== key) return dictionary[key][0];
+  if (data && data[0] && data[0] !== key) return data[0];
+  const defFallback = (data && data[1] && !data[1].startsWith('A useful word')) ? data[1] : (definitionsCache[key] || dictionary[key]?.[1]);
+  if (defFallback) return defFallback;
+  return key.charAt(0).toUpperCase() + key.slice(1);
 }
 
 function showDictionary(word) {
@@ -26180,7 +26211,7 @@ function showDictionary(word) {
     ? definition
     : (activeWordContext && !activeWordContext.includes('The word “') && activeWordContext.length > 5
         ? `“${activeWordContext.trim()}”`
-        : `<span class="explanation-loading" style="color: #8B5A2B; font-style: italic;">Loading explanation...</span>`);
+        : (data[2] ? `A ${data[2]} used in literary English.` : `A word encountered in "${activeBook?.title || 'this story'}".`));
 
   const isSaved = savedWords.has(key);
 
@@ -26253,7 +26284,7 @@ function showFullDictionary(key) {
     ? definition
     : (activeWordContext && !activeWordContext.includes('The word “') && activeWordContext.length > 5
         ? `“${activeWordContext.trim()}”`
-        : `<span class="explanation-loading" style="color: #8B5A2B; font-style: italic;">Loading explanation...</span>`);
+        : (data[2] ? `A ${data[2]} used in literary English.` : `A word encountered in "${activeBook?.title || 'this story'}".`));
 
   const isSaved = savedWords.has(key);
   
@@ -26341,7 +26372,7 @@ function chooseReviewChoices(currentWord, motherLanguage) {
   for (const word of vocabulary.map(item => item[0])) {
     const translation = getWordTranslation(word, dictionary[word] || [word, vocabularyRecords[word]?.meaning || '']);
     const normalized = normalizeChoiceText(translation);
-    if (!translation || normalized === 'translation unavailable' || !normalized || normalized === currentWordKey) continue;
+    if (!translation || translation === 'null' || translation === 'undefined' || normalized === 'translation unavailable' || normalized === 'null' || !normalized || normalized === currentWordKey) continue;
     if (seen.has(normalized)) continue;
     seen.add(normalized);
     pool.push(translation);
@@ -26367,7 +26398,12 @@ function chooseReviewChoices(currentWord, motherLanguage) {
   // Fallback if pool is still too small
   if (possible.length < 4) {
     // Arabic fallback translations so no English appears in Arabic review mode
-    const fallback = ['مهم', 'واضح', 'شائع', 'مفيد', 'هادئ', 'جديد', 'بسيط', 'قوي', 'طويل', 'قصير']
+    // Build language-appropriate fallback from actual dictionary translations
+    const dictFallbacks = Object.keys(dictionary).slice(0, 40)
+      .map(w => getWordTranslation(w, dictionary[w]))
+      .filter(t => t && t !== 'null' && t !== 'undefined' && normalizeChoiceText(t) !== currentWordKey && !seen.has(normalizeChoiceText(t)));
+    const arabicFallback = ['مهم', 'واضح', 'شائع', 'مفيد', 'هادئ', 'جديد', 'بسيط', 'قوي', 'طويل', 'قصير'];
+    const fallback = (dictFallbacks.length >= 4 ? dictFallbacks : [...dictFallbacks, ...arabicFallback])
       .filter(choice => normalizeChoiceText(choice) !== currentWordKey && !seen.has(normalizeChoiceText(choice)));
     for (const choice of fallback) {
       if (possible.length >= 4) break;
@@ -26420,9 +26456,16 @@ function showReviewFace() {
 function renderFlashcards(matches) {
   const current = matches[flashcardIndex % Math.max(1, matches.length)] || vocabulary[0];
   const translateForReview = word => getWordTranslation(word, dictionary[word] || [word, vocabularyRecords[word]?.meaning || '']);
-  const correctChoice = translateForReview(current[0]);
+  let correctChoice = translateForReview(current[0]);
+  // Guard: ensure correctChoice is never null/undefined/empty
+  if (!correctChoice || correctChoice === 'null' || correctChoice === 'undefined') {
+    correctChoice = definitionsCache[current[0]] || dictionary[current[0]]?.[1] || (current[0].charAt(0).toUpperCase() + current[0].slice(1));
+  }
   const candidateChoices = chooseReviewChoices(current[0], motherLanguage);
-  const distractors = candidateChoices.filter(choice => normalizeChoiceText(choice) !== normalizeChoiceText(correctChoice)).slice(0, 3);
+  // Filter null/undefined/empty distractors and exclude correct answer
+  const distractors = candidateChoices
+    .filter(choice => choice && choice !== 'null' && choice !== 'undefined' && normalizeChoiceText(choice) !== normalizeChoiceText(correctChoice))
+    .slice(0, 3);
   const allChoices = [correctChoice, ...distractors];
   // Fisher-Yates shuffle so correct answer appears in random position each card
   for (let i = allChoices.length - 1; i > 0; i--) {
@@ -26453,7 +26496,7 @@ function renderMatchIt(matches) {
   const translateForReview = word => getWordTranslation(word, dictionary[word] || [word, vocabularyRecords[word]?.meaning || '']);
   const allPairs = matches.map(m => ({ term: m[0], match: translateForReview(m[0]) }));
   
-  const validPairs = allPairs.filter(p => p.match && p.term);
+  const validPairs = allPairs.filter(p => p.match && p.match !== 'null' && p.match !== 'undefined' && p.term);
   const shuffledPairs = matchShuffle([...validPairs]);
   const ROUND_SIZE = 6;
   matchState.rounds = [];
