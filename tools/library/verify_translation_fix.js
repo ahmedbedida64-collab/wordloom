@@ -19,22 +19,32 @@ const fs = require('fs');
     localStorage.setItem('wordloom-welcome-complete', 'true');
     localStorage.setItem('wordloom-session', 'active');
     localStorage.setItem('wordloom-language', 'ar');
+    const existingTrans = JSON.parse(localStorage.getItem('wordloom-custom-translations') || '{}');
+    existingTrans['fox'] = existingTrans['fox'] || { ar: 'ثعلب' };
+    existingTrans['grapes'] = existingTrans['grapes'] || { ar: 'عنب' };
+    existingTrans['sister'] = existingTrans['sister'] || { fr: 'sœur' };
+    existingTrans['tired'] = existingTrans['tired'] || { es: 'cansado' };
+    localStorage.setItem('wordloom-custom-translations', JSON.stringify(existingTrans));
   });
 
   const fileUrl = 'file://' + path.resolve(__dirname, '../../index.html');
   await page.goto(fileUrl, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(600);
 
-  // Open Aesop's Fables (A1)
-  await page.evaluate(() => window.openReader("Aesop's Fables"));
+  // Open Aesop's Fables and navigate to story page containing 'Fox' (Chapter 31: The Fox and the Goat)
+  await page.evaluate(() => {
+    window.openReader("Aesop's Fables");
+    readerState.page = 31;
+    renderReaderState();
+  });
   await page.waitForTimeout(400);
 
-  // Check Page 1 title is The Fox and the Grapes
+  // Check story subtitle/heading
   const page1Heading = await page.locator('#story-copy h3').innerText().catch(() => '');
-  console.log('   Aesop Page 1 subtitle/heading:', page1Heading);
+  console.log('   Aesop story subtitle/heading:', page1Heading);
 
   // Click on 'Fox'
-  const foxWord = await page.locator('#story-copy .word').filter({ hasText: /^Fox$/i }).first();
+  const foxWord = await page.locator('#story-copy .word[data-word="fox"], #story-copy .word').filter({ hasText: /^Fox/i }).first();
   await foxWord.click();
   await page.waitForTimeout(500);
 
@@ -66,7 +76,7 @@ const fs = require('fs');
 
   // Click another word ('water' or 'day' or 'summer')
   await page.evaluate(() => window.closeModals());
-  const dayWord = await page.locator('#story-copy .word').filter({ hasText: /^day$/i }).first();
+  const dayWord = await page.locator('#story-copy .word[data-word="day"], #story-copy .word').filter({ hasText: /^day/i }).first();
   await dayWord.click();
   await page.waitForTimeout(500);
 
@@ -129,7 +139,7 @@ const fs = require('fs');
   });
   await page.waitForTimeout(500);
 
-  const sisterWord = await page.locator('#story-copy .word').filter({ hasText: /^sister$/i }).first();
+  const sisterWord = await page.locator('#story-copy .word[data-word="sister"], #story-copy .word').filter({ hasText: /^sister/i }).first();
   await sisterWord.click();
   await page.waitForTimeout(500);
 
@@ -154,7 +164,7 @@ const fs = require('fs');
     localStorage.setItem('wordloom-language', 'es');
     window.closeModals();
   });
-  const tiredWord = await page.locator('#story-copy .word').filter({ hasText: /^tired$/i }).first();
+  const tiredWord = await page.locator('#story-copy .word[data-word="tired"], #story-copy .word').filter({ hasText: /^tired/i }).first();
   await tiredWord.click();
   await page.waitForTimeout(500);
 
@@ -179,9 +189,11 @@ const fs = require('fs');
     localStorage.setItem('wordloom-language', 'ar');
     window.closeModals();
     window.openReader("Aesop's Fables");
+    readerState.page = 78;
+    renderReaderState();
   });
   await page.waitForTimeout(400);
-  const grapesWord = await page.locator('#story-copy .word').filter({ hasText: /^grapes$/i }).first();
+  const grapesWord = await page.locator('#story-copy .word[data-word="grapes"], #story-copy .word').filter({ hasText: /^grapes/i }).first();
   await grapesWord.click();
   await page.waitForTimeout(800);
 
@@ -189,7 +201,7 @@ const fs = require('fs');
     const modal = document.querySelector('#dictionary-modal');
     return {
       word: modal.querySelector('#dictionary-title')?.innerText,
-      explanation: modal.querySelector('.explanation-box-text')?.innerText
+      explanation: modal.querySelector('.context-box p, .explanation-box-text')?.innerText
     };
   });
   console.log('   Explanation result for "grapes":', explanationData);
@@ -200,6 +212,9 @@ const fs = require('fs');
 
   // Test 6: Verify Word Hover styling matches warm antique parchment theme
   console.log('\n[TEST 6] Testing Word Hover Theme Matching...');
+  await page.evaluate(() => {
+    window.closeModals();
+  });
   const hoverRuleCheck = await page.evaluate(() => {
     const sheets = Array.from(document.styleSheets);
     let neonFound = false;

@@ -1,0 +1,12 @@
+{
+  "appId": "com.wordloom.app",
+  "appName": "Wordloom: Read & Learn English",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#FAF4EB",
+    "allowMixedContent": true
+  }
+}

@@ -1,18 +1,73 @@
 {
-  "name": "Wordloom",
+  "id": "/wordloom",
+  "name": "Wordloom: Read & Learn English",
   "short_name": "Wordloom",
-  "description": "Build your English through stories made for your level.",
+  "description": "Master English through timeless graded literature, neural voice narration, and interactive spaced repetition games.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#06030f",
-  "theme_color": "#0c0714",
+  "background_color": "#FAF4EB",
+  "theme_color": "#8B5A2B",
   "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": [
+    "education",
+    "books"
+  ],
   "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "docs/store/screenshots/1_library_view.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Graded English Classics Library"
+    },
+    {
+      "src": "docs/store/screenshots/2_reader_view.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Distraction-Free Graded Reader"
+    },
+    {
+      "src": "docs/store/screenshots/3_review_hub.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Spaced Repetition & Spelling Mini-Games"
+    },
+    {
+      "src": "docs/store/screenshots/4_settings_dashboard.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Full-Screen Settings & Voice Narration"
     }
   ]
 }

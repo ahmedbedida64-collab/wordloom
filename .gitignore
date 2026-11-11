@@ -1,6 +1,35 @@
+# Environment & OS
 .env
-data/
-backups/
-__pycache__/
-.pytest_cache/
-.coverage
+.DS_Store
+**/.DS_Store
+*.log
+*.orig
+
+# Dependencies & Build Bundles
+node_modules/
+www/
+dist/
+build/
+
+# Android Native Build Artefacts
+android/.gradle/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+
+# Security & Release Signing (Never commit keystores to Git)
+*.keystore
+*.jks
+
+# Internal AI Agent Workspaces & Scratchpads
+.agents/
+
+# IDE & Editor files
+.idea/
+.vscode/
+
+# Test output artifacts
+tools/library/*.png
+tools/library/*.json
+tools/prototypes/

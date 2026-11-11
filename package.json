@@ -9,9 +9,14 @@
     "test:reader": "node tools/library/verify_browser_reader.js",
     "test:auth": "node tools/library/verify_recreated_auth_and_custom_books.js",
     "test:settings": "node tools/library/screenshot_settings_fullscreen.js",
-    "serve": "python3 -m http.server 8765"
+    "test:ttw": "node tools/library/verify_type_what_you_hear.js",
+    "serve": "python3 -m http.server 8765",
+    "build:android": "node tools/library/prepare_android_assets.js && npx cap sync android",
+    "open:android": "npx cap open android",
+    "assets:store": "node tools/library/generate_store_assets.js && node tools/library/generate_android_icons.js"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.6.0",
     "playwright": "^1.40.0"
   },
   "keywords": [
@@ -22,5 +27,9 @@
     "vocabulary"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0"
+  }
 }
