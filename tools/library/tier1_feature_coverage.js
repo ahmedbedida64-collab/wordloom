@@ -271,6 +271,7 @@ const path = require('path');
     const voiceSelect = document.querySelector('#reader-voice');
     const lineSelect = document.querySelector('#line-size-shape');
     const langSelect = document.querySelector('#mother-language');
+    const moodChips = document.querySelectorAll('.mood-chip-btn');
     const signoutBtn = document.querySelector('#auth-signout');
 
     return {
@@ -278,15 +279,16 @@ const path = require('path');
       voiceOptions: voiceSelect ? Array.from(voiceSelect.options).map(o => o.value) : [],
       lineOptions: lineSelect ? Array.from(lineSelect.options).map(o => o.value) : [],
       langOptions: langSelect ? Array.from(langSelect.options).map(o => o.value) : [],
+      moodChipCount: moodChips.length,
       hasSignout: !!signoutBtn
     };
   });
   console.log('   Settings Dashboard inspection:', settingsData);
 
-  if (!settingsData.viewVisible || settingsData.voiceOptions.length < 4 || settingsData.lineOptions.length < 3 || settingsData.langOptions.length < 5 || !settingsData.hasSignout) {
-    throw new Error('FAILED: Settings dashboard missing voice options, typography options, or signout button');
+  if (!settingsData.viewVisible || settingsData.voiceOptions.length < 4 || settingsData.lineOptions.length < 3 || settingsData.langOptions.length < 5 || settingsData.moodChipCount < 5 || !settingsData.hasSignout) {
+    throw new Error('FAILED: Settings dashboard is missing required controls or profile actions');
   }
-  console.log('   ✓ Full-screen simplified settings dashboard controls and profile actions verified.');
+  console.log('   ✓ Full-screen settings dashboard controls and profile actions verified.');
 
   console.log('\n================================================================');
   console.log('       ✓ TIER 1 FEATURE COVERAGE SUITE PASSED (100%)            ');

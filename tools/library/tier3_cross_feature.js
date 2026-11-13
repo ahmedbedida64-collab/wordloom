@@ -225,10 +225,12 @@ const path = require('path');
   await page.evaluate(() => window.showView('settings'));
   await page.waitForTimeout(400);
 
+  // Update Voice, Rhythm, Language, Mood
   // Update Voice, Rhythm, Language
   await page.locator('#reader-voice').selectOption('natural-male');
   await page.locator('#line-size-shape').selectOption('roomy');
   await page.locator('#mother-language').selectOption('fr');
+  await page.locator('.mood-chip-btn').filter({ hasText: /fern/i }).click();
   await page.waitForTimeout(200);
 
   // Click Save Preferences
@@ -251,6 +253,7 @@ const path = require('path');
       language: localStorage.getItem('wordloom-language'),
       voice: localStorage.getItem('wordloom-voice'),
       lineSize: localStorage.getItem('wordloom-line-size'),
+      mood: localStorage.getItem('wordloom-mood'),
       vocabRecordsCount: Object.keys(JSON.parse(localStorage.getItem('wordloom-vocabulary-records') || '{}')).length,
       soundReaderProfile: SoundReader.currentVoiceProfile,
       motherLangGlobal: motherLanguage
@@ -259,6 +262,7 @@ const path = require('path');
 
   console.log('   Persisted State across reload:', persistedState);
 
+  // Verify all 7 keys persisted
   // Verify all essential keys persisted
   if (!persistedState.session || persistedState.session.email !== 'demo@wordloom.com') {
     throw new Error('FAILED: wordloom-session was not preserved across reload');
@@ -271,6 +275,9 @@ const path = require('path');
   }
   if (persistedState.lineSize !== 'roomy') {
     throw new Error(`FAILED: wordloom-line-size not preserved (expected 'roomy', got '${persistedState.lineSize}')`);
+  }
+  if (persistedState.mood !== 'fern') {
+    throw new Error(`FAILED: wordloom-mood not preserved (expected 'fern', got '${persistedState.mood}')`);
   }
   if (persistedState.vocabRecordsCount === 0) {
     throw new Error('FAILED: wordloom-vocabulary-records lost across session reload');
