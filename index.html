@@ -12407,7 +12407,7 @@ body::-webkit-scrollbar-thumb:hover {
           <div class="settings-header-copy">
             <p class="eyebrow">✦ Your reading room</p>
             <h1>Settings</h1>
-            <p class="view-intro">Shape Wordloom around the way you learn · Reading typography, vocabulary benchmarks, and account profile.</p>
+            <p class="view-intro">Shape Wordloom around your reading comfort · Reading typography, narration voice, and reader profile.</p>
           </div>
           <div class="settings-header-actions">
             <button class="text-button back-link" type="button" onclick="window.showView('library')">Back to Library</button>
@@ -12500,87 +12500,26 @@ body::-webkit-scrollbar-thumb:hover {
                 </div>
               </div>
 
-              <div style="background: rgba(139, 90, 43, 0.06); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;">
+              <div class="settings-status-box" style="background: rgba(139, 90, 43, 0.05); border: 1px solid rgba(139, 90, 43, 0.15); border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5C4033; font-weight: 600;">Session status</span>
-                  <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #2D6559; background: #E8F3EE; padding: 3px 8px; border-radius: 999px; font-weight: 700;">● Active</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5C4033; font-weight: 600;">Session status</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #2D6559; background: #E8F3EE; padding: 3px 9px; border-radius: 999px; font-weight: 700;">● Active</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5C4033; font-weight: 600;">Offline library</span>
-                  <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #8B5A2B; font-weight: 600;">IndexedDB & LocalStorage</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5C4033; font-weight: 600;">Offline library</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #8B5A2B; font-weight: 600;">21 Books Cached</span>
                 </div>
-              </div>
-            </div>
-
-            <!-- Lower Left Column: Benchmark & Goals (Span 6) -->
-            <div class="settings-card settings-grid-col-6">
-              <div class="settings-card-header">
-                <div class="settings-card-icon" aria-hidden="true">🎯</div>
-                <div>
-                  <h2>Learning Benchmark</h2>
-                  <p>Calibrates your recommended catalog stories and vocabulary benchmarks.</p>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5C4033; font-weight: 600;">Storage mode</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #8B5A2B; font-weight: 600;">Local &amp; Private</span>
                 </div>
               </div>
 
-              <div class="settings-field">
-                <label for="learner-level">
-                  <span class="field-title">Learner level</span>
-                  <span class="field-description">Select your target CEFR comprehension band.</span>
-                  <select id="learner-level" class="standalone-select">
-                    <option value="A1">A1 · Beginner (Foundational)</option>
-                    <option value="A2">A2 · Easy (Simple narratives)</option>
-                    <option value="B1">B1 · Intermediate (Classic fables)</option>
-                    <option value="B2">B2 · Upper intermediate (Literary prose)</option>
-                    <option value="C1">C1 · Advanced (Rich literature)</option>
-                    <option value="C2">C2 · Proficient (Unabridged classics)</option>
-                  </select>
-                </label>
-              </div>
-
-              <div class="settings-field">
-                <label for="learning-goal">
-                  <span class="field-title">Learning goal</span>
-                  <span class="field-description">Personalize recommendations and reading focus.</span>
-                  <select id="learning-goal" class="standalone-select">
-                    <option value="confidence">Confidence · Calm, steady progress</option>
-                    <option value="vocabulary">Vocabulary · High-value words and timely review</option>
-                    <option value="fluency">Fluency · Natural rhythm and longer passages</option>
-                    <option value="deep-reading">Deep Reading · Context and structural mastery</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-
-            <!-- Lower Right Column: Color Mood (Span 6) -->
-            <div class="settings-card settings-grid-col-6">
-              <div class="settings-card-header">
-                <div class="settings-card-icon" aria-hidden="true">🎨</div>
-                <div>
-                  <h2>Color Mood & Canvas</h2>
-                  <p>Harmonize the app palette with your reading environment.</p>
-                </div>
-              </div>
-
-              <div class="settings-field">
-                <span class="field-title">Ambient Palette</span>
-                <span class="field-description">Click a mood to apply it to your reading environment immediately.</span>
-                <div class="mood-pill-grid">
-                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('purple'); localStorage.setItem('wordloom-mood', 'purple'); showToast('Mood: Antique Parchment');">
-                    <span class="mood-dot" style="background: #8B5A2B;"></span> Parchment
-                  </button>
-                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('fern'); localStorage.setItem('wordloom-mood', 'fern'); showToast('Mood: Emerald Fern');">
-                    <span class="mood-dot" style="background: #2D6559;"></span> Fern
-                  </button>
-                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('coral'); localStorage.setItem('wordloom-mood', 'coral'); showToast('Mood: Warm Coral');">
-                    <span class="mood-dot" style="background: #E2765F;"></span> Coral
-                  </button>
-                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('sky'); localStorage.setItem('wordloom-mood', 'sky'); showToast('Mood: Ocean Sky');">
-                    <span class="mood-dot" style="background: #3D78A0;"></span> Sky
-                  </button>
-                  <button type="button" class="mood-chip-btn" onclick="applyColorMood('amber'); localStorage.setItem('wordloom-mood', 'amber'); showToast('Mood: Amber Gold');">
-                    <span class="mood-dot" style="background: #B47D2E;"></span> Amber
-                  </button>
-                </div>
+              <div class="settings-reading-promise" style="background: #FAF4EB; border: 1.5px solid rgba(139, 90, 43, 0.2); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;">
+                <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; color: #8B5A2B; text-transform: uppercase; letter-spacing: 0.06em;">✦ Focused Reading Experience</span>
+                <p style="font-family: 'Newsreader', Georgia, serif; font-size: 14.5px; line-height: 1.55; color: #5C4033; margin: 0;">
+                  Wordloom keeps your reading quiet, private, and distraction-free. All reading history, saved vocabulary cards, and custom titles remain securely on your device.
+                </p>
               </div>
             </div>
           </div>

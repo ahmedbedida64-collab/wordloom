@@ -10,7 +10,7 @@ See [README.md](README.md) for the user-facing feature summary and hosting guida
 - Book cards in the library are styled as a single photo-cover frame with details (title, author, level badge, length) overlaid directly on the photo. Directly beneath the frame sit only two controls: one reading button ("Read" / "Continue") and the favorite heart toggle.
 - Reader flow is a distraction-free "single paper" sheet with the book title featured atop the first page only, and two simple navigation buttons ("Previous" and "Next") without directional arrows.
 - Back and forward buttons strictly follow the Brown Natural Frame design standard: `1.5px solid #8B5A2B`, background `#FAF4EB`, color `#5C4033`, radius `6px`, with zero arrow glyphs (`←`, `→`).
-- Settings page is an expansive full-screen 1360px dashboard with typography rhythm, reader profile, CEFR benchmarks, and ambient color mood swatches.
+- Settings page is an expansive full-screen 1360px dashboard with typography rhythm, narration voice controls, and reader profile.
 - The reading plan, reading history, vocabulary review, favorites, color mood, level, and learning goal are browser-local product state; preserve their existing storage keys and object shapes.
 
 ## Project shape
