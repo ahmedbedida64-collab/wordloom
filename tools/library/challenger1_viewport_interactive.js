@@ -61,6 +61,7 @@ const fs = require('fs');
       localStorage.setItem('wordloom-session', 'active');
       localStorage.setItem('wordloom-language', 'ar');
       localStorage.setItem('wordloom-voice', 'natural-female');
+      localStorage.setItem('wordloom-voice', 'studio-human');
       localStorage.setItem('wordloom-level', 'B1');
       localStorage.setItem('wordloom-line-size', 'standard');
       localStorage.setItem('wordloom-mood', 'purple');

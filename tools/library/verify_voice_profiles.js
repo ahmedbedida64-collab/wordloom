@@ -55,13 +55,17 @@ const path = require('path');
     console.log('   Selected value:', selectData.selectedValue);
     console.log('   Preview button text:', selectData.btnText);
 
-    const expectedProfiles = ['natural-female', 'natural-male', 'british-classic', 'studio-human'];
+    const expectedProfiles = ['studio-human', 'british-classic'];
     for (const prof of expectedProfiles) {
       if (!selectData.options.some(o => o.value === prof)) {
         throw new Error(`Missing expected profile option: ${prof}`);
       }
     }
     console.log('   ✓ All 4 voice profiles exist in dropdown!\n');
+    if (selectData.options.some(o => o.value === 'natural-female' || o.value === 'natural-male')) {
+      throw new Error('Found removed natural-female or natural-male option in dropdown');
+    }
+    console.log('   ✓ Voice profiles strictly refined to Studio Human and British Classic!\n');
 
     // [TEST 2] Button styling check (Brown Natural Frame standards, no arrows)
     console.log('[TEST 2] Checking Brown Natural Frame button styling standard...');
@@ -163,6 +167,7 @@ const path = require('path');
     // Reset select to another value, then call syncSettingsForm
     await page.evaluate(() => {
       document.querySelector('#reader-voice').value = 'natural-female';
+      document.querySelector('#reader-voice').value = 'studio-human';
       window.syncSettingsForm();
     });
     const syncedValue = await page.evaluate(() => document.querySelector('#reader-voice').value);

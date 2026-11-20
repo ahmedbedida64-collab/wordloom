@@ -15,6 +15,9 @@
  * 9. Tier 2: Boundary, Corner Cases & Design Guardrails (tier2_boundary_corner.js)
  * 10. Tier 3: Cross-Feature Combinations & State Transitions (tier3_cross_feature.js)
  * 11. Tier 4: Real-World Scenarios, Multi-Viewport & Offline (tier4_real_world.js)
+ * 12. Voice Engine Deep Audit & Concurrency Zero-Overlap (verify_voice_deep_audit.js)
+ * 13. High-Frequency Voice Synthesis & Concurrency Stabilization (verify_voice_high_frequency.js)
+ * 14. Multi-Tenant User Vault, SM-2 SRS & Data Persistence (verify_multi_tenant_vault.js)
  */
 
 const { spawnSync } = require('child_process');
@@ -75,6 +78,21 @@ const SUITES = [
     name: 'Tier 4: Real-World Scenarios, Multi-Viewport & Offline',
     file: 'tools/library/tier4_real_world.js',
     description: 'Verifies mobile (390x844) & desktop (1440x900) zero overflow, dock auto-hiding, and sw.js offline caching.'
+  },
+  {
+    name: 'Voice Engine Deep Audit & Concurrency Zero-Overlap',
+    file: 'tools/library/verify_voice_deep_audit.js',
+    description: 'Verifies zero-overlap concurrency, stopAll teardown, emotional prosody, natural pronunciation, and profile resolution.'
+  },
+  {
+    name: 'High-Frequency Voice Synthesis & Concurrency Stabilization',
+    file: 'tools/library/verify_voice_high_frequency.js',
+    description: 'Verifies 50-call burst stress, forced V8 GC retention, SoundFX procedural audio, ducking, and 30-point prosody rubric.'
+  },
+  {
+    name: 'Multi-Tenant User Vault, SM-2 SRS & Data Persistence',
+    file: 'tools/library/verify_multi_tenant_vault.js',
+    description: 'Verifies per-user data isolation, mathematical SM-2 SRS engine, Due Today queue, JSON backup roundtrip, and IndexedDB storage.'
   }
 ];
 

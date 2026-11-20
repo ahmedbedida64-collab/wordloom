@@ -226,8 +226,7 @@ const path = require('path');
   await page.waitForTimeout(400);
 
   // Update Voice, Rhythm, Language, Mood
-  // Update Voice, Rhythm, Language
-  await page.locator('#reader-voice').selectOption('natural-male');
+  await page.locator('#reader-voice').selectOption('british-classic');
   await page.locator('#line-size-shape').selectOption('roomy');
   await page.locator('#mother-language').selectOption('fr');
   await page.locator('.mood-chip-btn').filter({ hasText: /fern/i }).click();
@@ -270,8 +269,8 @@ const path = require('path');
   if (persistedState.language !== 'fr' || persistedState.motherLangGlobal !== 'fr') {
     throw new Error(`FAILED: wordloom-language not preserved (expected 'fr', got '${persistedState.language}')`);
   }
-  if (persistedState.voice !== 'natural-male' || persistedState.soundReaderProfile !== 'natural-male') {
-    throw new Error(`FAILED: wordloom-voice not preserved (expected 'natural-male', got '${persistedState.voice}')`);
+  if (persistedState.voice !== 'british-classic' || persistedState.soundReaderProfile !== 'british-classic') {
+    throw new Error(`FAILED: wordloom-voice not preserved (expected 'british-classic', got '${persistedState.voice}')`);
   }
   if (persistedState.lineSize !== 'roomy') {
     throw new Error(`FAILED: wordloom-line-size not preserved (expected 'roomy', got '${persistedState.lineSize}')`);

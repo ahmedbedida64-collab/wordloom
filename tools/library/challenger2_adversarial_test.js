@@ -98,6 +98,7 @@ fs.writeFileSync(TEST_TXT_PATH, DUMMY_TXT_CONTENT, 'utf8');
       localStorage.setItem('wordloom-line-size', 'roomy');
       localStorage.setItem('wordloom-mood', 'fern');
       localStorage.setItem('wordloom-voice', 'natural-male');
+      localStorage.setItem('wordloom-voice', 'british-classic');
       localStorage.setItem('wordloom-vocabulary-records', JSON.stringify(vocab));
       localStorage.setItem('wordloom-saved-words', JSON.stringify(['adversary']));
       localStorage.setItem('wordloom-custom-books', JSON.stringify(customBooks));

@@ -285,7 +285,7 @@ const path = require('path');
   });
   console.log('   Settings Dashboard inspection:', settingsData);
 
-  if (!settingsData.viewVisible || settingsData.voiceOptions.length < 4 || settingsData.lineOptions.length < 3 || settingsData.langOptions.length < 5 || settingsData.moodChipCount < 5 || !settingsData.hasSignout) {
+  if (!settingsData.viewVisible || settingsData.voiceOptions.length < 2 || settingsData.lineOptions.length < 3 || settingsData.langOptions.length < 5 || settingsData.moodChipCount < 5 || !settingsData.hasSignout) {
     throw new Error('FAILED: Settings dashboard is missing required controls or profile actions');
   }
   console.log('   ✓ Full-screen settings dashboard controls and profile actions verified.');
